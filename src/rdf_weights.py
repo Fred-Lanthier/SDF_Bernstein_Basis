@@ -1,14 +1,14 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
 import numpy as np
 import torch
-from src.visu.plots_3d import plot_robot_isosurfaces, RobotSene
 from typing import List, Union, Literal
 from src.core.common import CommonSdfMethods 
 from src.core.assets.entities.models import WeightsLinkModel
+from src.core.train.train_config import TrainConfig, Train_W
 from src.core.math.projection_point import spherical_projection, correct_sphere_gradient
+
+from src.core.sdf_creator import SDFTrain
 
 
 
@@ -23,107 +23,13 @@ class RDF_Weights(CommonSdfMethods):
         CommonSdfMethods.init_robot_folder(self, ws_path, robot_name)
         self.ws_path = ws_path
 
-    def train_links(
-        self,
-        link_names: Union[List[str], str],
-        n_func: int,
-        iters: int,
-        batch_near: int = 1024,
-        batch_rand: int = 64,
-        robot_name: str = "",
-        debug: bool = False,
-        n_points: int = 100000,
-        sample_point_count: int = 1000000,
-        scan_count: int = 100,
-        scan_resolution: int = 400,
-    ):
-        if isinstance(link_names, str):
-            link_names = [link_names]
-
-        import mesh_to_sdf
-
-        from src.core.train.weight_train import BernsteinWeightsTrain
-
-        mesh_folder = getattr(self, robot_name + self.folder_mesh)
-        model_folder = getattr(self, robot_name + self.folder_model)
-
-        for link_name in link_names:
-            mesh_obj = mesh_folder.load(link_name)
-            mesh = mesh_obj.get()
-            if mesh is None:
-                raise ValueError(f"Mesh for link '{link_name}' could not be loaded")
-
-            file_name = mesh.metadata.get("file_name", link_name)
-            centroid_offset = np.asarray(mesh.bounding_box.centroid, dtype=np.float32)
-            scale_factor = float(np.max(np.linalg.norm(mesh.vertices - centroid_offset, axis=1)))
-            if scale_factor <= 0:
-                raise ValueError(f"Invalid scale factor computed for link '{link_name}'")
-
-            scaled_mesh = mesh_to_sdf.scale_to_unit_sphere(mesh.copy())
-            scaled_mesh.metadata["file_name"] = file_name
-
-            near_points, near_sdf = mesh_to_sdf.sample_sdf_near_surface(
-                scaled_mesh,
-                number_of_points=int(n_points),
-                surface_point_method="scan",
-                sign_method="normal",
-                scan_count=int(scan_count),
-                scan_resolution=int(scan_resolution),
-                sample_point_count=int(sample_point_count),
-                normal_sample_count=100,
-                min_size=0.015,
-                return_gradients=False,
-            )
-            query_points = np.random.uniform(-1.0, 1.0, size=(int(n_points), 3)).astype(np.float32)
-            query_sdf = mesh_to_sdf.mesh_to_sdf(
-                scaled_mesh,
-                query_points,
-                surface_point_method="scan",
-                sign_method="normal",
-                bounding_radius=None,
-                scan_count=int(scan_count),
-                scan_resolution=int(scan_resolution),
-                sample_point_count=int(sample_point_count),
-                normal_sample_count=100,
-            )
-
-            trainer = BernsteinWeightsTrain(
-                n_func=n_func,
-                domain_min=-1,
-                domain_max=1,
-                device=self.device,
-                dtype=self.dtype,
-            )
-            trainer.set_points_domain(-1, 1)
-            trainer.set_number_of_functions(n_func)
-
-            weights = trainer.train(
-                near_points,
-                near_sdf,
-                query_points,
-                query_sdf,
-                epoches=iters,
-                sample_near=batch_near,
-                sample_rand=batch_rand,
-            )
-
-            model_pt = {
-                "file_name": file_name,
-                "file_suffix": WeightsLinkModel.file_suffix,
-                "domain_min": -1.0,
-                "domain_max": 1.0,
-                "scale_factor": torch.as_tensor(scale_factor, dtype=self.dtype),
-                "centroid_offset": torch.as_tensor(centroid_offset, dtype=self.dtype),
-                "n_func": int(n_func),
-                "weights": weights.detach().cpu(),
-            }
-            model_folder.save(model_pt)
-            self.add_model(link_name, WeightsLinkModel.file_suffix, robot_name=robot_name)
-
-            if debug:
-                from src.visu.debug_visu_utils import show_mesh
-
-                show_mesh(self.to_mesh(link_name, type="trimesh", debug=False))
+    def train_links(self, link_names:Union[List[str], str],  n_func:int, iters:int, batch_near:int=1024, batch_rand:int=64, robot_name='', debug=False):
+        cfg_w = Train_W(run=True, n_func=n_func, iters=iters, batch_near=batch_near, batch_rand=batch_rand)
+        cfg = TrainConfig(links_to_train=link_names, debug=debug, classic=cfg_w )
+        trainer = SDFTrain()
+        trainer.init_robot_folder(self.ws_path, robot_name=robot_name)
+        trainer.create_model(cfg, robot_name=robot_name)
+        CommonSdfMethods.init_robot_folder(self, self.ws_path, robot_name=robot_name)
 
     def batch_to(self, device):
         self.device = device
@@ -132,8 +38,6 @@ class RDF_Weights(CommonSdfMethods):
         self.scale_factors_batch = self.scale_factors_batch.to(device)
         
     def add_models(self, link_names:Union[List[str], str], namespace='', robot_name='', **kwargs):
-        if isinstance(link_names, str):
-            link_names = [link_names]
         for link_name in link_names:
             self.add_model(link_name, WeightsLinkModel.file_suffix, namespace, robot_name, **kwargs)
 
@@ -164,6 +68,31 @@ class RDF_Weights(CommonSdfMethods):
             g_in = torch.einsum('ijk,j->ik', d_phi_p, model.weights)  # (N,3)
             
             d_sdf = correct_sphere_gradient(points_scaled, g_in, outside, r1=(model.domain_max - model.domain_min) / 2)
+        else:
+            d_sdf = torch.zeros((points_scaled.shape[0], 3), device=self.device, dtype=self.dtype)
+
+        if get_min:
+            sdf_min, idx = torch.min(sdf, dim=0)
+            return sdf_min, d_sdf[idx], points[idx]
+
+        return sdf, d_sdf, points
+
+    @torch.no_grad()
+    def inner_kernel_for_tests(self, link_name: str, points: torch.Tensor, get_grad: bool = False, get_min: bool = False, fk_matrix: torch.Tensor = None):
+        if fk_matrix is not None:
+            points = CommonSdfMethods.to_link_frame(points_w=points, H_wl=fk_matrix)
+
+        model: WeightsLinkModel = getattr(self, link_name + self.model_extension)
+        model.to(points.device, points.dtype)
+        self.set_number_of_functions(model.n_func)
+        self.set_points_domain(domain_min=model.domain_min, domain_max=model.domain_max)
+
+        points_scaled = (points - model.centroid_offset) / model.scale_factor
+        phi_p, d_phi_p = super().basis_function_from_3Dpoints(points_scaled, use_derivative=get_grad)
+        sdf = torch.matmul(phi_p, model.weights) * model.scale_factor
+
+        if get_grad:
+            d_sdf = torch.einsum('ijk,j->ik', d_phi_p, model.weights)
         else:
             d_sdf = torch.zeros((points_scaled.shape[0], 3), device=self.device, dtype=self.dtype)
 
@@ -217,6 +146,8 @@ class RDF_Weights(CommonSdfMethods):
         elif w.numel() > expected:
             w = w[:expected]
         return w.reshape(n_func, n_func, n_func)
+
+    
 
     def inference_link_batch(self, points:torch.Tensor, get_grad=False, get_min=False, forward_tensor:torch.Tensor=None,) -> tuple:
         '''
@@ -275,14 +206,15 @@ class RDF_Weights(CommonSdfMethods):
 
         return sdf, d_sdf, points
 
-    def gradient_descent_link(self, points_link_frame:torch.Tensor, link_name:str, num_of_iteration:int = 10):
+    def gradient_descent_link(self, points_link_frame:torch.Tensor, link_name:str, num_of_iteration:int = None):
         model:WeightsLinkModel = getattr(self, link_name + self.model_extension)
-        self.n_func = model.n_func
+        self.set_number_of_functions(model.n_func)
         points_debug = torch.zeros((num_of_iteration, points_link_frame.shape[0], 3), device=self.device, dtype=self.dtype)
         
+        sdf, gradient, points_link_frame = self.inference_link(link_name, points_link_frame, get_grad=True, get_min=False)
         for i in range(num_of_iteration):
             points_debug[i] = points_link_frame
-            sdf, gradient, _ = self.inference_link(link_name, points_link_frame, get_grad=True, get_min=False)
+            sdf, gradient, points_link_frame = self.inference_link(link_name, points_link_frame, get_grad=True, get_min=False)
             step = sdf.unsqueeze(1) * gradient / (gradient.norm(dim=1, keepdim=True) + 1e-6)
             points_link_frame = points_link_frame - step
         
@@ -317,13 +249,24 @@ class RDF_Weights(CommonSdfMethods):
         
         model:WeightsLinkModel = getattr(self, model_name + self.model_extension)
         if  hasattr(model, 'weights'):
+            prev_n_func = getattr(self, "n_func", None)
+            prev_domain = (getattr(self, "domain_min", None), getattr(self, "domain_max", None))
+
+            model_n_func = int(model.n_func) if getattr(model, "n_func", None) is not None else int(round(float(model.weights.numel()) ** (1.0 / 3.0)))
+            self.set_number_of_functions(model_n_func)
+            self.set_points_domain(domain_min=model.domain_min, domain_max=model.domain_max)
+
             mesh =  sdf_to_mesh(weights=model.weights,
                                 nbData=128,
                                 domain_max=model.domain_max, domain_min=model.domain_min,
                                 scaling_factor=model.scale_factor,
                                 centroid_offset=model.centroid_offset,
                                 basis_function_from_3Dpoints=super().basis_function_from_3Dpoints)
-        
+
+            if prev_n_func is not None and prev_domain[0] is not None and prev_domain[1] is not None:
+                self.set_number_of_functions(prev_n_func)
+                self.set_points_domain(domain_min=prev_domain[0], domain_max=prev_domain[1])
+
         mesh.show() if debug else None
         mesh = trimesh_to_pyvista(mesh, np.eye(4)) if type=='pyvista' else mesh
         return mesh

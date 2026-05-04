@@ -37,3 +37,7 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+#Datasets
+
+*.npy

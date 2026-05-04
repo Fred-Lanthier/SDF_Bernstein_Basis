@@ -1,13 +1,10 @@
 from dataclasses import asdict, dataclass, field, fields
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
+import numpy as np
 import torch
 
-
-def _as_tensor(value, device=None, dtype=None):
-    if isinstance(value, torch.Tensor):
-        return value.to(device=device, dtype=dtype) if device is not None or dtype is not None else value
-    return torch.as_tensor(value, device=device, dtype=dtype)
+ArrayLike = Union[float, np.ndarray, torch.Tensor, list]
 
 
 @dataclass
@@ -17,8 +14,15 @@ class BaseLinkModel:
     domain_min: float = 0.0
     domain_max: float = 0.0
     scale_factor: torch.Tensor = field(default_factory=lambda: torch.tensor(1.0))
-    centroid_offset: torch.Tensor = field(default_factory=lambda: torch.zeros(3))
+    centroid_offset: ArrayLike = 0.0
+
+    center_ellipsoid: torch.Tensor = field(default_factory=lambda: torch.empty((3,)))
+    axes_ellipsoid: Optional[Any] = None
+    scales_ellipsoid: Optional[Any] = None
+    eigen_vector_ellipsoid: Optional[Any] = None
+
     n_func: Optional[int] = None
+
     device: str = field(default="cpu", init=False)
     dtype: torch.dtype = field(default=torch.float32, init=False)
 
@@ -35,17 +39,18 @@ class BaseLinkModel:
 @dataclass
 class WeightsLinkModel(BaseLinkModel):
     file_suffix: str = field(default="_w", init=False)
-    weights: torch.Tensor = field(default_factory=lambda: torch.empty(0))
+    weights: torch.Tensor = field(default_factory=lambda: torch.empty((0,)))
 
     def to(self, device, dtype):
         dev = torch.device(device) if not isinstance(device, torch.device) else device
         cur = torch.device(self.device) if isinstance(self.device, str) else self.device
-        if cur == dev and self.dtype == dtype:
+
+        if (cur == dev) and (self.dtype == dtype):
             return self
 
-        self.weights = _as_tensor(self.weights, device=dev, dtype=dtype)
-        self.centroid_offset = _as_tensor(self.centroid_offset, device=dev, dtype=dtype)
-        self.scale_factor = _as_tensor(self.scale_factor, device=dev, dtype=dtype)
+        self.weights = self.weights.to(device=device, dtype=dtype)
+        self.centroid_offset = self.centroid_offset.to(device=device, dtype=dtype)
+        self.scale_factor = self.scale_factor.to(device=device, dtype=dtype)
         self.device = str(dev)
         self.dtype = dtype
         return self

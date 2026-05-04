@@ -1,5 +1,6 @@
-import os
 from typing import Union
+
+import os
 
 import torch
 from torch import load as torch_load
@@ -8,6 +9,8 @@ from torch import save as torch_save
 from src.core.assets.FolderManage import FolderManage
 from src.core.assets.entities.models import SphereModel, WeightsLinkModel
 from src.core.assets.load_model_wrapper import load_link_sphere_model, load_link_weight_model
+from src.core.assets.train_wrapper import TrainWrapper
+from src.core.train.train_config import TrainConfig
 
 
 def _infer_kind(d: dict) -> str:
@@ -27,6 +30,7 @@ class ModelHandler(FolderManage):
 
     def load_model(self, model_name, device, dtype) -> ModelT:
         path = super().get_file_path(model_name, debug=True)
+
         if path is None:
             raise FileNotFoundError(
                 "\033[91m"
@@ -39,17 +43,13 @@ class ModelHandler(FolderManage):
                 + "\033[0m"
             )
 
-        target_device = torch.device(device)
-        if target_device.type == "cuda" and not torch.cuda.is_available():
-            target_device = torch.device("cpu")
-
-        model_dict = torch_load(path, map_location=target_device)
+        model_dict = torch_load(path, map_location=torch.device(device))
         kind = _infer_kind(model_dict)
 
         if kind == "link_w":
-            return load_link_weight_model(model_dict, device=target_device, dtype=dtype)
+            return load_link_weight_model(model_dict, device=device, dtype=dtype)
         if kind == "link_sphere":
-            return load_link_sphere_model(model_dict, device=target_device, dtype=dtype)
+            return load_link_sphere_model(model_dict, device=device, dtype=dtype)
 
         raise RuntimeError("Error in loading model")
 
@@ -59,3 +59,31 @@ class ModelHandler(FolderManage):
         path = os.path.join(path, model_name + "." + self.extension)
         torch_save(model_pt, path)
         print("\033[92m" + f"[SAVED] FILE: {model_name} in --> {path}" + "\033[0m")
+
+    def create_weights(self, dataset: dict, cfg: TrainConfig, device, dtype) -> dict:
+        print("\033[1m" + f'CREATING MODEL FILE: {dataset["file_name"]}' + "\033[0m")
+        model = TrainWrapper(device=device, dtype=dtype)
+        model.debug = cfg.debug
+        model.set_weight_model()
+        model.initialize_model(dataset)
+        dataset = model.filter_dataset(dataset)
+        points_inside = dataset["near_points"][dataset["near_sdf"] < 0]
+        model.fit_ellipsoid(points_inside)
+
+        model.train(
+            dataset,
+            cfg.classic.n_func,
+            epoches=cfg.classic.iters,
+            sample_near=cfg.classic.batch_near,
+            sample_rand=cfg.classic.batch_rand,
+        )
+
+        self.save(model.get_model_pt())
+
+    def create_spheres(self, mesh, n_points, n_spheres, debug, device="cuda", dtype=torch.float32) -> dict:
+        model = TrainWrapper(device=device, dtype=dtype)
+        model.debug = debug
+        model.set_sphere_model()
+        model.train_sphere(mesh, n_points=n_points, n_spheres=n_spheres)
+        self.save(model.get_model_pt())
+    

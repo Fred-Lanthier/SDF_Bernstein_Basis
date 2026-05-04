@@ -9,10 +9,7 @@ from src.utils.MeshUtils import overlap_origins
 import torch
 import numpy as np
 import time
-try:
-    from pymeshfix import _meshfix  # pip install pymeshfix
-except ImportError:  # optional dependency
-    _meshfix = None
+from pymeshfix import _meshfix #pip install pymeshfix pip install pyvista
 #pip install pycollada becouse trimesh can't read .dae files by default
 
 from src.visu.debug_visu_utils import show_pointcloud_matplot
@@ -55,8 +52,6 @@ class Mesh():
     
     @staticmethod
     def mesh_fix(mesh_path) -> Trimesh:
-        if _meshfix is None:
-            raise ImportError("pymeshfix is required to repair meshes")
         # print("\033[91m" + "Mesh is not watertight, attempting to repair..." + "\033[0m")
         tin = _meshfix.PyTMesh()
         tin.load_file(mesh_path)
@@ -243,3 +238,4 @@ class Mesh():
 
 
     
+

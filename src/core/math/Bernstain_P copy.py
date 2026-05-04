@@ -6,6 +6,7 @@ import time
 
 class BersteinPoly():
     def __init__(self, n_func:int=8, domain_min=-1, domain_max=1, device='cpu', dtype=torch.float64):
+        self.set_number_of_functions(n_func)
         self.domain_min = domain_min
         self.domain_max = domain_max
         self.dtype = dtype
@@ -13,9 +14,6 @@ class BersteinPoly():
              self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         else:
             self.device = 'cpu'
-        self._i_cache = None
-        self._comb_cache = None
-        self.set_number_of_functions(n_func)
 
     def set_points_domain(self, domain_min, domain_max):
 
@@ -25,41 +23,31 @@ class BersteinPoly():
 
     def set_number_of_functions(self, n_func):
         self.n_func = int(n_func)
-        # cache coefficienti binomiali in float64 per robustezza numerica (N alti)
-        i_cpu = torch.arange(self.n_func, device='cpu', dtype=torch.float64)
-        n_cpu = torch.tensor(self.n_func - 1, device='cpu', dtype=torch.float64)
-        comb = torch.exp(torch.lgamma(n_cpu + 1) - torch.lgamma(i_cpu + 1) - torch.lgamma(n_cpu - i_cpu + 1))
-        self._i_cache = i_cpu
-        self._comb_cache = comb
 
 
     def normalize_points(self, p):
         # print(f'Normalizing points from domain [{self.domain_min},{self.domain_max}]')
-        return ((p - self.domain_min)/(self.domain_max-self.domain_min)).view(-1, 3)
+        return ((p - self.domain_min)/(self.domain_max-self.domain_min)).reshape(len(p), 3)
 
     @staticmethod
     def binomial_coefficient(n, k): #C(n,k )
         return torch.exp(torch.lgamma(n + 1) - torch.lgamma(k + 1) - torch.lgamma(n - k + 1))
 
     def build_bernstein_t(self, t, use_derivative=False): #given t normalized to [0,1] returns the bernstein basis function
-        t = t.clamp_(min=1e-6, max=1-1e-6)  # limit t to be inside min and max
-        compute_dtype = torch.float64 if self.n_func >= 128 else t.dtype
-        t_work = t.to(dtype=compute_dtype)
+        t = torch.clamp(t, min=1e-6, max=1-1e-6)#limit t to be inside min and max
         n = self.n_func - 1
-        i = self._i_cache.to(device=t.device, dtype=compute_dtype)
-        comb = self._comb_cache.to(device=t.device, dtype=compute_dtype)
+        i = torch.arange(self.n_func, device=t.device)
 
-        phi = comb * (1 - t_work).unsqueeze(-1) ** (n - i) * t_work.unsqueeze(-1) ** i #add a dimension to t and i to be able to do the outer product
+        comb = self.binomial_coefficient(torch.tensor(n, device=t.device), i)
+
+        phi = comb * (1 - t).unsqueeze(-1) ** (n - i) * t.unsqueeze(-1) ** i #add a dimension to t and i to be able to do the outer product
         #returns Bernstain basis function in order Bi0,---,Bin
         if not use_derivative:
-            return phi.to(dtype=t.dtype),None
+            return phi.float(),None
         else:
-            comb_mul_n_minus_i = comb * (n - i)
-            comb_mul_i = comb * i
-            dphi = -comb_mul_n_minus_i * (1 - t_work).unsqueeze(-1) ** (n - i - 1) * t_work.unsqueeze(-1) ** i \
-                   + comb_mul_i * (1 - t_work).unsqueeze(-1) ** (n - i) * t_work.unsqueeze(-1) ** (i - 1)
-            dphi = dphi.clamp_(min=-1e4, max=1e4)
-            return phi.to(dtype=t.dtype),dphi.to(dtype=t.dtype)
+            dphi = -comb * (n - i) * (1 - t).unsqueeze(-1) ** (n - i - 1) * t.unsqueeze(-1) ** i + comb * i * (1 - t).unsqueeze(-1) ** (n - i) * t.unsqueeze(-1) ** (i - 1)
+            dphi = torch.clamp(dphi, min=-1e4, max=1e4)
+            return phi.float(),dphi.float()
 
 
     def basis_function_from_3Dpoints(self, p, use_derivative=False):
@@ -299,3 +287,4 @@ if __name__ == "__main__":
 #             optimizer.step()
 
 #         return wb.detach()
+
