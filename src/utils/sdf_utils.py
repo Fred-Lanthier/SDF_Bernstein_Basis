@@ -3,7 +3,7 @@ import skimage.measure
 import trimesh
 import numpy as np
 from src.core.math.transformations import matrix_to_pos_quat
-from src.utils.MeshUtils import normalize_mesh, denormalize_mesh
+from src.utils.MeshUtils import denormalize_mesh
 from src.core.assets.entities.MeshModel import Mesh
 from typing import Union
 from scipy.ndimage import gaussian_filter
@@ -44,18 +44,22 @@ def sdf_to_mesh(
 
     # --- marching cubes su CPU ---
     d_smooth = gaussian_filter(d_np, sigma=1.0)
-    spacing = (domain_max - domain_min) / nbData
-    verts, faces, normals, values = skimage.measure.marching_cubes(    d_smooth, level=0.0, spacing=(spacing, spacing, spacing))
+    spacing = (domain_max - domain_min) / max(nbData - 1, 1)
+    verts, faces, normals, values = skimage.measure.marching_cubes(
+        d_smooth,
+        level=0.0,
+        spacing=(spacing, spacing, spacing),
+    )
 
     mesh = trimesh.Trimesh(vertices=verts, faces=faces, process=False)
     mesh = mesh.subdivide_to_size(max_edge=1)
+    mesh.apply_translation([domain_min, domain_min, domain_min])
 
     # --- conversione sicura CPU per i parametri ---
     scaling_factor_np = scaling_factor.detach().cpu().numpy() if torch.is_tensor(scaling_factor) else np.asarray(scaling_factor)
     centroid_offset_np = centroid_offset.detach().cpu().numpy() if torch.is_tensor(centroid_offset) else np.asarray(centroid_offset)
 
-    # --- normalizzazione e denormalizzazione ---
-    mesh = normalize_mesh(mesh.copy())
+    # --- denormalizzazione finale nel frame originale ---
     mesh = denormalize_mesh(mesh.copy(), scaling_factor_np, centroid_offset_np)
 
     return mesh

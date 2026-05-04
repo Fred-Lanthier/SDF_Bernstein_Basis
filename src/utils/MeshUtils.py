@@ -78,10 +78,16 @@ def overlap_origins(original_mesh, disaligned_mesh):
     return disaligned_mesh
 
 
-def denormalize_mesh(mesh, scale, offset): # porta la mesh da un intervallo [0,1] a [min,max]
-    import mesh_to_sdf
-    mesh = mesh_to_sdf.scale_to_unit_sphere(mesh)
-    mesh.vertices = mesh.vertices*scale + offset        
+def denormalize_mesh(mesh, scale, offset): # porta la mesh dal frame unitario al frame originale
+    scale = np.asarray(scale, dtype=float)
+    offset = np.asarray(offset, dtype=float)
+
+    if scale.ndim == 0:
+        scale = np.repeat(float(scale), 3)
+    if offset.ndim == 0:
+        offset = np.repeat(float(offset), 3)
+
+    mesh.vertices = mesh.vertices * scale + offset
     return mesh
 
 # def normalize_mesh(mesh, domain_min, domain_max): # porta la mesh da un intervallo [min,max] a [0,1]
