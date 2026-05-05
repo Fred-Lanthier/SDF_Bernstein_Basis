@@ -42,7 +42,7 @@ class BersteinPoly():
         return torch.exp(torch.lgamma(n + 1) - torch.lgamma(k + 1) - torch.lgamma(n - k + 1))
 
     def build_bernstein_t(self, t, use_derivative=False): #given t normalized to [0,1] returns the bernstein basis function
-        t = t.clamp_(min=1e-6, max=1-1e-6)  # limit t to be inside min and max
+        t = t.clamp(min=1e-6, max=1-1e-6)  # limit t to be inside min and max
         compute_dtype = torch.float64 if self.n_func >= 128 else t.dtype
         t_work = t.to(dtype=compute_dtype)
         n = self.n_func - 1

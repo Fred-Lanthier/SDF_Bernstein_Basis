@@ -7,8 +7,12 @@ import torch
 from panda_test.panda_fk import fk_panda_two_robots
 from src.rdf_weights import RDF_Weights
 
+import rospkg
 
-WS_PATH = '/home/andrea/Documents/RDF/panda_test'
+rospack = rospkg.RosPack()
+
+
+WS_PATH = rospack.get_path('vision_processing') + '/third_party/SDF_Bernstein_Basis/panda_test'
 ROBOT_NAME = 'panda_robot'
 
 BASE_LINK_NAMES = [

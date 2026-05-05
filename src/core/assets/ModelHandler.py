@@ -43,7 +43,7 @@ class ModelHandler(FolderManage):
                 + "\033[0m"
             )
 
-        model_dict = torch_load(path, map_location=torch.device(device))
+        model_dict = torch_load(path, map_location=torch.device(device), weights_only=False)
         kind = _infer_kind(model_dict)
 
         if kind == "link_w":
