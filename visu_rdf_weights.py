@@ -27,6 +27,7 @@ BASE_LINK_NAMES = [
     'panda_hand',
     'panda_leftfinger',
     'panda_rightfinger',
+    'fork_tip'
 ]
 NAMESPACES = ['p1_', 'p2_']
 LINK_NAMES = [ns + ln for ns in NAMESPACES for ln in BASE_LINK_NAMES]

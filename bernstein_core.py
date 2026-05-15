@@ -51,28 +51,48 @@ class BernsteinCore():
         
         return phi_xyz
 
-    def get_whole_body_sdf_batch(self, x, pose, theta):
+    def get_whole_body_sdf_batch(self, x, pose, theta, return_per_link=False):
         """
         Calcule la distance SDF ultra-rapidement en batch vectorisé.
+
+        Args:
+            return_per_link: if True, also returns sdf [B, K, N] before the min over links.
+                             Enables per-link barrier computation in BernsteinBarrier.
         """
         B = theta.size(0)
         N = x.size(0)
         K = self.K
-        
+
         # 1. Forward Kinematics (FK) via URDFLayer
         trans_list = self.robot.get_transformations_each_link(pose, theta)
-        trans_stacked = torch.stack(trans_list, dim=1) 
-        
-        # On suppose que les links correspondent aux K premiers
-        fk_trans = trans_stacked[:, :K, :, :].reshape(B*K, 4, 4)
 
-        # 2. Inversion rapide des Matrices
-        R = fk_trans[:, :3, :3]
-        R_inv = R.transpose(1, 2).contiguous() 
-        t_vec = fk_trans[:, :3, 3].contiguous() 
-        
-        diff = x.unsqueeze(0) - t_vec.unsqueeze(1) 
-        x_robot_frame_batch = torch.bmm(diff, R_inv) 
+        # Select exactly the transforms for the requested links
+        matched_trans = []
+        for target_link in self.used_links:
+            idx = None
+            t_name = target_link.replace('panda_', '').replace('_w', '').replace('.pt', '')
+            for i, info in enumerate(self.robot.meshes_info):
+                i_name = info['link_name'].replace('panda_', '')
+                if t_name in i_name or i_name in t_name:
+                    idx = i
+                    break
+
+            if idx is None:
+                raise ValueError(f"Link {target_link} not found in URDF visuals")
+            matched_trans.append(trans_list[idx])
+
+        trans_stacked = torch.stack(matched_trans, dim=1)
+
+        fk_trans = trans_stacked.reshape(B*K, 4, 4)
+
+        # 2. Transform world points to each link's local frame
+        # torch.bmm(diff, R) computes R^T @ diff in column-vector notation,
+        # which is the correct world→local transform for an orthogonal R.
+        R = fk_trans[:, :3, :3].contiguous()
+        t_vec = fk_trans[:, :3, 3].contiguous()
+
+        diff = x.unsqueeze(0) - t_vec.unsqueeze(1)
+        x_robot_frame_batch = torch.bmm(diff, R)
 
         # 3. Mise à l'échelle pour SDF_Bernstein_Basis
         offsets_expanded = self.offsets.unsqueeze(0).expand(B, K, 3).reshape(B*K, 1, 3)
@@ -80,24 +100,27 @@ class BernsteinCore():
 
         x_scaled = (x_robot_frame_batch - offsets_expanded) / scales_expanded
 
-        # 4. Bornage au volume [-1, 1] 
-        # (Dans le nouveau système, c'est une approximation sphérique à la frontière, 
+        # 4. Bornage au volume [-1, 1]
+        # (Dans le nouveau système, c'est une approximation sphérique à la frontière,
         # mais le clamping est le plus rapide pour la collision de près)
         x_bounded = torch.clamp(x_scaled, min=-1.0+1e-2, max=1.0-1e-2)
         res_x = x_scaled - x_bounded
 
         # 5. Évaluation du polynôme de Bernstein
         phi = self.build_basis_function_from_points(x_bounded.reshape(B*K*N, 3))
-        phi = phi.reshape(B, K, N, -1).transpose(0, 1).reshape(K, B*N, -1) 
-        
+        phi = phi.reshape(B, K, N, -1).transpose(0, 1).reshape(K, B*N, -1)
+
         # 6. Produit Scalaire des Poids
         sdf = torch.einsum('kni,ki->kn', phi, self.weights).reshape(K, B, N).transpose(0, 1).reshape(B*K, N)
         sdf = sdf + res_x.norm(dim=-1)
         sdf = sdf.reshape(B, K, N)
-        
+
         # Rescale selon les dimensions d'origine
-        sdf = sdf * self.scales.unsqueeze(0).unsqueeze(2)
-        
-        sdf_value, _ = sdf.min(dim=1)
-        
+        sdf = sdf * self.scales.unsqueeze(0).unsqueeze(2)  # [B, K, N]
+
+        sdf_value, _ = sdf.min(dim=1)  # [B, N] — min over links
+
+        if return_per_link:
+            return sdf_value, sdf  # [B, N], [B, K, N]
+
         return sdf_value

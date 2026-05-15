@@ -61,7 +61,7 @@ class Dataset():
                                                         scan_resolution=self.scan_resolution,
                                                         sample_point_count=self.sample_point_count,
                                                         normal_sample_count=self.normal_sample_count,
-                                                        min_size=0.015, # The fraction of uniformly sampled that should be inside the shape. If this is 0.015 and less than 1.5% of uniformly sampled points have negative SDFs, an exception is thrown. This can be used to detect bad meshes.
+                                                        min_size=0.0, # Reduced to 0.0 to prevent BadMeshException for thin objects like the fork
                                                         return_gradients=False) 
         
         query_points = self._get_rdm_train_points()

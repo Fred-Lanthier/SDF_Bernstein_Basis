@@ -122,14 +122,48 @@ def _append_gripper_fk(T_list, finger_q=0.0, dtype=np.float32):
 
     # URDF chain:
     # link7 -> link8:    xyz=(0, 0, 0.107), rpy=(0, 0, 0)
-    # link8 -> hand:     xyz=(0, 0, 0),     rpy=(0, 0, -0.707)
+    # link8 -> hand:     xyz=(0, 0, 0),     rpy=(0, 0, -pi/4)
     # hand  -> fingers:  xyz=(0, +/-q, 0.0584), rpy=(0, 0, 0)
+    # -0.707 was wrong (cos(45°) used instead of the angle -pi/4 = -0.7854 rad).
     T_link8 = T7 @ _trans(0.0, 0.0, 0.107, dtype=dtype)
-    T_hand = T_link8 @ _rotz(-0.707, dtype=dtype)
+    T_hand = T_link8 @ _rotz(-np.pi / 4, dtype=dtype)
     T_leftfinger = T_hand @ _trans(0.0, +finger_q, 0.0584, dtype=dtype)
     T_rightfinger = T_hand @ _trans(0.0, -finger_q, 0.0584, dtype=dtype)
 
-    return T_list + [T_hand, T_leftfinger, T_rightfinger]
+    # hand -> panda_TCP -> fork_tip
+    T_TCP = T_hand @ _trans(0.0, 0.0, 0.1034, dtype=dtype)
+    
+    # fork_tip_joint origin in URDF: xyz="-0.0055 0 0.1296" rpy="0 -3.621558 0"
+    # rpy(0, -3.621558, 0) is a rotation around Y axis.
+    # Note: np.cos(-3.621558) = np.cos(3.621558). We build a RotY matrix.
+    theta_y = -3.6215581978882336
+    c = np.cos(theta_y)
+    s = np.sin(theta_y)
+    RotY = np.array([
+        [c,  0.0, s,   0.0],
+        [0.0, 1.0, 0.0, 0.0],
+        [-s, 0.0, c,   0.0],
+        [0.0, 0.0, 0.0, 1.0]
+    ], dtype=dtype)
+    
+    Trans_fork = _trans(-0.0055, 0.0, 0.1296, dtype=dtype)
+    
+    # The fork mesh has a visual offset defined in the URDF relative to the fork_tip joint
+    visual_xyz = np.array([-0.033, -0.02, 0.0171378], dtype=dtype)
+    visual_rpy = np.array([0, 0.4799655442984406, 0], dtype=dtype)
+    cy = np.cos(visual_rpy[1])
+    sy = np.sin(visual_rpy[1])
+    
+    VisualOffset = np.array([
+        [cy,  0.0, sy,  visual_xyz[0]],
+        [0.0, 1.0, 0.0, visual_xyz[1]],
+        [-sy, 0.0, cy,  visual_xyz[2]],
+        [0.0, 0.0, 0.0, 1.0]
+    ], dtype=dtype)
+    
+    T_fork_tip = T_TCP @ Trans_fork @ RotY @ VisualOffset
+
+    return T_list + [T_hand, T_leftfinger, T_rightfinger, T_fork_tip]
 
 
 def fk_panda(q=None, base=None, dtype=np.float32, include_gripper=False, finger_q=0.0):
