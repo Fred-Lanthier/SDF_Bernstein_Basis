@@ -17,29 +17,32 @@ class RDF_Weights(CommonSdfMethods):
     def __init__(self, device='cuda', dtype=torch.float32):
 
         CommonSdfMethods.__init__(self, projection_method='sphere', device=device, dtype=dtype)
+        self._mesh_cache = {}
 
     
     def init_robot_folder(self, ws_path, robot_name=''):
         CommonSdfMethods.init_robot_folder(self, ws_path, robot_name)
         self.ws_path = ws_path
+        self._mesh_cache = {}
 
     def train_links(self, link_names:Union[List[str], str],  n_func:int, iters:int, batch_near:int=1024, batch_rand:int=64, robot_name='', debug=False):
         cfg_w = Train_W(run=True, n_func=n_func, iters=iters, batch_near=batch_near, batch_rand=batch_rand)
-        cfg = TrainConfig(links_to_train=link_names, debug=debug, classic=cfg_w )
+        cfg = TrainConfig(links_to_train=link_names, debug=debug, classic=cfg_w)
         trainer = SDFTrain()
         trainer.init_robot_folder(self.ws_path, robot_name=robot_name)
         trainer.create_model(cfg, robot_name=robot_name)
         CommonSdfMethods.init_robot_folder(self, self.ws_path, robot_name=robot_name)
+
+    def add_models(self, link_names:Union[List[str], str], namespace='', robot_name='', **kwargs):
+        for link_name in link_names:
+            self.add_model(link_name, WeightsLinkModel.file_suffix, namespace, robot_name, **kwargs)
+        self._mesh_cache = {} # Clear cache when models change
 
     def batch_to(self, device):
         self.device = device
         self.weights_batch = self.weights_batch.to(device)
         self.centroids_batch = self.centroids_batch.to(device)
         self.scale_factors_batch = self.scale_factors_batch.to(device)
-        
-    def add_models(self, link_names:Union[List[str], str], namespace='', robot_name='', **kwargs):
-        for link_name in link_names:
-            self.add_model(link_name, WeightsLinkModel.file_suffix, namespace, robot_name, **kwargs)
 
     def inference_link(self, link_name:str, points: torch.Tensor, get_grad: bool=False, get_min: bool=False, fk_matrix:torch.Tensor = None,):
         #DEBUGGATO CON ALTRO METODO PER 5 PUNTI E TORNANO STESSI RISULTATI, MA VALORI DIVERSI AL MILLIMETRO
@@ -248,24 +251,34 @@ class RDF_Weights(CommonSdfMethods):
         from src.utils.MeshUtils import trimesh_to_pyvista   
         
         model:WeightsLinkModel = getattr(self, model_name + self.model_extension)
-        if  hasattr(model, 'weights'):
-            prev_n_func = getattr(self, "n_func", None)
-            prev_domain = (getattr(self, "domain_min", None), getattr(self, "domain_max", None))
+        
+        # Check cache first using model_name or weights hash if you want to be extreme
+        # Using model_name as key is safer if models are named uniquely
+        if model_name in self._mesh_cache:
+            # print(f"Mesh cache HIT for {model_name}")
+            mesh = self._mesh_cache[model_name]
+        else:
+            # print(f"Mesh cache MISS for {model_name}")
+            if  hasattr(model, 'weights'):
+                prev_n_func = getattr(self, "n_func", None)
+                prev_domain = (getattr(self, "domain_min", None), getattr(self, "domain_max", None))
 
-            model_n_func = int(model.n_func) if getattr(model, "n_func", None) is not None else int(round(float(model.weights.numel()) ** (1.0 / 3.0)))
-            self.set_number_of_functions(model_n_func)
-            self.set_points_domain(domain_min=model.domain_min, domain_max=model.domain_max)
+                model_n_func = int(model.n_func) if getattr(model, "n_func", None) is not None else int(round(float(model.weights.numel()) ** (1.0 / 3.0)))
+                self.set_number_of_functions(model_n_func)
+                self.set_points_domain(domain_min=model.domain_min, domain_max=model.domain_max)
 
-            mesh =  sdf_to_mesh(weights=model.weights,
-                                nbData=128,
-                                domain_max=model.domain_max, domain_min=model.domain_min,
-                                scaling_factor=model.scale_factor,
-                                centroid_offset=model.centroid_offset,
-                                basis_function_from_3Dpoints=super().basis_function_from_3Dpoints)
+                mesh =  sdf_to_mesh(weights=model.weights,
+                                    nbData=256,
+                                    domain_max=model.domain_max, domain_min=model.domain_min,
+                                    scaling_factor=model.scale_factor,
+                                    centroid_offset=model.centroid_offset,
+                                    basis_function_from_3Dpoints=super().basis_function_from_3Dpoints)
 
-            if prev_n_func is not None and prev_domain[0] is not None and prev_domain[1] is not None:
-                self.set_number_of_functions(prev_n_func)
-                self.set_points_domain(domain_min=prev_domain[0], domain_max=prev_domain[1])
+                if prev_n_func is not None and prev_domain[0] is not None and prev_domain[1] is not None:
+                    self.set_number_of_functions(prev_n_func)
+                    self.set_points_domain(domain_min=prev_domain[0], domain_max=prev_domain[1])
+                
+                self._mesh_cache[model_name] = mesh
 
         mesh.show() if debug else None
         mesh = trimesh_to_pyvista(mesh, np.eye(4)) if type=='pyvista' else mesh

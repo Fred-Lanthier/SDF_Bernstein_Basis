@@ -34,7 +34,7 @@ def sdf_to_mesh(
 
     # --- calcolo SDF in batch per evitare OOM ---
     d_list = []
-    for p_s in torch.split(p, 10_000, dim=0):
+    for p_s in torch.split(p, 5_000, dim=0):
         phi_p, _ = basis_function_from_3Dpoints(p_s, use_derivative=False)
         d_s = torch.matmul(phi_p, weights)
         d_list.append(d_s)
@@ -43,10 +43,10 @@ def sdf_to_mesh(
     d_np = d.view(nbData, nbData, nbData).detach().cpu().numpy()
 
     # --- marching cubes su CPU ---
-    d_smooth = gaussian_filter(d_np, sigma=1.0)
+    d_np = d.view(nbData, nbData, nbData).detach().cpu().numpy()
     spacing = (domain_max - domain_min) / max(nbData - 1, 1)
     verts, faces, normals, values = skimage.measure.marching_cubes(
-        d_smooth,
+        d_np,
         level=0.0,
         spacing=(spacing, spacing, spacing),
     )

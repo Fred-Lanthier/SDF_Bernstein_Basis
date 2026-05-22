@@ -60,54 +60,86 @@ class BernsteinWeightsTrain(BersteinPoly):
 
 
 
-    # def train_eikonal(self, point_near: np.ndarray, near_sdf: np.ndarray,
-    #         query_points: np.ndarray, query_sdf: np.ndarray,
-    #         epoches=400, lr=1e-2, lambda_eikonal=0.05):
+    def train_eikonal(self, point_near: np.ndarray, near_sdf: np.ndarray,
+            query_points: np.ndarray, query_sdf: np.ndarray,
+            epoches=400, lr=1e-3, lambda_eikonal=0.05, lambda_bound=0.5, sample_near=8192, sample_rand=2048, batch_size=512):
         
-    #     print(f'\033[95m Training Bernstein SDF with Eikonal loss [{self.domain_min}, {self.domain_max}] for {epoches} epochs\033[0m')
+        print(f'\033[95m Training Bernstein SDF with Eikonal + Boundary loss [{self.domain_min}, {self.domain_max}] for {epoches} epochs\033[0m')
+        print(f' [95m Using N_FUNC={self.n_func} ({self.n_func**3} parameters) and sample sizes: near={sample_near}, rand={sample_rand} [0m')
 
-    #     # Inizializza i pesi come parametro ottimizzabile
-    #     wb = torch.zeros(self.n_func**3, requires_grad=True, device=self.device, dtype=torch.float32)
-    #     optimizer = torch.optim.Adam([wb], lr=lr)
+        # Inizializza i pesi come parametro ottimizzabile
+        wb = torch.zeros(self.n_func**3, requires_grad=True, device=self.device, dtype=torch.float32)
+        optimizer = torch.optim.Adam([wb], lr=lr)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epoches)
 
-    #     for iter in range(epoches):
-    #         optimizer.zero_grad()
+        for iter in range(epoches):
+            optimizer.zero_grad()
 
-    #         # Campionamento
-    #         idx_near = np.random.choice(len(point_near), 1024, replace=False)
-    #         idx_rand = np.random.choice(len(query_points), 64, replace=False)
+            # Campionamento
+            idx_near = np.random.choice(len(point_near), sample_near, replace=False)
+            idx_rand = np.random.choice(len(query_points), sample_rand, replace=False)
 
-    #         p_near = torch.from_numpy(point_near[idx_near]).float().to(self.device)
-    #         sdf_near = torch.from_numpy(near_sdf[idx_near]).float().to(self.device)
+            p_near = torch.from_numpy(point_near[idx_near]).float().to(self.device)
+            sdf_near = torch.from_numpy(near_sdf[idx_near]).float().to(self.device)
 
-    #         p_rand = torch.from_numpy(query_points[idx_rand]).float().to(self.device)
-    #         sdf_rand = torch.from_numpy(query_sdf[idx_rand]).float().to(self.device)
+            p_rand = torch.from_numpy(query_points[idx_rand]).float().to(self.device)
+            sdf_rand = torch.from_numpy(query_sdf[idx_rand]).float().to(self.device)
 
-    #         # Input completo
-    #         p = torch.cat([p_near, p_rand], dim=0)
-    #         sdf_gt = torch.cat([sdf_near, sdf_rand], dim=0)
+            p_all = torch.cat([p_near, p_rand], dim=0)
+            sdf_gt_all = torch.cat([sdf_near, sdf_rand], dim=0)
+            
+            # Batch loop to avoid OOM
+            total_loss_sdf = 0
+            total_loss_eik = 0
+            
+            # We must accumulate gradients across batches
+            for b_idx in range(0, p_all.shape[0], batch_size):
+                p = p_all[b_idx : b_idx + batch_size]
+                sdf_gt = sdf_gt_all[b_idx : b_idx + batch_size]
 
-    #         # Base di Bernstein + derivate
-    #         phi_xyz, d_phi_xyz = self.basis_function_from_3Dpoints(p, use_derivative=True)
+                # Base di Bernstein + derivate
+                phi_xyz, d_phi_xyz = self.basis_function_from_3Dpoints(p, use_derivative=True)
 
-    #         sdf_pred = torch.matmul(phi_xyz, wb)  # Predizione SDF
+                sdf_pred = torch.matmul(phi_xyz, wb)  # Predizione SDF
 
-    #         # Gradiente analitico ∇SDF
-    #         grad = torch.einsum('ijk,j->ik', d_phi_xyz, wb)
-    #         grad_norm = grad.norm(dim=1)
+                # Gradiente analitico ∇SDF
+                grad = torch.einsum('ijk,j->ik', d_phi_xyz, wb)
+                grad_norm = grad.norm(dim=1)
 
-    #         # Loss componenti
-    #         loss_sdf = torch.nn.functional.mse_loss(sdf_pred.squeeze(), sdf_gt)
-    #         loss_eikonal = ((grad_norm - 1) ** 2).mean()
-    #         loss_total = loss_sdf + lambda_eikonal * loss_eikonal
+                # Loss componenti with moderate surface weighting
+                surface_weight = torch.exp(-4.0 * sdf_gt.abs()) + 0.05
+                loss_sdf = (surface_weight * (sdf_pred.squeeze() - sdf_gt) ** 2).mean()
 
-    #         # Backprop e aggiornamento
-    #         loss_total.backward()
-    #         optimizer.step()
+                # Enforce Eikonal loss everywhere to prevent swiss cheese oscillations
+                loss_eikonal = ((grad_norm - 1) ** 2).mean()
+                
+                # Scaled loss for accumulation
+                loss_part = (loss_sdf + lambda_eikonal * loss_eikonal) * (p.shape[0] / p_all.shape[0])
+                loss_part.backward()
+                
+                total_loss_sdf += loss_sdf.item() * (p.shape[0] / p_all.shape[0])
+                total_loss_eik += loss_eikonal.item() * (p.shape[0] / p_all.shape[0])
+            
+            # Boundary constraint (small batch, separate)
+            p_bound = (torch.rand((128, 3), device=self.device) * 2 - 1)
+            face_idx = torch.randint(0, 3, (128,), device=self.device)
+            side = torch.randint(0, 2, (128,), device=self.device) * 2 - 1
+            p_bound[torch.arange(128), face_idx] = side.float()
+            
+            phi_bound, _ = self.basis_function_from_3Dpoints(p_bound, use_derivative=False)
+            sdf_bound = torch.matmul(phi_bound, wb)
+            loss_boundary = torch.relu(0.1 - sdf_bound).mean() 
 
-    #         print(f"\033[95mEpoch {iter:03d} | SDF Loss: {loss_sdf.item():.5f} | Eikonal: {loss_eikonal.item():.5f} | Total: {loss_total.item():.5f}\033[0m")
+            (lambda_bound * loss_boundary).backward()
 
-    #     return wb.detach()
+            # Update e scheduler
+            optimizer.step()
+            scheduler.step()
+
+            if iter % 100 == 0 or iter == epoches - 1:
+                print(f"\033[95mEpoch {iter:04d} | SDF: {total_loss_sdf:.5f} | Eik: {total_loss_eik:.5f} | Bnd: {loss_boundary.item():.5f} | Total: {total_loss_sdf + total_loss_eik + loss_boundary.item():.5f} | LR: {optimizer.param_groups[0]['lr']:.6f}\033[0m")
+
+        return wb.detach()
 
     # def train_recursive_with_eikonal(self, point_near: np.ndarray, near_sdf: np.ndarray,
     #                                 query_points: np.ndarray, query_sdf: np.ndarray,

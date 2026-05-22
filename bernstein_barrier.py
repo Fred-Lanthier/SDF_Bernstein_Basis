@@ -38,8 +38,7 @@ class BernsteinBarrier(nn.Module):
         # 2. Per-link softmin over N obstacle points → h_k for each link [B, K]
         #    The standard logsumexp underestimates the true minimum by alpha * ln(N).
         #    We normalize it by subtracting ln(N) to center the soft-minimum on the true distance.
-        N = sdf_per_link.shape[-1]
-        h_per_link = -self.alpha * (torch.logsumexp(-sdf_per_link / self.alpha, dim=-1) - math.log(N)) - self.d_safe
+        h_per_link = -self.alpha * torch.logsumexp(-sdf_per_link / self.alpha, dim=-1) - self.d_safe
 
         # 3. Global h: hard min over links — autograd flows to the most dangerous link only
         h, _ = h_per_link.min(dim=1)  # [B]

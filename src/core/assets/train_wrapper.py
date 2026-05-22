@@ -84,7 +84,7 @@ class TrainWrapper():
 
         return dataset
 
-    def train(self, dataset: dict, n_func, epoches: int = 200, sample_near: int = 1024, sample_rand: int = 64):
+    def train(self, dataset: dict, n_func, epoches: int = 200, sample_near: int = 1024, sample_rand: int = 1024):
         if not isinstance(dataset, dict):
             raise ValueError("[91mThe dataset must be a dictionary[0m")
 
@@ -97,15 +97,27 @@ class TrainWrapper():
         self._berstein_train.set_points_domain(dataset['sdf_domain_min'], dataset['sdf_domain_max'])
         self._berstein_train.set_number_of_functions(n_func)
 
-        self.weights = self._berstein_train.train(
-            dataset['near_points'],
-            dataset['near_sdf'],
-            dataset['query_points'],
-            dataset['query_sdf'],
-            epoches=epoches,
-            sample_near=sample_near,
-            sample_rand=sample_rand,
-        )
+        if n_func >= 24:
+            print(f'[95m Using Eikonal training for high N_FUNC={n_func}[0m')
+            self.weights = self._berstein_train.train_eikonal(
+                dataset['near_points'],
+                dataset['near_sdf'],
+                dataset['query_points'],
+                dataset['query_sdf'],
+                epoches=epoches,
+                sample_near=sample_near,
+                sample_rand=sample_rand,
+            )
+        else:
+            self.weights = self._berstein_train.train(
+                dataset['near_points'],
+                dataset['near_sdf'],
+                dataset['query_points'],
+                dataset['query_sdf'],
+                epoches=epoches,
+                sample_near=sample_near,
+                sample_rand=sample_rand,
+            )
 
         self.model_pt.n_func = int(n_func)
         self.model_pt.weights = self.weights

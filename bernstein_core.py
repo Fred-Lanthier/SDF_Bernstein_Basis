@@ -8,7 +8,9 @@ class BernsteinCore():
         self.used_links = link_names
         self.K = len(self.used_links)
         
-        # Setup batched parameters in RDF_Weights
+        # Setup batched parameters in RDF_Weights. These legacy tensors are kept for
+        # compatibility, but runtime SDF evaluation uses per-order groups below so
+        # low-order robot links are not padded to the fork_tip order.
         rdf_weights_instance.set_ordered_batch_params(link_names)
         
         # Extrait les paramètres du modèle généré par SDF_Bernstein_Basis
@@ -27,27 +29,73 @@ class BernsteinCore():
         self.used_links_tensor = torch.arange(self.K, dtype=torch.long, device=device)
         self.i_tensor = torch.arange(self.n_func, device=device)
 
-    def build_bernstein_t(self, t):
+        self.groups = {}
+        for idx, link in enumerate(link_names):
+            model = getattr(rdf_weights_instance, link + rdf_weights_instance.model_extension)
+            n_func = int(model.n_func)
+            if n_func not in self.groups:
+                self.groups[n_func] = {"indices": [], "link_names": []}
+            self.groups[n_func]["indices"].append(idx)
+            self.groups[n_func]["link_names"].append(link)
+
+        for n_func, group in self.groups.items():
+            group["n_func"] = n_func
+            group["indices_tensor"] = torch.tensor(
+                group["indices"], dtype=torch.long, device=device)
+            group["offsets"] = torch.cat([
+                getattr(rdf_weights_instance, link + rdf_weights_instance.model_extension)
+                .centroid_offset.unsqueeze(0)
+                for link in group["link_names"]
+            ], dim=0).to(device)
+            group["scales"] = torch.cat([
+                getattr(rdf_weights_instance, link + rdf_weights_instance.model_extension)
+                .scale_factor.unsqueeze(0)
+                for link in group["link_names"]
+            ], dim=0).reshape(-1).to(device)
+            group["weights"] = torch.cat([
+                getattr(rdf_weights_instance, link + rdf_weights_instance.model_extension)
+                .weights.unsqueeze(0).to(device)
+                for link in group["link_names"]
+            ], dim=0)
+
+            n = n_func - 1
+            i = torch.arange(n_func, device=device)
+            group["comb"] = torch.exp(
+                torch.lgamma(torch.tensor(n + 1.0, device=device))
+                - torch.lgamma(i + 1.0)
+                - torch.lgamma(torch.tensor(n, device=device) - i + 1.0)
+            ).contiguous()
+            group["i_tensor"] = i
+
+    def build_bernstein_t(self, t, n_func=None, comb=None, i_tensor=None):
+        if n_func is None:
+            n_func = self.n_func
+            comb = self.comb
+            i_tensor = self.i_tensor
         t = torch.clamp(t, min=1e-4, max=1-1e-4) # Limite dynamique
-        n = self.n_func - 1
+        n = n_func - 1
         
-        phi = self.comb * (1 - t).unsqueeze(-1) ** (n - self.i_tensor) * t.unsqueeze(-1) ** self.i_tensor
+        phi = comb * (1 - t).unsqueeze(-1) ** (n - i_tensor) * t.unsqueeze(-1) ** i_tensor
         return phi.float()
 
-    def build_basis_function_from_points(self, p):
+    def build_basis_function_from_points(self, p, n_func=None, comb=None, i_tensor=None):
+        if n_func is None:
+            n_func = self.n_func
+            comb = self.comb
+            i_tensor = self.i_tensor
         N = len(p)
         # Shift domain from [-1, 1] to [0, 1] 
         p = ((p - (-1.0)) / (1.0 - (-1.0))).reshape(-1)
-        phi = self.build_bernstein_t(p) 
-        phi = phi.reshape(N, 3, self.n_func)
+        phi = self.build_bernstein_t(p, n_func, comb, i_tensor)
+        phi = phi.reshape(N, 3, n_func)
         
         phi_x = phi[:,0,:]
         phi_y = phi[:,1,:]
         phi_z = phi[:,2,:]
         
         # Optimisation des multiplications de base (Même structure que l'ancien code)
-        phi_xy = torch.einsum("ij,ik->ijk", phi_x, phi_y).view(-1, self.n_func**2)
-        phi_xyz = torch.einsum("ij,ik->ijk", phi_xy, phi_z).view(-1, self.n_func**3)
+        phi_xy = torch.einsum("ij,ik->ijk", phi_x, phi_y).view(-1, n_func**2)
+        phi_xyz = torch.einsum("ij,ik->ijk", phi_xy, phi_z).view(-1, n_func**3)
         
         return phi_xyz
 
@@ -106,17 +154,36 @@ class BernsteinCore():
         x_bounded = torch.clamp(x_scaled, min=-1.0+1e-2, max=1.0-1e-2)
         res_x = x_scaled - x_bounded
 
-        # 5. Évaluation du polynôme de Bernstein
-        phi = self.build_basis_function_from_points(x_bounded.reshape(B*K*N, 3))
-        phi = phi.reshape(B, K, N, -1).transpose(0, 1).reshape(K, B*N, -1)
+        x_bounded_4d = x_bounded.reshape(B, K, N, 3)
+        res_x_4d = res_x.reshape(B, K, N, 3)
+        sdf_parts = []
 
-        # 6. Produit Scalaire des Poids
-        sdf = torch.einsum('kni,ki->kn', phi, self.weights).reshape(K, B, N).transpose(0, 1).reshape(B*K, N)
-        sdf = sdf + res_x.norm(dim=-1)
-        sdf = sdf.reshape(B, K, N)
+        for _, group in self.groups.items():
+            indices_tensor = group["indices_tensor"]
+            group_indices = group["indices"]
+            K_g = len(group_indices)
+            n_func = group["n_func"]
 
-        # Rescale selon les dimensions d'origine
-        sdf = sdf * self.scales.unsqueeze(0).unsqueeze(2)  # [B, K, N]
+            x_bounded_g = torch.index_select(x_bounded_4d, 1, indices_tensor)
+            x_bounded_flat = x_bounded_g.transpose(0, 1).reshape(K_g, B * N, 3)
+            phi = self.build_basis_function_from_points(
+                x_bounded_flat.reshape(K_g * B * N, 3),
+                n_func=n_func,
+                comb=group["comb"],
+                i_tensor=group["i_tensor"],
+            )
+            phi = phi.reshape(K_g, B * N, -1)
+
+            sdf_g = torch.einsum('kni,ki->kn', phi, group["weights"])
+            sdf_g = sdf_g.reshape(K_g, B, N).transpose(0, 1)
+            sdf_g = sdf_g + torch.index_select(res_x_4d, 1, indices_tensor).norm(dim=-1)
+            sdf_g = sdf_g * group["scales"].unsqueeze(0).unsqueeze(2)
+
+            for group_i, original_i in enumerate(group_indices):
+                sdf_parts.append((original_i, sdf_g[:, group_i, :]))
+
+        sdf_parts.sort(key=lambda item: item[0])
+        sdf = torch.stack([item[1] for item in sdf_parts], dim=1)
 
         sdf_value, _ = sdf.min(dim=1)  # [B, N] — min over links
 

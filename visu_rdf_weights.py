@@ -48,11 +48,12 @@ def main():
     rdf = RDF_Weights(device=device)
     rdf.init_robot_folder(WS_PATH, robot_name=ROBOT_NAME)
 
-    for ns in NAMESPACES:
-        rdf.add_models(link_names=BASE_LINK_NAMES, namespace=ns, robot_name=ROBOT_NAME)
-        rdf.add_mesh(link_names=BASE_LINK_NAMES, namespace=ns, robot_name=ROBOT_NAME)
+    # Load unique models ONLY ONCE (no namespace)
+    rdf.add_models(link_names=BASE_LINK_NAMES, robot_name=ROBOT_NAME)
+    rdf.add_mesh(link_names=BASE_LINK_NAMES, robot_name=ROBOT_NAME)
 
-    rdf.set_ordered_batch_params(link_names=LINK_NAMES)
+    # Batch parameters for inference (use base names)
+    rdf.set_ordered_batch_params(link_names=BASE_LINK_NAMES)
 
     points = torch.tensor(
         [
@@ -64,13 +65,13 @@ def main():
         dtype=dtype,
         device=device,
     )
-    batch_points = points.unsqueeze(0).repeat(len(LINK_NAMES), 1, 1)
+    batch_points = points.unsqueeze(0).repeat(len(BASE_LINK_NAMES), 1, 1)
 
     points_rdm = torch.rand((550, 3), dtype=dtype, device=device)
     for _ in range(3):
-        rdf.inference_link(points=points_rdm, link_name=LINK_NAMES[3], get_grad=False, get_min=False)
+        rdf.inference_link(points=points_rdm, link_name=BASE_LINK_NAMES[3], get_grad=False, get_min=False)
     time_ = time.time()
-    sdf, grad, _ = rdf.inference_link(points=points_rdm, link_name=LINK_NAMES[3], get_grad=False, get_min=False)
+    sdf, grad, _ = rdf.inference_link(points=points_rdm, link_name=BASE_LINK_NAMES[3], get_grad=False, get_min=False)
     print('TIME SDF GRAD 550 POINTS:', time.time() - time_)
 
     sdf, grad, points = rdf.inference_link_batch(points=batch_points, get_grad=False, get_min=True)
@@ -122,7 +123,7 @@ def main():
         points_for_gd = (
             torch.tensor([[1.0, 0.0, 0.5]], dtype=dtype, device=device)
             .unsqueeze(0)
-            .repeat(len(LINK_NAMES), 1, 1)
+            .repeat(len(BASE_LINK_NAMES), 1, 1)
         )
         rdf.visualize_gradient_descent(
             initial_points=points_for_gd,
@@ -134,20 +135,46 @@ def main():
             rdf_opacity=RDF_OPACITY,
         )
 
-    mesh_links = [name for name in LINK_NAMES if name.startswith('p1_')]
-    rdf_links = [name for name in LINK_NAMES if name.startswith('p2_')]
+    mesh_links = [name for name in fw_dict.keys() if name.startswith('p1_')]
+    rdf_links = [name for name in fw_dict.keys()] # Visualize all links as RDF
 
-    rdf.visualize_scene(
-        forward_as_dict=fw_dict,
-        links_as_mesh=True,
-        mesh_link_names=mesh_links,
-        links_as_rdf=True,
-        rdf_link_names=rdf_links,
-        mesh_color=MESH_COLOR,
-        mesh_opacity=MESH_OPACITY,
-        rdf_color=RDF_COLOR,
-        rdf_opacity=RDF_OPACITY,
-    )
+    # Custom loop to handle instancing without duplicating models
+    from src.utils.MeshUtils import trimesh_to_pyvista
+    from src.visu.plots_3d import RobotSene
+    
+    rdf._visualizer = RobotSene()
+    
+    # 1. Add Meshes for first robot
+    for ln in BASE_LINK_NAMES:
+        tf = fw_dict['p1_' + ln]
+        mesh = rdf.to_mesh(ln, type='trimesh')
+        rdf._visualizer.add_mesh(
+            trimesh_to_pyvista(mesh, tf),
+            opacity=MESH_OPACITY,
+            color=MESH_COLOR,
+        )
+
+    # 2. Add RDFs for second robot (REUSING SAME MESHES)
+    for ln in BASE_LINK_NAMES:
+        tf = fw_dict['p2_' + ln]
+        mesh = rdf.to_mesh(ln, type='trimesh') # Cache hit here
+        rdf._visualizer.add_mesh(
+            trimesh_to_pyvista(mesh, tf),
+            opacity=RDF_OPACITY,
+            color=RDF_COLOR,
+        )
+    
+    # 3. Superpose the real robot CAD meshes in red on top of Robot 1 RDF
+    for ln in BASE_LINK_NAMES:
+        tf = fw_dict['p1_' + ln]
+        cad_mesh = getattr(rdf, ln + rdf.mesh_extension).mesh
+        rdf._visualizer.add_mesh(
+            trimesh_to_pyvista(cad_mesh, tf),
+            opacity=0.4,
+            color='red',
+        )
+    
+    rdf._visualizer.show()
 
 
 if __name__ == '__main__':

@@ -41,12 +41,14 @@ def main():
     #     debug=False,
     # )
     
-    # 2. Train the fork with N_FUNC = 16 for better geometric fidelity
-    print("Training fork with N_FUNC = 16...")
+    # 2. Train the fork with N_FUNC = 48 for higher edge fidelity
+    print("Training fork with N_FUNC = 48...")
     rdf.train_links(
         link_names=FORK_LINK,
-        n_func=24,
-        iters=TRAIN_ITERS,
+        n_func=48,
+        iters=6000,
+        batch_near=4096,
+        batch_rand=1024,
         robot_name=ROBOT_NAME,
         debug=False,
     )
