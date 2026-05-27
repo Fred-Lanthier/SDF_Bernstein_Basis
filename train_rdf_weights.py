@@ -41,11 +41,12 @@ def main():
     #     debug=False,
     # )
     
-    # 2. Train the fork with N_FUNC = 48 for higher edge fidelity
-    print("Training fork with N_FUNC = 48...")
+    # 2. Train the fork with N_FUNC = 8 (matches robot links)
+    # N_FUNC=48 caused polynomial oscillation outside the [-1,1] domain (swiss cheese at 5cm)
+    print("Training fork with N_FUNC = 8...")
     rdf.train_links(
         link_names=FORK_LINK,
-        n_func=48,
+        n_func=8,
         iters=6000,
         batch_near=4096,
         batch_rand=1024,
