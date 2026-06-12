@@ -1,6 +1,144 @@
 from src.core.math.Bernstain_P import BersteinPoly
+import math
 import torch
 import numpy as np
+import trimesh
+
+
+def elevate_bernstein_weights(weights, old_n_func, new_n_func):
+    """Degree-elevate tensor-product Bernstein weights without changing the SDF."""
+    old_n_func = int(old_n_func)
+    new_n_func = int(new_n_func)
+    if new_n_func < old_n_func:
+        raise ValueError("Bernstein degree elevation cannot reduce n_func.")
+    if new_n_func == old_n_func:
+        return torch.as_tensor(weights).reshape(-1).clone()
+
+    old_degree = old_n_func - 1
+    new_degree = new_n_func - 1
+    degree_delta = new_degree - old_degree
+    elevation = torch.zeros((new_n_func, old_n_func), dtype=torch.float64)
+    for new_index in range(new_n_func):
+        old_start = max(0, new_index - degree_delta)
+        old_stop = min(old_degree, new_index)
+        denominator = math.comb(new_degree, new_index)
+        for old_index in range(old_start, old_stop + 1):
+            elevation[new_index, old_index] = (
+                math.comb(old_degree, old_index)
+                * math.comb(degree_delta, new_index - old_index)
+                / denominator
+            )
+
+    elevated = torch.as_tensor(weights, dtype=torch.float64).reshape(
+        old_n_func,
+        old_n_func,
+        old_n_func,
+    )
+    elevated = torch.einsum("ia,abc->ibc", elevation, elevated)
+    elevated = torch.einsum("jb,ibc->ijc", elevation, elevated)
+    elevated = torch.einsum("kc,ijc->ijk", elevation, elevated)
+    return elevated.reshape(-1).to(dtype=torch.float32)
+
+
+def build_normal_ray_training_data(
+    mesh,
+    centroid_offset,
+    scale_factor,
+    number_of_points=50000,
+    min_distance_m=0.001,
+    focus_distance_m=0.01,
+    focus_fraction=0.75,
+    max_distance_m=0.05,
+    normal_tolerance_degrees=5.0,
+    seed=7,
+):
+    """Generate verified outward samples in the normalized model frame."""
+    mesh_normalized = mesh.copy()
+    mesh_normalized.vertices = (
+        np.asarray(mesh_normalized.vertices) - np.asarray(centroid_offset)
+    ) / float(scale_factor)
+
+    rng = np.random.default_rng(seed)
+    min_distance_normalized = float(min_distance_m) / float(scale_factor)
+    focus_distance_normalized = float(focus_distance_m) / float(scale_factor)
+    max_distance_normalized = float(max_distance_m) / float(scale_factor)
+    accepted_points = []
+    accepted_sdf = []
+    accepted_directions = []
+
+    for round_index in range(12):
+        accepted_count = sum(len(points) for points in accepted_points)
+        remaining = number_of_points - accepted_count
+        if remaining <= 0:
+            break
+
+        candidate_count = max(remaining * 2, 2048)
+        surface_points, face_indices = trimesh.sample.sample_surface(
+            mesh_normalized,
+            candidate_count,
+            seed=seed + round_index,
+        )
+        surface_normals = mesh_normalized.face_normals[face_indices]
+
+        # Concentrate samples in the safety-critical shell while retaining
+        # enough farther samples to preserve the global distance profile.
+        near_count = int(round(candidate_count * focus_fraction))
+        offsets = np.empty(candidate_count, dtype=np.float64)
+        offsets[:near_count] = rng.uniform(
+            min_distance_normalized,
+            focus_distance_normalized,
+            size=near_count,
+        )
+        offsets[near_count:] = rng.uniform(
+            focus_distance_normalized,
+            max_distance_normalized,
+            size=candidate_count - near_count,
+        )
+        rng.shuffle(offsets)
+
+        candidates = surface_points + surface_normals * offsets[:, None]
+        in_domain = np.all((candidates >= -1.0) & (candidates <= 1.0), axis=1)
+        candidates = candidates[in_domain]
+        candidate_normals = surface_normals[in_domain]
+        candidate_offsets = offsets[in_domain]
+        if len(candidates) == 0:
+            continue
+
+        closest, distances, triangle_ids = trimesh.proximity.closest_point(
+            mesh_normalized,
+            candidates,
+        )
+        displacement = candidates - closest
+        nearest_normals = mesh_normalized.face_normals[triangle_ids]
+        external = np.einsum("ij,ij->i", displacement, nearest_normals) >= 0.0
+        valid_distance = distances > 1e-6
+        directions = displacement / np.maximum(distances[:, None], 1e-12)
+        normal_alignment = np.einsum("ij,ij->i", directions, candidate_normals)
+        stable_normal = normal_alignment >= np.cos(
+            np.deg2rad(normal_tolerance_degrees)
+        )
+        distance_matches_offset = np.abs(distances - candidate_offsets) <= (
+            0.00025 / float(scale_factor)
+        )
+        valid = external & valid_distance & stable_normal & distance_matches_offset
+
+        accepted_points.append(candidates[valid].astype(np.float32))
+        accepted_sdf.append(distances[valid].astype(np.float32))
+        accepted_directions.append(directions[valid].astype(np.float32))
+
+    if not accepted_points:
+        raise RuntimeError("Could not generate valid normal-ray training points.")
+
+    points = np.concatenate(accepted_points, axis=0)
+    sdf = np.concatenate(accepted_sdf, axis=0)
+    directions = np.concatenate(accepted_directions, axis=0)
+    if len(points) < number_of_points:
+        raise RuntimeError(
+            f"Generated only {len(points)} normal-ray points; requested {number_of_points}."
+        )
+
+    selection = rng.permutation(len(points))[:number_of_points]
+    return points[selection], sdf[selection], directions[selection]
 
 
 class BernsteinWeightsTrain(BersteinPoly):
@@ -140,6 +278,198 @@ class BernsteinWeightsTrain(BersteinPoly):
                 print(f"\033[95mEpoch {iter:04d} | SDF: {total_loss_sdf:.5f} | Eik: {total_loss_eik:.5f} | Bnd: {loss_boundary.item():.5f} | Total: {total_loss_sdf + total_loss_eik + loss_boundary.item():.5f} | LR: {optimizer.param_groups[0]['lr']:.6f}\033[0m")
 
         return wb.detach()
+
+    def train_geometric(
+        self,
+        point_near,
+        near_sdf,
+        query_points,
+        query_sdf,
+        ray_points,
+        ray_sdf,
+        ray_directions,
+        initial_weights=None,
+        epochs=400,
+        learning_rate=1e-3,
+        sample_near=2048,
+        sample_rand=1024,
+        sample_ray=1024,
+        lambda_ray=2.0,
+        lambda_eikonal=0.05,
+        lambda_direction=0.2,
+        lambda_gradient_vector=0.25,
+        ray_focus_distance=None,
+        ray_focus_fraction=0.75,
+        near_surface_weight=4.0,
+        seed=7,
+    ):
+        """Fine-tune a low-order Bernstein SDF using value and direction data."""
+        rng = np.random.default_rng(seed)
+        if initial_weights is None:
+            initial_weights = torch.zeros(self.n_func ** 3, dtype=torch.float32)
+        weights = torch.nn.Parameter(
+            torch.as_tensor(initial_weights, dtype=torch.float32, device=self.device)
+            .reshape(-1)
+            .clone()
+        )
+        optimizer = torch.optim.Adam([weights], lr=learning_rate)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+            optimizer,
+            T_max=max(1, epochs),
+        )
+
+        arrays = [
+            point_near,
+            near_sdf,
+            query_points,
+            query_sdf,
+            ray_points,
+            ray_sdf,
+            ray_directions,
+        ]
+        (
+            point_near,
+            near_sdf,
+            query_points,
+            query_sdf,
+            ray_points,
+            ray_sdf,
+            ray_directions,
+        ) = [np.asarray(value) for value in arrays]
+
+        print(
+            f"Training geometric Bernstein SDF: n_func={self.n_func}, epochs={epochs}, "
+            f"near={sample_near}, random={sample_rand}, rays={sample_ray}"
+        )
+        if ray_focus_distance is None:
+            ray_focus_distance = float(np.max(ray_sdf))
+        focus_ray_indices = np.flatnonzero(ray_sdf <= ray_focus_distance)
+        far_ray_indices = np.flatnonzero(ray_sdf > ray_focus_distance)
+        if len(focus_ray_indices) == 0:
+            raise ValueError("No ray samples fall inside ray_focus_distance.")
+
+        for epoch in range(epochs):
+            optimizer.zero_grad()
+            near_index = rng.choice(
+                len(point_near),
+                size=min(sample_near, len(point_near)),
+                replace=False,
+            )
+            rand_index = rng.choice(
+                len(query_points),
+                size=min(sample_rand, len(query_points)),
+                replace=False,
+            )
+            ray_batch_size = min(sample_ray, len(ray_points))
+            focus_count = min(
+                int(round(ray_batch_size * ray_focus_fraction)),
+                len(focus_ray_indices),
+            )
+            far_count = min(ray_batch_size - focus_count, len(far_ray_indices))
+            focus_count = min(
+                ray_batch_size - far_count,
+                len(focus_ray_indices),
+            )
+            ray_index_parts = [
+                rng.choice(focus_ray_indices, size=focus_count, replace=False)
+            ]
+            if far_count:
+                ray_index_parts.append(
+                    rng.choice(far_ray_indices, size=far_count, replace=False)
+                )
+            ray_index = np.concatenate(ray_index_parts)
+            rng.shuffle(ray_index)
+
+            p_near = torch.as_tensor(
+                point_near[near_index], dtype=torch.float32, device=self.device
+            )
+            sdf_near = torch.as_tensor(
+                near_sdf[near_index], dtype=torch.float32, device=self.device
+            )
+            p_rand = torch.as_tensor(
+                query_points[rand_index], dtype=torch.float32, device=self.device
+            )
+            sdf_rand = torch.as_tensor(
+                query_sdf[rand_index], dtype=torch.float32, device=self.device
+            )
+            p_ray = torch.as_tensor(
+                ray_points[ray_index], dtype=torch.float32, device=self.device
+            )
+            sdf_ray = torch.as_tensor(
+                ray_sdf[ray_index], dtype=torch.float32, device=self.device
+            )
+            direction_ray = torch.as_tensor(
+                ray_directions[ray_index],
+                dtype=torch.float32,
+                device=self.device,
+            )
+
+            phi_near, grad_phi_near = self.basis_function_from_3Dpoints(
+                p_near, use_derivative=True
+            )
+            phi_rand, grad_phi_rand = self.basis_function_from_3Dpoints(
+                p_rand, use_derivative=True
+            )
+            phi_ray, grad_phi_ray = self.basis_function_from_3Dpoints(
+                p_ray, use_derivative=True
+            )
+
+            pred_near = phi_near @ weights
+            pred_rand = phi_rand @ weights
+            pred_ray = phi_ray @ weights
+            grad_near = torch.einsum("nwc,w->nc", grad_phi_near, weights)
+            grad_rand = torch.einsum("nwc,w->nc", grad_phi_rand, weights)
+            grad_ray = torch.einsum("nwc,w->nc", grad_phi_ray, weights)
+
+            loss_near = torch.nn.functional.mse_loss(pred_near, sdf_near)
+            loss_rand = torch.nn.functional.mse_loss(pred_rand, sdf_rand)
+            loss_ray = torch.nn.functional.mse_loss(pred_ray, sdf_ray)
+
+            all_gradient = torch.cat([grad_near, grad_rand, grad_ray], dim=0)
+            loss_eikonal = ((all_gradient.norm(dim=1) - 1.0) ** 2).mean()
+            ray_unit = torch.nn.functional.normalize(grad_ray, dim=1, eps=1e-8)
+            target_unit = torch.nn.functional.normalize(direction_ray, dim=1, eps=1e-8)
+            ray_focus_scale = max(float(ray_focus_distance), 1e-8)
+            ray_weights = 1.0 + near_surface_weight * torch.exp(
+                -sdf_ray / ray_focus_scale
+            )
+            ray_weights = ray_weights / ray_weights.mean()
+            direction_error = 1.0 - (ray_unit * target_unit).sum(dim=1)
+            loss_direction = (ray_weights * direction_error).mean()
+            gradient_vector_error = ((grad_ray - target_unit) ** 2).sum(dim=1)
+            loss_gradient_vector = (
+                ray_weights * gradient_vector_error
+            ).mean()
+
+            loss = (
+                loss_near
+                + loss_rand
+                + lambda_ray * loss_ray
+                + lambda_eikonal * loss_eikonal
+                + lambda_direction * loss_direction
+                + lambda_gradient_vector * loss_gradient_vector
+            )
+            loss.backward()
+            optimizer.step()
+            scheduler.step()
+
+            if epoch % 25 == 0 or epoch == epochs - 1:
+                print(
+                    "Epoch {:04d} | total={:.6f} near={:.6f} random={:.6f} "
+                    "ray={:.6f} eikonal={:.6f} direction={:.6f} "
+                    "gradient_vector={:.6f}".format(
+                        epoch,
+                        loss.item(),
+                        loss_near.item(),
+                        loss_rand.item(),
+                        loss_ray.item(),
+                        loss_eikonal.item(),
+                        loss_direction.item(),
+                        loss_gradient_vector.item(),
+                    )
+                )
+
+        return weights.detach()
 
     # def train_recursive_with_eikonal(self, point_near: np.ndarray, near_sdf: np.ndarray,
     #                                 query_points: np.ndarray, query_sdf: np.ndarray,
