@@ -7,6 +7,9 @@ class BernsteinCore():
         
         self.used_links = link_names
         self.K = len(self.used_links)
+        self._link_mesh_infos = [
+            self._resolve_link_mesh_info(link_name) for link_name in self.used_links
+        ]
         
         # Setup batched parameters in RDF_Weights. These legacy tensors are kept for
         # compatibility, but runtime SDF evaluation uses per-order groups below so
@@ -67,6 +70,40 @@ class BernsteinCore():
             ).contiguous()
             group["i_tensor"] = i
 
+    @staticmethod
+    def _link_match_key(name):
+        return name.replace('panda_', '').replace('_w', '').replace('.pt', '')
+
+    def _resolve_link_mesh_info(self, target_link):
+        target_key = self._link_match_key(target_link)
+        for info in self.robot.meshes_info:
+            mesh_key = info['link_name'].replace('panda_', '')
+            if target_key in mesh_key or mesh_key in target_key:
+                return info
+        raise ValueError(f"Link {target_link} not found in URDF visuals")
+
+    def _stack_used_link_transforms(self, pose, theta, link_poses=None):
+        if theta.shape[-1] < self.robot.dof:
+            batch_shape = theta.shape[:-1]
+            padding = theta.new_zeros((*batch_shape, self.robot.dof - theta.shape[-1]))
+            theta = torch.cat([theta, padding], dim=-1)
+
+        if link_poses is None:
+            link_poses = self.robot._native_forward_kinematics(theta)
+
+        transforms = []
+        for info in self._link_mesh_infos:
+            link_name = info['link_name']
+            if link_name not in link_poses:
+                raise ValueError(f"Link {link_name} not mapped.")
+            T_joint = link_poses[link_name]
+            T_world_joint = pose @ T_joint
+            batch_shape = T_world_joint.shape[:-2]
+            T_visual = info['visual_offset'].to(dtype=T_world_joint.dtype).expand(*batch_shape, 4, 4)
+            transforms.append(T_world_joint @ T_visual)
+
+        return torch.stack(transforms, dim=1)
+
     def build_bernstein_t(self, t, n_func=None, comb=None, i_tensor=None):
         if n_func is None:
             n_func = self.n_func
@@ -99,37 +136,23 @@ class BernsteinCore():
         
         return phi_xyz
 
-    def get_whole_body_sdf_batch(self, x, pose, theta, return_per_link=False):
+    def get_whole_body_sdf_batch(self, x, pose, theta, return_per_link=False, link_poses=None):
         """
         Calcule la distance SDF ultra-rapidement en batch vectorisé.
 
         Args:
             return_per_link: if True, also returns sdf [B, K, N] before the min over links.
                              Enables per-link barrier computation in BernsteinBarrier.
+            link_poses: optional FK dict from URDFLayer._native_forward_kinematics(theta).
+                        Passing it avoids recomputing FK when the caller already
+                        needed link poses for candidate filtering.
         """
         B = theta.size(0)
         N = x.size(0)
         K = self.K
 
-        # 1. Forward Kinematics (FK) via URDFLayer
-        trans_list = self.robot.get_transformations_each_link(pose, theta)
-
-        # Select exactly the transforms for the requested links
-        matched_trans = []
-        for target_link in self.used_links:
-            idx = None
-            t_name = target_link.replace('panda_', '').replace('_w', '').replace('.pt', '')
-            for i, info in enumerate(self.robot.meshes_info):
-                i_name = info['link_name'].replace('panda_', '')
-                if t_name in i_name or i_name in t_name:
-                    idx = i
-                    break
-
-            if idx is None:
-                raise ValueError(f"Link {target_link} not found in URDF visuals")
-            matched_trans.append(trans_list[idx])
-
-        trans_stacked = torch.stack(matched_trans, dim=1)
+        # 1. Forward Kinematics (FK) for exactly the protected SDF links.
+        trans_stacked = self._stack_used_link_transforms(pose, theta, link_poses=link_poses)
 
         fk_trans = trans_stacked.reshape(B*K, 4, 4)
 
