@@ -32,6 +32,30 @@ class BernsteinCore():
         self.used_links_tensor = torch.arange(self.K, dtype=torch.long, device=device)
         self.i_tensor = torch.arange(self.n_func, device=device)
 
+        # ── Grasped object (rigid point cloud attached to a link frame) ────────
+        # When grasp_attach_link names a link present in the FK dict, the grasped
+        # object's point cloud (snapshot in that link's frame) is appended as an
+        # extra protected "link" in get_whole_body_sdf_batch: its SDF is the
+        # distance to the nearest grasped point minus grasp_radius (a union of
+        # spheres conforming to the real target shape — no box/orientation fit).
+        # This makes a grasped object part of the protected body AND the
+        # self-filter. grasp_active in {0,1} gates it without changing the
+        # (CUDA-graph) tensor topology; grasp_points is a fixed [M,3] buffer.
+        self.grasp_attach_link = None
+        self.grasp_npts = 0
+        self.grasp_points = None                          # [M, 3] attach-link frame
+        self.grasp_active = torch.zeros((), device=device)
+        self.grasp_radius = torch.zeros((), device=device)
+        # Soft-min temperature over grasped points. >0 blends the nearest points
+        # so the SDF gradient is smooth (no jump when the nearest point switches);
+        # 0 = hard min (C0, jumpy gradient). Baked at CUDA-graph capture.
+        self.grasp_softmin_beta = 0.0
+        # Per-link d_safe adjustment for the grasped object. The barrier subtracts
+        # one global d_safe from every link; this offset (= grasp_d_safe - d_safe)
+        # is folded into the grasp SDF so the grasped object's effective standoff
+        # is grasp_d_safe while the arm/fork keep the global d_safe.
+        self.grasp_dsafe_offset = 0.0
+
         self.groups = {}
         for idx, link in enumerate(link_names):
             model = getattr(rdf_weights_instance, link + rdf_weights_instance.model_extension)
@@ -69,6 +93,21 @@ class BernsteinCore():
                 - torch.lgamma(torch.tensor(n, device=device) - i + 1.0)
             ).contiguous()
             group["i_tensor"] = i
+
+    def configure_grasp_cloud(self, attach_link, max_points, radius, softmin_beta=0.0,
+                              d_safe_global=0.0, grasp_d_safe=None):
+        """Allocate the fixed-size grasped-cloud buffer (call BEFORE CUDA-graph
+        capture so the grasp term is baked into the graph). grasp_d_safe (None =
+        use the global d_safe) sets the grasped object's own clearance margin."""
+        self.grasp_attach_link = attach_link
+        self.grasp_npts = int(max_points)
+        self.grasp_points = torch.zeros((self.grasp_npts, 3), device=self.device)
+        self.grasp_radius.fill_(float(radius))
+        self.grasp_softmin_beta = float(softmin_beta)
+        if grasp_d_safe is None:
+            grasp_d_safe = d_safe_global
+        self.grasp_dsafe_offset = float(grasp_d_safe) - float(d_safe_global)
+        self.grasp_active.zero_()
 
     @staticmethod
     def _link_match_key(name):
@@ -136,6 +175,34 @@ class BernsteinCore():
         
         return phi_xyz
 
+    def _grasp_cloud_sdf(self, x, T_wf):
+        """Signed distance from world points x [N,3] to the grasped point cloud
+        (a union of spheres of radius grasp_radius), batched over T_wf [B,4,4].
+        Returns [B, N]. Differentiable w.r.t. T_wf (hence theta).
+
+        grasp_points are in the attach-link frame; world = R @ p_local + t, the
+        inverse of the world->local convention (bmm(diff, R)) used elsewhere.
+        """
+        R = T_wf[:, :3, :3]                                   # [B, 3, 3]
+        t = T_wf[:, :3, 3]                                    # [B, 3]
+        pts_w = torch.matmul(self.grasp_points.unsqueeze(0),  # [B, M, 3]
+                             R.transpose(1, 2)) + t.unsqueeze(1)
+        diff = x.unsqueeze(0).unsqueeze(0) - pts_w.unsqueeze(2)   # [B, M, N, 3]
+        d = torch.sqrt((diff * diff).sum(dim=-1) + 1e-12)        # [B, M, N]
+        beta = self.grasp_softmin_beta
+        if beta and beta > 0.0:
+            # Soft-min over the M grasped points (numerically stable LogSumExp
+            # with the min-shift trick) → smooth gradient, no switch-point jumps.
+            d_min, _ = d.min(dim=1, keepdim=True)                # [B, 1, N]
+            dist = d_min.squeeze(1) - beta * torch.log(
+                torch.exp(-(d - d_min) / beta).sum(dim=1))       # [B, N]
+        else:
+            dist = d.min(dim=1).values                           # [B, N] hard min
+        # Subtract grasp_dsafe_offset (= grasp_d_safe - global d_safe) so that,
+        # after the barrier subtracts the global d_safe, the grasped object's
+        # net margin equals grasp_d_safe.
+        return dist - self.grasp_radius - self.grasp_dsafe_offset  # [B, N]
+
     def get_whole_body_sdf_batch(self, x, pose, theta, return_per_link=False, link_poses=None):
         """
         Calcule la distance SDF ultra-rapidement en batch vectorisé.
@@ -152,6 +219,15 @@ class BernsteinCore():
         K = self.K
 
         # 1. Forward Kinematics (FK) for exactly the protected SDF links.
+        #    Compute link_poses once here (if not provided) so the grasped-box
+        #    term below can attach to its link frame with grad flowing through FK.
+        if link_poses is None:
+            theta_fk = theta
+            if theta_fk.shape[-1] < self.robot.dof:
+                pad = theta_fk.new_zeros(
+                    (*theta_fk.shape[:-1], self.robot.dof - theta_fk.shape[-1]))
+                theta_fk = torch.cat([theta_fk, pad], dim=-1)
+            link_poses = self.robot._native_forward_kinematics(theta_fk)
         trans_stacked = self._stack_used_link_transforms(pose, theta, link_poses=link_poses)
 
         fk_trans = trans_stacked.reshape(B*K, 4, 4)
@@ -207,6 +283,17 @@ class BernsteinCore():
 
         sdf_parts.sort(key=lambda item: item[0])
         sdf = torch.stack([item[1] for item in sdf_parts], dim=1)
+
+        # 5. Optional grasped-object point cloud, appended as an extra protected
+        #    "link". Attached rigidly to grasp_attach_link; gated by grasp_active
+        #    so it has zero effect (huge SDF, never the min) when not grasped.
+        if (self.grasp_attach_link is not None
+                and self.grasp_points is not None
+                and self.grasp_attach_link in link_poses):
+            T_wf = pose @ link_poses[self.grasp_attach_link]      # [B, 4, 4]
+            grasp_sdf = self._grasp_cloud_sdf(x, T_wf)            # [B, N]
+            grasp_sdf = grasp_sdf + (1.0 - self.grasp_active) * 1.0e3
+            sdf = torch.cat([sdf, grasp_sdf.unsqueeze(1)], dim=1)  # [B, K+1, N]
 
         sdf_value, _ = sdf.min(dim=1)  # [B, N] — min over links
 

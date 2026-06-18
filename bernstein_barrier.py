@@ -65,3 +65,56 @@ class BernsteinBarrier(nn.Module):
         )[0]
 
         return h, grad_h, min_idx
+
+    def forward_two_group(self, q, x_obs, n_robot, pose=None, n_obs_robot=None):
+        """Two-constraint variant for a grasped object.
+
+        Splits the protected links into the robot/fork group (indices [0, n_robot))
+        and a single grasped-object group (index n_robot, appended by the core).
+        Returns (h_robot, grad_robot, h_food, grad_food) — one barrier value and
+        gradient per group, each with its OWN margin (the robot uses the global
+        d_safe; the food's own d_safe is folded into its SDF via the core's
+        grasp_dsafe_offset). The solver then applies one half-space per group, so
+        the food can never out-compete the robot for the single min gradient.
+
+        n_obs_robot (optional): partition the N selected obstacle points between
+        the two groups. The robot/fork group soft-mins over points [0, n_obs_robot)
+        and the target group over points [n_obs_robot, N). The selection orders
+        the points as [robot-nearest... | food-nearest...] to match, so each
+        constraint only sees the obstacles allotted to it (the target CBF never
+        brakes on the robot's rim, and vice-versa). None = both groups see all N.
+        """
+        B = q.size(0)
+        if pose is None:
+            pose = torch.eye(4, device=q.device).unsqueeze(0).expand(B, 4, 4)
+        if not q.requires_grad:
+            q.requires_grad_(True)
+
+        _, sdf_per_link = self.core.get_whole_body_sdf_batch(
+            x_obs, pose, q, return_per_link=True)            # [B, L, N]
+
+        def _softmin_h(sdf_lp):
+            """Soft-min over the obstacle-point axis, per link. [B, L', Np] -> [B, L']."""
+            sdf_min, _ = sdf_lp.min(dim=-1, keepdim=True)
+            exp_terms = torch.exp(-(sdf_lp - sdf_min) / self.alpha)
+            return (sdf_min.squeeze(-1)
+                    - self.alpha * torch.log(exp_terms.sum(dim=-1))
+                    - self.d_safe)
+
+        if n_obs_robot is None:
+            h_per_link = _softmin_h(sdf_per_link)             # [B, L]
+            h_robot = h_per_link[:, :n_robot].min(dim=1).values
+            h_food = h_per_link[:, n_robot]
+        else:
+            # Robot/fork links over the robot point partition; target link over
+            # the food point partition. Each group sees only its allotted points.
+            h_robot = _softmin_h(
+                sdf_per_link[:, :n_robot, :n_obs_robot]).min(dim=1).values   # [B]
+            h_food = _softmin_h(
+                sdf_per_link[:, n_robot:n_robot + 1, n_obs_robot:])[:, 0]    # [B]
+        ones = torch.ones_like(h_robot)
+        grad_robot = torch.autograd.grad(
+            h_robot, q, grad_outputs=ones, retain_graph=True, only_inputs=True)[0]
+        grad_food = torch.autograd.grad(
+            h_food, q, grad_outputs=ones, retain_graph=False, only_inputs=True)[0]
+        return h_robot, grad_robot, h_food, grad_food
