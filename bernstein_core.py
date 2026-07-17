@@ -275,7 +275,26 @@ class BernsteinCore():
 
             sdf_g = torch.einsum('kni,ki->kn', phi, group["weights"])
             sdf_g = sdf_g.reshape(K_g, B, N).transpose(0, 1)
-            sdf_g = sdf_g + torch.index_select(res_x_4d, 1, indices_tensor).norm(dim=-1)
+            # Out-of-domain extension: guaranteed LOWER bound on the true
+            # distance, sqrt(P^2 + ||res||^2) for P >= 0. Proof: every link
+            # surface point s lies in the clamp cube, and on each clamped
+            # axis |p_j - s_j| = |c_j - s_j| + |res_j| (same side), hence
+            # ||p - s||^2 >= ||c - s||^2 + ||res||^2 for all s, i.e.
+            # d_true(p)^2 >= P^2 + ||res||^2. Unlike the Lipschitz bound
+            # P - ||res||, this bound is MONOTONE INCREASING in the
+            # excursion, so its gradient keeps the physical outward
+            # direction (required by the CBF / null-space clearance). The
+            # legacy P + ||res|| was an UPPER bound (could over-report
+            # clearance). P < 0 at the clamped point (link crossing the
+            # clamp-margin shell) falls back to P + ||res|| to preserve the
+            # penetration sign; interior points keep the raw polynomial.
+            res_norm = torch.index_select(res_x_4d, 1, indices_tensor).norm(dim=-1)
+            outside_val = torch.where(
+                sdf_g >= 0.0,
+                torch.sqrt(sdf_g.clamp_min(0.0).square() + res_norm.square()),
+                sdf_g + res_norm,
+            )
+            sdf_g = torch.where(res_norm > 0.0, outside_val, sdf_g)
             sdf_g = sdf_g * group["scales"].unsqueeze(0).unsqueeze(2)
 
             for group_i, original_i in enumerate(group_indices):

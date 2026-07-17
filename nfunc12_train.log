@@ -1,0 +1,1234 @@
+START Wed 08 Jul 2026 12:32:59 PM EDT  ->  panda_test/Models/nfunc12_candidate
+=================================================================
+>>> [xarm7_link_base] 12:32:59
+Link xarm7_link_base: training n_func=12 (1728 params) on cuda
+
+[Stage 1] Recursive least squares for 80 iters...
+[95m Iteration 0 loss 0.03136328607797623[0m
+[95m Iteration 1 loss 0.0005150928045623004[0m
+[95m Iteration 2 loss 0.0002451336185913533[0m
+[95m Iteration 3 loss 0.00023008846619632095[0m
+[95m Iteration 4 loss 0.000166323923622258[0m
+[95m Iteration 5 loss 0.00018216835451312363[0m
+[95m Iteration 6 loss 0.00015158172755036503[0m
+[95m Iteration 7 loss 0.0001438436156604439[0m
+[95m Iteration 8 loss 0.00014627106429543346[0m
+[95m Iteration 9 loss 0.00016484862135257572[0m
+[95m Iteration 10 loss 0.00013407641381490976[0m
+[95m Iteration 11 loss 0.00014982681022956967[0m
+[95m Iteration 12 loss 0.00013290134666021913[0m
+[95m Iteration 13 loss 0.00013706633762922138[0m
+[95m Iteration 14 loss 0.0001201785053126514[0m
+[95m Iteration 15 loss 0.00013136091001797467[0m
+[95m Iteration 16 loss 0.0001247470499947667[0m
+[95m Iteration 17 loss 0.00012673728633672[0m
+[95m Iteration 18 loss 0.0001264640159206465[0m
+[95m Iteration 19 loss 0.00010581002425169572[0m
+[95m Iteration 20 loss 0.00011996548710158095[0m
+[95m Iteration 21 loss 0.0002730082778725773[0m
+[95m Iteration 22 loss 0.00012413435615599155[0m
+[95m Iteration 23 loss 0.00011745479423552752[0m
+[95m Iteration 24 loss 0.00011882693797815591[0m
+[95m Iteration 25 loss 0.0001110411249101162[0m
+[95m Iteration 26 loss 0.00011214659753022715[0m
+[95m Iteration 27 loss 0.00011005050328094512[0m
+[95m Iteration 28 loss 0.000110511107777711[0m
+[95m Iteration 29 loss 0.000165496050613001[0m
+[95m Iteration 30 loss 0.00010523787932470441[0m
+[95m Iteration 31 loss 0.00010661929991329089[0m
+[95m Iteration 32 loss 0.00011809922580141574[0m
+[95m Iteration 33 loss 0.00010078236664412543[0m
+[95m Iteration 34 loss 0.0001619470858713612[0m
+[95m Iteration 35 loss 0.00011064300633734092[0m
+[95m Iteration 36 loss 0.00010546278645051643[0m
+[95m Iteration 37 loss 0.00010049647971754894[0m
+[95m Iteration 38 loss 0.00011148522753501311[0m
+[95m Iteration 39 loss 0.0001013808578136377[0m
+[95m Iteration 40 loss 9.837574179982767e-05[0m
+[95m Iteration 41 loss 9.627961844671518e-05[0m
+[95m Iteration 42 loss 0.0001523353421362117[0m
+[95m Iteration 43 loss 9.793388016987592e-05[0m
+[95m Iteration 44 loss 0.00010563187970547006[0m
+[95m Iteration 45 loss 0.00010913528967648745[0m
+[95m Iteration 46 loss 0.0001076357439160347[0m
+[95m Iteration 47 loss 9.680937364464626e-05[0m
+[95m Iteration 48 loss 9.897416748572141e-05[0m
+[95m Iteration 49 loss 9.827609028434381e-05[0m
+[95m Iteration 50 loss 0.00010413236304884776[0m
+[95m Iteration 51 loss 9.97103052213788e-05[0m
+[95m Iteration 52 loss 9.531100658932701e-05[0m
+[95m Iteration 53 loss 0.00010277597903041169[0m
+[95m Iteration 54 loss 9.837527613854036e-05[0m
+[95m Iteration 55 loss 9.77228773990646e-05[0m
+[95m Iteration 56 loss 9.340749238617718e-05[0m
+[95m Iteration 57 loss 9.801469423109666e-05[0m
+[95m Iteration 58 loss 9.605578816263005e-05[0m
+[95m Iteration 59 loss 9.49037421378307e-05[0m
+[95m Iteration 60 loss 9.158748434856534e-05[0m
+[95m Iteration 61 loss 0.00010135041520697996[0m
+[95m Iteration 62 loss 0.00011103849828941748[0m
+[95m Iteration 63 loss 9.154144208878279e-05[0m
+[95m Iteration 64 loss 0.0001046828692778945[0m
+[95m Iteration 65 loss 9.587578824721277e-05[0m
+[95m Iteration 66 loss 0.0002464245480950922[0m
+[95m Iteration 67 loss 9.284794941777363e-05[0m
+[95m Iteration 68 loss 0.00010710149217629805[0m
+[95m Iteration 69 loss 9.439246059628204e-05[0m
+[95m Iteration 70 loss 0.00010209352331003174[0m
+[95m Iteration 71 loss 9.271545422961935e-05[0m
+[95m Iteration 72 loss 9.151867561740801e-05[0m
+[95m Iteration 73 loss 0.00010082593507831916[0m
+[95m Iteration 74 loss 0.00010039515473181382[0m
+[95m Iteration 75 loss 0.0001249991328222677[0m
+[95m Iteration 76 loss 8.698859164724126e-05[0m
+[95m Iteration 77 loss 9.763396519701928e-05[0m
+[95m Iteration 78 loss 9.24821215448901e-05[0m
+[95m Iteration 79 loss 9.430250065634027e-05[0m
+
+Generating 20,000 verified normal-ray samples...
+
+[Stage 2] Geometric fine-tune for 1500 epochs...
+Training geometric Bernstein SDF: n_func=12, epochs=1500, near=2048, random=1024, rays=1024
+Epoch 0000 | total=0.127562 near=0.000068 random=0.000228 ray=0.010127 eikonal=0.097709 direction=0.147672 gradient_vector=0.290367
+Epoch 0025 | total=0.127500 near=0.000148 random=0.000308 ray=0.009030 eikonal=0.099178 direction=0.151294 gradient_vector=0.295067
+Epoch 0050 | total=0.125929 near=0.000271 random=0.000401 ray=0.008811 eikonal=0.089919 direction=0.157346 gradient_vector=0.286677
+Epoch 0075 | total=0.118695 near=0.000362 random=0.000499 ray=0.008217 eikonal=0.089109 direction=0.147897 gradient_vector=0.269464
+Epoch 0100 | total=0.126469 near=0.000413 random=0.000506 ray=0.007675 eikonal=0.090290 direction=0.165314 gradient_vector=0.290495
+Epoch 0125 | total=0.110578 near=0.000473 random=0.000556 ray=0.006359 eikonal=0.087708 direction=0.144297 gradient_vector=0.254345
+Epoch 0150 | total=0.127338 near=0.000496 random=0.000611 ray=0.007083 eikonal=0.088469 direction=0.169470 gradient_vector=0.294995
+Epoch 0175 | total=0.115718 near=0.000491 random=0.000804 ray=0.007069 eikonal=0.084737 direction=0.153378 gradient_vector=0.261490
+Epoch 0200 | total=0.117188 near=0.000498 random=0.000640 ray=0.006516 eikonal=0.086466 direction=0.156125 gradient_vector=0.269877
+Epoch 0225 | total=0.113137 near=0.000545 random=0.000748 ray=0.005508 eikonal=0.087239 direction=0.153746 gradient_vector=0.262868
+Epoch 0250 | total=0.117553 near=0.000523 random=0.000747 ray=0.006649 eikonal=0.089767 direction=0.157255 gradient_vector=0.268181
+Epoch 0275 | total=0.110429 near=0.000514 random=0.000830 ray=0.005821 eikonal=0.088949 direction=0.150260 gradient_vector=0.251779
+Epoch 0300 | total=0.111978 near=0.000526 random=0.000847 ray=0.005921 eikonal=0.086225 direction=0.154505 gradient_vector=0.254200
+Epoch 0325 | total=0.100541 near=0.000551 random=0.000855 ray=0.005572 eikonal=0.089867 direction=0.132748 gradient_vector=0.227798
+Epoch 0350 | total=0.110347 near=0.000519 random=0.000952 ray=0.006468 eikonal=0.087385 direction=0.148738 gradient_vector=0.247295
+Epoch 0375 | total=0.116958 near=0.000580 random=0.000842 ray=0.005914 eikonal=0.088942 direction=0.162687 gradient_vector=0.266894
+Epoch 0400 | total=0.112376 near=0.000540 random=0.000895 ray=0.005025 eikonal=0.090719 direction=0.159057 gradient_vector=0.258175
+Epoch 0425 | total=0.108373 near=0.000569 random=0.000888 ray=0.005495 eikonal=0.089630 direction=0.150278 gradient_vector=0.245561
+Epoch 0450 | total=0.111512 near=0.000609 random=0.000987 ray=0.006102 eikonal=0.090061 direction=0.154061 gradient_vector=0.249593
+Epoch 0475 | total=0.111570 near=0.000562 random=0.000931 ray=0.005767 eikonal=0.089118 direction=0.156104 gradient_vector=0.251463
+Epoch 0500 | total=0.115449 near=0.000628 random=0.001110 ray=0.006298 eikonal=0.092750 direction=0.160569 gradient_vector=0.257450
+Epoch 0525 | total=0.106969 near=0.000570 random=0.000958 ray=0.004600 eikonal=0.094239 direction=0.152321 gradient_vector=0.244255
+Epoch 0550 | total=0.113067 near=0.000610 random=0.001097 ray=0.006112 eikonal=0.092690 direction=0.155326 gradient_vector=0.253749
+Epoch 0575 | total=0.107751 near=0.000544 random=0.001202 ray=0.005563 eikonal=0.093737 direction=0.148265 gradient_vector=0.242158
+Epoch 0600 | total=0.116332 near=0.000596 random=0.001050 ray=0.006283 eikonal=0.094742 direction=0.163833 gradient_vector=0.258465
+Epoch 0625 | total=0.111742 near=0.000589 random=0.001046 ray=0.006187 eikonal=0.096072 direction=0.154871 gradient_vector=0.247827
+Epoch 0650 | total=0.105121 near=0.000578 random=0.001063 ray=0.005077 eikonal=0.092723 direction=0.145746 gradient_vector=0.238160
+Epoch 0675 | total=0.103151 near=0.000590 random=0.000953 ray=0.005616 eikonal=0.093662 direction=0.142386 gradient_vector=0.228863
+Epoch 0700 | total=0.101303 near=0.000548 random=0.001188 ray=0.004413 eikonal=0.094108 direction=0.141246 gradient_vector=0.231147
+Epoch 0725 | total=0.104545 near=0.000615 random=0.001370 ray=0.005191 eikonal=0.093725 direction=0.144634 gradient_vector=0.234258
+Epoch 0750 | total=0.107322 near=0.000584 random=0.001325 ray=0.005315 eikonal=0.096376 direction=0.147750 gradient_vector=0.241660
+Epoch 0775 | total=0.107433 near=0.000564 random=0.001037 ray=0.005634 eikonal=0.096299 direction=0.149536 gradient_vector=0.239369
+Epoch 0800 | total=0.097942 near=0.000566 random=0.001016 ray=0.004863 eikonal=0.097246 direction=0.133561 gradient_vector=0.220238
+Epoch 0825 | total=0.098547 near=0.000594 random=0.001251 ray=0.004593 eikonal=0.094078 direction=0.135519 gradient_vector=0.222835
+Epoch 0850 | total=0.102744 near=0.000629 random=0.001100 ray=0.005035 eikonal=0.094021 direction=0.143550 gradient_vector=0.230141
+Epoch 0875 | total=0.104906 near=0.000626 random=0.001206 ray=0.004571 eikonal=0.098212 direction=0.147834 gradient_vector=0.237818
+Epoch 0900 | total=0.110184 near=0.000652 random=0.001265 ray=0.005598 eikonal=0.097985 direction=0.153364 gradient_vector=0.245997
+Epoch 0925 | total=0.112503 near=0.000587 random=0.001102 ray=0.005283 eikonal=0.099738 direction=0.160860 gradient_vector=0.252354
+Epoch 0950 | total=0.095878 near=0.000645 random=0.001347 ray=0.003950 eikonal=0.094720 direction=0.133212 gradient_vector=0.218427
+Epoch 0975 | total=0.102134 near=0.000562 random=0.001335 ray=0.004615 eikonal=0.096878 direction=0.143455 gradient_vector=0.229887
+Epoch 1000 | total=0.101041 near=0.000630 random=0.001358 ray=0.004602 eikonal=0.096478 direction=0.139326 gradient_vector=0.228637
+Epoch 1025 | total=0.099632 near=0.000567 random=0.001047 ray=0.004960 eikonal=0.098298 direction=0.138955 gradient_vector=0.221569
+Epoch 1050 | total=0.096506 near=0.000603 random=0.001258 ray=0.004743 eikonal=0.097520 direction=0.133048 gradient_vector=0.214690
+Epoch 1075 | total=0.110033 near=0.000614 random=0.001336 ray=0.005426 eikonal=0.100635 direction=0.155401 gradient_vector=0.244477
+Epoch 1100 | total=0.107148 near=0.000640 random=0.001491 ray=0.004797 eikonal=0.099105 direction=0.152153 gradient_vector=0.240143
+Epoch 1125 | total=0.112703 near=0.000586 random=0.001205 ray=0.005119 eikonal=0.099679 direction=0.162569 gradient_vector=0.252705
+Epoch 1150 | total=0.105813 near=0.000601 random=0.001220 ray=0.005638 eikonal=0.098403 direction=0.145715 gradient_vector=0.234611
+Epoch 1175 | total=0.099885 near=0.000610 random=0.001318 ray=0.004494 eikonal=0.098526 direction=0.139520 gradient_vector=0.224552
+Epoch 1200 | total=0.107337 near=0.000608 random=0.001464 ray=0.005407 eikonal=0.098104 direction=0.148884 gradient_vector=0.239078
+Epoch 1225 | total=0.104854 near=0.000628 random=0.001320 ray=0.004641 eikonal=0.100521 direction=0.146593 gradient_vector=0.237121
+Epoch 1250 | total=0.107886 near=0.000652 random=0.001357 ray=0.004471 eikonal=0.101784 direction=0.154547 gradient_vector=0.243753
+Epoch 1275 | total=0.093623 near=0.000660 random=0.001414 ray=0.004432 eikonal=0.098939 direction=0.125093 gradient_vector=0.210872
+Epoch 1300 | total=0.094209 near=0.000595 random=0.001250 ray=0.003843 eikonal=0.097102 direction=0.131163 gradient_vector=0.214360
+Epoch 1325 | total=0.106305 near=0.000613 random=0.001244 ray=0.005715 eikonal=0.102019 direction=0.146188 gradient_vector=0.234722
+Epoch 1350 | total=0.100877 near=0.000624 random=0.001199 ray=0.004691 eikonal=0.098220 direction=0.141082 gradient_vector=0.226175
+Epoch 1375 | total=0.095400 near=0.000569 random=0.001413 ray=0.004191 eikonal=0.097902 direction=0.130547 gradient_vector=0.216123
+Epoch 1400 | total=0.106096 near=0.000654 random=0.001379 ray=0.004924 eikonal=0.100236 direction=0.148988 gradient_vector=0.237622
+Epoch 1425 | total=0.103609 near=0.000625 random=0.001428 ray=0.004738 eikonal=0.099244 direction=0.144578 gradient_vector=0.232806
+Epoch 1450 | total=0.098137 near=0.000593 random=0.001269 ray=0.004553 eikonal=0.097944 direction=0.134975 gradient_vector=0.221110
+Epoch 1475 | total=0.099270 near=0.000555 random=0.001492 ray=0.004278 eikonal=0.099009 direction=0.136460 gradient_vector=0.225699
+Epoch 1499 | total=0.100771 near=0.000608 random=0.001295 ray=0.004961 eikonal=0.097386 direction=0.141419 gradient_vector=0.223170
+
+Saved candidate: panda_test/Models/nfunc12_candidate/xarm7_link_base_w.pt  (n_func=12, weights=(1728,))
+>>> [xarm7_link_base] done in 21s
+=================================================================
+>>> [xarm7_link1] 12:33:20
+Link xarm7_link1: training n_func=12 (1728 params) on cuda
+
+[Stage 1] Recursive least squares for 80 iters...
+[95m Iteration 0 loss 0.029413893818855286[0m
+[95m Iteration 1 loss 0.0007222837884910405[0m
+[95m Iteration 2 loss 0.0003655944892670959[0m
+[95m Iteration 3 loss 0.00030043470906093717[0m
+[95m Iteration 4 loss 0.00028967674006707966[0m
+[95m Iteration 5 loss 0.00021600155741907656[0m
+[95m Iteration 6 loss 0.00021944586478639394[0m
+[95m Iteration 7 loss 0.00019213826453778893[0m
+[95m Iteration 8 loss 0.00016462603525724262[0m
+[95m Iteration 9 loss 0.00018807174637913704[0m
+[95m Iteration 10 loss 0.00019696043455041945[0m
+[95m Iteration 11 loss 0.0001500329963164404[0m
+[95m Iteration 12 loss 0.0001824352948460728[0m
+[95m Iteration 13 loss 0.00015332309703808278[0m
+[95m Iteration 14 loss 0.00017523519636597484[0m
+[95m Iteration 15 loss 0.00016773528477642685[0m
+[95m Iteration 16 loss 0.0002340962237212807[0m
+[95m Iteration 17 loss 0.00015772033657412976[0m
+[95m Iteration 18 loss 0.000169431310496293[0m
+[95m Iteration 19 loss 0.00021920287690591067[0m
+[95m Iteration 20 loss 0.00020440372463781387[0m
+[95m Iteration 21 loss 0.0001525317638879642[0m
+[95m Iteration 22 loss 0.00015230478311423212[0m
+[95m Iteration 23 loss 0.00014761606871616095[0m
+[95m Iteration 24 loss 0.0001483605446992442[0m
+[95m Iteration 25 loss 0.00014143940643407404[0m
+[95m Iteration 26 loss 0.000155536356032826[0m
+[95m Iteration 27 loss 0.0001701892470009625[0m
+[95m Iteration 28 loss 0.00014398327039089054[0m
+[95m Iteration 29 loss 0.0001360390888294205[0m
+[95m Iteration 30 loss 0.00012692941527348012[0m
+[95m Iteration 31 loss 0.00013523241796065122[0m
+[95m Iteration 32 loss 0.00012581907503772527[0m
+[95m Iteration 33 loss 0.00014364156231749803[0m
+[95m Iteration 34 loss 0.00016539559874217957[0m
+[95m Iteration 35 loss 0.00011936279770452529[0m
+[95m Iteration 36 loss 0.0001280636788578704[0m
+[95m Iteration 37 loss 0.0001285679027205333[0m
+[95m Iteration 38 loss 0.00021359296806622297[0m
+[95m Iteration 39 loss 0.00018846988677978516[0m
+[95m Iteration 40 loss 0.00014146998000796884[0m
+[95m Iteration 41 loss 0.0001223802100867033[0m
+[95m Iteration 42 loss 0.00012324795534368604[0m
+[95m Iteration 43 loss 0.0001208942849189043[0m
+[95m Iteration 44 loss 0.0001421273045707494[0m
+[95m Iteration 45 loss 0.00015580584295094013[0m
+[95m Iteration 46 loss 0.0001266106410184875[0m
+[95m Iteration 47 loss 0.00024317782663274556[0m
+[95m Iteration 48 loss 0.0001298156421398744[0m
+[95m Iteration 49 loss 0.00011339562479406595[0m
+[95m Iteration 50 loss 0.00013480840425472707[0m
+[95m Iteration 51 loss 0.000125886857858859[0m
+[95m Iteration 52 loss 0.00011997046385658905[0m
+[95m Iteration 53 loss 0.00011354727030266076[0m
+[95m Iteration 54 loss 0.0001276117836823687[0m
+[95m Iteration 55 loss 0.00012525031343102455[0m
+[95m Iteration 56 loss 0.00011732958228094503[0m
+[95m Iteration 57 loss 0.00013722349831368774[0m
+[95m Iteration 58 loss 0.00011629991058725864[0m
+[95m Iteration 59 loss 0.00013284401211421937[0m
+[95m Iteration 60 loss 0.00011995469685643911[0m
+[95m Iteration 61 loss 0.0001155202990048565[0m
+[95m Iteration 62 loss 0.00012649096606764942[0m
+[95m Iteration 63 loss 0.000104955215647351[0m
+[95m Iteration 64 loss 9.862754814093933e-05[0m
+[95m Iteration 65 loss 0.00011583881132537499[0m
+[95m Iteration 66 loss 0.0001076383632607758[0m
+[95m Iteration 67 loss 0.00010917762119788677[0m
+[95m Iteration 68 loss 0.0001207885579788126[0m
+[95m Iteration 69 loss 0.00011085313599323854[0m
+[95m Iteration 70 loss 0.00016558045172132552[0m
+[95m Iteration 71 loss 0.00010189403838012367[0m
+[95m Iteration 72 loss 0.00010674774966901168[0m
+[95m Iteration 73 loss 0.0001097626518458128[0m
+[95m Iteration 74 loss 9.867240441963077e-05[0m
+[95m Iteration 75 loss 0.00010065318929264322[0m
+[95m Iteration 76 loss 0.00011900877871084958[0m
+[95m Iteration 77 loss 9.869118366623297e-05[0m
+[95m Iteration 78 loss 0.00012208927364554256[0m
+[95m Iteration 79 loss 0.00011302134225843474[0m
+
+Generating 20,000 verified normal-ray samples...
+
+[Stage 2] Geometric fine-tune for 1500 epochs...
+Training geometric Bernstein SDF: n_func=12, epochs=1500, near=2048, random=1024, rays=1024
+Epoch 0000 | total=0.102222 near=0.000082 random=0.000243 ray=0.006051 eikonal=0.052128 direction=0.124411 gradient_vector=0.249226
+Epoch 0025 | total=0.097821 near=0.000172 random=0.000329 ray=0.005294 eikonal=0.053154 direction=0.120789 gradient_vector=0.239665
+Epoch 0050 | total=0.104473 near=0.000233 random=0.000405 ray=0.005374 eikonal=0.049057 direction=0.132711 gradient_vector=0.256364
+Epoch 0075 | total=0.098959 near=0.000281 random=0.000414 ray=0.004271 eikonal=0.048858 direction=0.130655 gradient_vector=0.244589
+Epoch 0100 | total=0.098755 near=0.000319 random=0.000533 ray=0.005248 eikonal=0.053972 direction=0.127989 gradient_vector=0.236447
+Epoch 0125 | total=0.099144 near=0.000323 random=0.000541 ray=0.005115 eikonal=0.052450 direction=0.130907 gradient_vector=0.236984
+Epoch 0150 | total=0.109088 near=0.000312 random=0.000590 ray=0.006056 eikonal=0.053661 direction=0.148370 gradient_vector=0.254867
+Epoch 0175 | total=0.099090 near=0.000342 random=0.000690 ray=0.005540 eikonal=0.054455 direction=0.129295 gradient_vector=0.233583
+Epoch 0200 | total=0.098211 near=0.000358 random=0.000562 ray=0.004946 eikonal=0.054689 direction=0.134197 gradient_vector=0.231301
+Epoch 0225 | total=0.088460 near=0.000334 random=0.000775 ray=0.003860 eikonal=0.056919 direction=0.119887 gradient_vector=0.211229
+Epoch 0250 | total=0.106668 near=0.000349 random=0.000744 ray=0.005018 eikonal=0.057242 direction=0.148957 gradient_vector=0.251543
+Epoch 0275 | total=0.114428 near=0.000382 random=0.000773 ray=0.004979 eikonal=0.060811 direction=0.163115 gradient_vector=0.270601
+Epoch 0300 | total=0.114980 near=0.000352 random=0.000801 ray=0.005717 eikonal=0.062059 direction=0.164489 gradient_vector=0.265566
+Epoch 0325 | total=0.103232 near=0.000341 random=0.000913 ray=0.005598 eikonal=0.058005 direction=0.143832 gradient_vector=0.236459
+Epoch 0350 | total=0.091000 near=0.000366 random=0.000817 ray=0.004099 eikonal=0.062274 direction=0.126440 gradient_vector=0.212869
+Epoch 0375 | total=0.105662 near=0.000396 random=0.000932 ray=0.004565 eikonal=0.061920 direction=0.150040 gradient_vector=0.248401
+Epoch 0400 | total=0.088041 near=0.000352 random=0.001011 ray=0.003260 eikonal=0.059775 direction=0.124342 gradient_vector=0.209202
+Epoch 0425 | total=0.113769 near=0.000359 random=0.001055 ray=0.004795 eikonal=0.065100 direction=0.167287 gradient_vector=0.264215
+Epoch 0450 | total=0.087459 near=0.000393 random=0.000817 ray=0.003753 eikonal=0.059940 direction=0.120728 gradient_vector=0.206403
+Epoch 0475 | total=0.104818 near=0.000359 random=0.001077 ray=0.005150 eikonal=0.065411 direction=0.152146 gradient_vector=0.237526
+Epoch 0500 | total=0.077100 near=0.000338 random=0.000938 ray=0.003293 eikonal=0.062014 direction=0.101785 gradient_vector=0.183126
+Epoch 0525 | total=0.103846 near=0.000359 random=0.001049 ray=0.005255 eikonal=0.062479 direction=0.147764 gradient_vector=0.237004
+Epoch 0550 | total=0.094473 near=0.000390 random=0.000985 ray=0.004321 eikonal=0.064407 direction=0.135821 gradient_vector=0.216279
+Epoch 0575 | total=0.091494 near=0.000379 random=0.001405 ray=0.003558 eikonal=0.065459 direction=0.131061 gradient_vector=0.212433
+Epoch 0600 | total=0.093363 near=0.000371 random=0.000838 ray=0.003684 eikonal=0.064985 direction=0.134822 gradient_vector=0.218287
+Epoch 0625 | total=0.096807 near=0.000367 random=0.000940 ray=0.003874 eikonal=0.065591 direction=0.139933 gradient_vector=0.225942
+Epoch 0650 | total=0.094010 near=0.000368 random=0.000973 ray=0.004532 eikonal=0.063896 direction=0.132923 gradient_vector=0.215307
+Epoch 0675 | total=0.087961 near=0.000391 random=0.001002 ray=0.004139 eikonal=0.062785 direction=0.125804 gradient_vector=0.199961
+Epoch 0700 | total=0.100248 near=0.000423 random=0.001065 ray=0.004200 eikonal=0.065649 direction=0.148438 gradient_vector=0.229562
+Epoch 0725 | total=0.102026 near=0.000362 random=0.000987 ray=0.004400 eikonal=0.065571 direction=0.151355 gradient_vector=0.233313
+Epoch 0750 | total=0.095258 near=0.000409 random=0.001077 ray=0.003631 eikonal=0.065784 direction=0.137696 gradient_vector=0.222726
+Epoch 0775 | total=0.097540 near=0.000379 random=0.001015 ray=0.004192 eikonal=0.068733 direction=0.142086 gradient_vector=0.223629
+Epoch 0800 | total=0.093359 near=0.000387 random=0.000941 ray=0.003755 eikonal=0.065259 direction=0.138093 gradient_vector=0.214560
+Epoch 0825 | total=0.095908 near=0.000414 random=0.001170 ray=0.003941 eikonal=0.067770 direction=0.138420 gradient_vector=0.221479
+Epoch 0850 | total=0.085215 near=0.000358 random=0.001058 ray=0.003170 eikonal=0.066020 direction=0.123237 gradient_vector=0.198040
+Epoch 0875 | total=0.100711 near=0.000392 random=0.001006 ray=0.003683 eikonal=0.067723 direction=0.150613 gradient_vector=0.233750
+Epoch 0900 | total=0.097812 near=0.000402 random=0.001272 ray=0.004193 eikonal=0.066809 direction=0.144314 gradient_vector=0.222188
+Epoch 0925 | total=0.080741 near=0.000361 random=0.001033 ray=0.003616 eikonal=0.065406 direction=0.114353 gradient_vector=0.183890
+Epoch 0950 | total=0.092879 near=0.000451 random=0.000958 ray=0.003914 eikonal=0.067233 direction=0.135218 gradient_vector=0.212944
+Epoch 0975 | total=0.095027 near=0.000416 random=0.001081 ray=0.003805 eikonal=0.067072 direction=0.140397 gradient_vector=0.217947
+Epoch 1000 | total=0.092824 near=0.000363 random=0.001341 ray=0.003463 eikonal=0.068249 direction=0.135505 gradient_vector=0.214721
+Epoch 1025 | total=0.091648 near=0.000472 random=0.001192 ray=0.003540 eikonal=0.068762 direction=0.135716 gradient_vector=0.209294
+Epoch 1050 | total=0.096884 near=0.000359 random=0.001131 ray=0.003795 eikonal=0.068421 direction=0.140508 gradient_vector=0.225124
+Epoch 1075 | total=0.094507 near=0.000372 random=0.001610 ray=0.003448 eikonal=0.067768 direction=0.141051 gradient_vector=0.216119
+Epoch 1100 | total=0.083496 near=0.000351 random=0.001150 ray=0.002585 eikonal=0.067228 direction=0.120928 gradient_vector=0.197106
+Epoch 1125 | total=0.099322 near=0.000368 random=0.000975 ray=0.003722 eikonal=0.067531 direction=0.148345 gradient_vector=0.229962
+Epoch 1150 | total=0.086167 near=0.000438 random=0.001230 ray=0.004191 eikonal=0.066541 direction=0.121443 gradient_vector=0.194003
+Epoch 1175 | total=0.100000 near=0.000472 random=0.001311 ray=0.004452 eikonal=0.070074 direction=0.146537 gradient_vector=0.226006
+Epoch 1200 | total=0.092568 near=0.000381 random=0.001036 ray=0.004520 eikonal=0.066783 direction=0.132208 gradient_vector=0.209319
+Epoch 1225 | total=0.092965 near=0.000404 random=0.001027 ray=0.003909 eikonal=0.069626 direction=0.134771 gradient_vector=0.213122
+Epoch 1250 | total=0.093982 near=0.000355 random=0.001067 ray=0.003848 eikonal=0.066445 direction=0.139454 gradient_vector=0.214605
+Epoch 1275 | total=0.087554 near=0.000366 random=0.001295 ray=0.003443 eikonal=0.069478 direction=0.125132 gradient_vector=0.202028
+Epoch 1300 | total=0.093597 near=0.000453 random=0.001146 ray=0.003789 eikonal=0.068918 direction=0.138615 gradient_vector=0.213002
+Epoch 1325 | total=0.099550 near=0.000403 random=0.001134 ray=0.003650 eikonal=0.070765 direction=0.145953 gradient_vector=0.231938
+Epoch 1350 | total=0.100607 near=0.000362 random=0.001350 ray=0.004641 eikonal=0.066913 direction=0.146784 gradient_vector=0.227639
+Epoch 1375 | total=0.082099 near=0.000427 random=0.001211 ray=0.003017 eikonal=0.068128 direction=0.116783 gradient_vector=0.190659
+Epoch 1400 | total=0.094021 near=0.000436 random=0.001143 ray=0.003476 eikonal=0.069729 direction=0.138258 gradient_vector=0.217413
+Epoch 1425 | total=0.099612 near=0.000395 random=0.001376 ray=0.003879 eikonal=0.069080 direction=0.149416 gradient_vector=0.226981
+Epoch 1450 | total=0.092934 near=0.000399 random=0.001159 ray=0.003576 eikonal=0.068974 direction=0.137632 gradient_vector=0.212993
+Epoch 1475 | total=0.083594 near=0.000422 random=0.001260 ray=0.003276 eikonal=0.068165 direction=0.117861 gradient_vector=0.193517
+Epoch 1499 | total=0.107290 near=0.000374 random=0.001469 ray=0.005407 eikonal=0.069413 direction=0.156312 gradient_vector=0.239598
+
+Saved candidate: panda_test/Models/nfunc12_candidate/xarm7_link1_w.pt  (n_func=12, weights=(1728,))
+>>> [xarm7_link1] done in 22s
+=================================================================
+>>> [xarm7_link2] 12:33:42
+Link xarm7_link2: training n_func=12 (1728 params) on cuda
+
+[Stage 1] Recursive least squares for 80 iters...
+[95m Iteration 0 loss 0.0567709319293499[0m
+[95m Iteration 1 loss 0.000796520325820893[0m
+[95m Iteration 2 loss 0.0003712065517902374[0m
+[95m Iteration 3 loss 0.0002797052438836545[0m
+[95m Iteration 4 loss 0.0002295032172696665[0m
+[95m Iteration 5 loss 0.00027238912298344076[0m
+[95m Iteration 6 loss 0.0002785258984658867[0m
+[95m Iteration 7 loss 0.00023697489814367145[0m
+[95m Iteration 8 loss 0.0002196525310864672[0m
+[95m Iteration 9 loss 0.00026814997545443475[0m
+[95m Iteration 10 loss 0.0001946140400832519[0m
+[95m Iteration 11 loss 0.00016439809405710548[0m
+[95m Iteration 12 loss 0.00020565064914990216[0m
+[95m Iteration 13 loss 0.00023656040139030665[0m
+[95m Iteration 14 loss 0.0001981296663871035[0m
+[95m Iteration 15 loss 0.00020383465744089335[0m
+[95m Iteration 16 loss 0.00019435542344581336[0m
+[95m Iteration 17 loss 0.00017477813526056707[0m
+[95m Iteration 18 loss 0.00021250336430966854[0m
+[95m Iteration 19 loss 0.00016869223327375948[0m
+[95m Iteration 20 loss 0.00022060982882976532[0m
+[95m Iteration 21 loss 0.00019145887927152216[0m
+[95m Iteration 22 loss 0.00017858383944258094[0m
+[95m Iteration 23 loss 0.0002046347362920642[0m
+[95m Iteration 24 loss 0.000186355464393273[0m
+[95m Iteration 25 loss 0.00016139070794451982[0m
+[95m Iteration 26 loss 0.00019125414837617427[0m
+[95m Iteration 27 loss 0.0001667010656092316[0m
+[95m Iteration 28 loss 0.00017862436652649194[0m
+[95m Iteration 29 loss 0.00019062153296545148[0m
+[95m Iteration 30 loss 0.000169411301612854[0m
+[95m Iteration 31 loss 0.00018654677842278033[0m
+[95m Iteration 32 loss 0.00018008935148827732[0m
+[95m Iteration 33 loss 0.0001770828093867749[0m
+[95m Iteration 34 loss 0.00014677380386274308[0m
+[95m Iteration 35 loss 0.00020146086171735078[0m
+[95m Iteration 36 loss 0.0001674828090472147[0m
+[95m Iteration 37 loss 0.0001772784598870203[0m
+[95m Iteration 38 loss 0.00017992280481848866[0m
+[95m Iteration 39 loss 0.00018522089521866292[0m
+[95m Iteration 40 loss 0.0001548245345475152[0m
+[95m Iteration 41 loss 0.0001331768580712378[0m
+[95m Iteration 42 loss 0.00015467700723093003[0m
+[95m Iteration 43 loss 0.00017462065443396568[0m
+[95m Iteration 44 loss 0.00014898681547492743[0m
+[95m Iteration 45 loss 0.00020418805070221424[0m
+[95m Iteration 46 loss 0.0001856427115853876[0m
+[95m Iteration 47 loss 0.0001689908531261608[0m
+[95m Iteration 48 loss 0.00016698181570973247[0m
+[95m Iteration 49 loss 0.00017393415328115225[0m
+[95m Iteration 50 loss 0.00016616536595392972[0m
+[95m Iteration 51 loss 0.00014359166380017996[0m
+[95m Iteration 52 loss 0.00015220431669149548[0m
+[95m Iteration 53 loss 0.00016120815416797996[0m
+[95m Iteration 54 loss 0.00017568688781466335[0m
+[95m Iteration 55 loss 0.00017416330229025334[0m
+[95m Iteration 56 loss 0.00016804887854959816[0m
+[95m Iteration 57 loss 0.0001780088059604168[0m
+[95m Iteration 58 loss 0.00018482058658264577[0m
+[95m Iteration 59 loss 0.00013261560525279492[0m
+[95m Iteration 60 loss 0.00012674511526711285[0m
+[95m Iteration 61 loss 0.00020908602164126933[0m
+[95m Iteration 62 loss 0.0001654161897022277[0m
+[95m Iteration 63 loss 0.0001670551428105682[0m
+[95m Iteration 64 loss 0.00021663376537617296[0m
+[95m Iteration 65 loss 0.00022613117471337318[0m
+[95m Iteration 66 loss 0.00015387868916150182[0m
+[95m Iteration 67 loss 0.00015465168689843267[0m
+[95m Iteration 68 loss 0.00015946982603054494[0m
+[95m Iteration 69 loss 0.00016247159510385245[0m
+[95m Iteration 70 loss 0.0001647634489927441[0m
+[95m Iteration 71 loss 0.00017026421846821904[0m
+[95m Iteration 72 loss 0.00016367973876185715[0m
+[95m Iteration 73 loss 0.00016255419177468866[0m
+[95m Iteration 74 loss 0.0001377086155116558[0m
+[95m Iteration 75 loss 0.00014134467346593738[0m
+[95m Iteration 76 loss 0.00014697395090479404[0m
+[95m Iteration 77 loss 0.00019155049812979996[0m
+[95m Iteration 78 loss 0.00014106303569860756[0m
+[95m Iteration 79 loss 0.00014322651259135455[0m
+
+Generating 20,000 verified normal-ray samples...
+
+[Stage 2] Geometric fine-tune for 1500 epochs...
+Training geometric Bernstein SDF: n_func=12, epochs=1500, near=2048, random=1024, rays=1024
+Epoch 0000 | total=0.037711 near=0.000093 random=0.000293 ray=0.000271 eikonal=0.077881 direction=0.034449 gradient_vector=0.103997
+Epoch 0025 | total=0.036718 near=0.000147 random=0.000426 ray=0.000264 eikonal=0.066179 direction=0.036241 gradient_vector=0.100238
+Epoch 0050 | total=0.032708 near=0.000168 random=0.000450 ray=0.000227 eikonal=0.058131 direction=0.034918 gradient_vector=0.086985
+Epoch 0075 | total=0.032036 near=0.000151 random=0.000504 ray=0.000224 eikonal=0.056520 direction=0.032789 gradient_vector=0.086194
+Epoch 0100 | total=0.031912 near=0.000175 random=0.000462 ray=0.000176 eikonal=0.049130 direction=0.035914 gradient_vector=0.085134
+Epoch 0125 | total=0.033351 near=0.000261 random=0.000515 ray=0.000233 eikonal=0.049993 direction=0.039588 gradient_vector=0.086769
+Epoch 0150 | total=0.031256 near=0.000196 random=0.000366 ray=0.000195 eikonal=0.048293 direction=0.036334 gradient_vector=0.082488
+Epoch 0175 | total=0.031363 near=0.000222 random=0.000442 ray=0.000209 eikonal=0.045626 direction=0.035750 gradient_vector=0.083396
+Epoch 0200 | total=0.031957 near=0.000293 random=0.000457 ray=0.000203 eikonal=0.045521 direction=0.038206 gradient_vector=0.083536
+Epoch 0225 | total=0.030583 near=0.000228 random=0.000501 ray=0.000200 eikonal=0.044492 direction=0.035435 gradient_vector=0.080571
+Epoch 0250 | total=0.030462 near=0.000210 random=0.000366 ray=0.000208 eikonal=0.044938 direction=0.034829 gradient_vector=0.081030
+Epoch 0275 | total=0.032205 near=0.000178 random=0.000360 ray=0.000213 eikonal=0.045335 direction=0.036693 gradient_vector=0.086540
+Epoch 0300 | total=0.031461 near=0.000206 random=0.000520 ray=0.000201 eikonal=0.042134 direction=0.037345 gradient_vector=0.083031
+Epoch 0325 | total=0.027760 near=0.000182 random=0.000441 ray=0.000193 eikonal=0.042009 direction=0.029441 gradient_vector=0.075051
+Epoch 0350 | total=0.028360 near=0.000183 random=0.000373 ray=0.000205 eikonal=0.041572 direction=0.033286 gradient_vector=0.074629
+Epoch 0375 | total=0.028605 near=0.000194 random=0.000387 ray=0.000221 eikonal=0.041456 direction=0.033656 gradient_vector=0.075108
+Epoch 0400 | total=0.028244 near=0.000192 random=0.000347 ray=0.000221 eikonal=0.039956 direction=0.032543 gradient_vector=0.075031
+Epoch 0425 | total=0.026920 near=0.000188 random=0.000334 ray=0.000198 eikonal=0.042332 direction=0.029516 gradient_vector=0.071933
+Epoch 0450 | total=0.028408 near=0.000195 random=0.000422 ray=0.000198 eikonal=0.041946 direction=0.033135 gradient_vector=0.074680
+Epoch 0475 | total=0.027382 near=0.000188 random=0.000345 ray=0.000196 eikonal=0.038557 direction=0.031563 gradient_vector=0.072865
+Epoch 0500 | total=0.028623 near=0.000196 random=0.000432 ray=0.000194 eikonal=0.042125 direction=0.031932 gradient_vector=0.076458
+Epoch 0525 | total=0.029075 near=0.000215 random=0.000444 ray=0.000207 eikonal=0.040544 direction=0.034613 gradient_vector=0.076206
+Epoch 0550 | total=0.029552 near=0.000198 random=0.000316 ray=0.000216 eikonal=0.040522 direction=0.034224 gradient_vector=0.078941
+Epoch 0575 | total=0.028219 near=0.000185 random=0.000496 ray=0.000190 eikonal=0.038384 direction=0.032432 gradient_vector=0.075006
+Epoch 0600 | total=0.029388 near=0.000190 random=0.000359 ray=0.000203 eikonal=0.038709 direction=0.034383 gradient_vector=0.078479
+Epoch 0625 | total=0.027711 near=0.000193 random=0.000369 ray=0.000196 eikonal=0.039278 direction=0.031638 gradient_vector=0.073856
+Epoch 0650 | total=0.030119 near=0.000184 random=0.000455 ray=0.000207 eikonal=0.040155 direction=0.035134 gradient_vector=0.080123
+Epoch 0675 | total=0.028367 near=0.000178 random=0.000380 ray=0.000175 eikonal=0.037153 direction=0.034792 gradient_vector=0.074575
+Epoch 0700 | total=0.029626 near=0.000274 random=0.000416 ray=0.000216 eikonal=0.039164 direction=0.035576 gradient_vector=0.077725
+Epoch 0725 | total=0.028183 near=0.000179 random=0.000328 ray=0.000198 eikonal=0.038082 direction=0.032772 gradient_vector=0.075283
+Epoch 0750 | total=0.027172 near=0.000231 random=0.000341 ray=0.000210 eikonal=0.037603 direction=0.032212 gradient_vector=0.071426
+Epoch 0775 | total=0.028641 near=0.000182 random=0.000480 ray=0.000180 eikonal=0.038759 direction=0.033819 gradient_vector=0.075670
+Epoch 0800 | total=0.030010 near=0.000189 random=0.000380 ray=0.000205 eikonal=0.037730 direction=0.035475 gradient_vector=0.080197
+Epoch 0825 | total=0.028243 near=0.000186 random=0.000434 ray=0.000205 eikonal=0.037676 direction=0.033617 gradient_vector=0.074420
+Epoch 0850 | total=0.027251 near=0.000211 random=0.000364 ray=0.000206 eikonal=0.037678 direction=0.031977 gradient_vector=0.071940
+Epoch 0875 | total=0.027063 near=0.000181 random=0.000485 ray=0.000185 eikonal=0.038252 direction=0.030938 gradient_vector=0.071712
+Epoch 0900 | total=0.029805 near=0.000194 random=0.000379 ray=0.000193 eikonal=0.036489 direction=0.037660 gradient_vector=0.077953
+Epoch 0925 | total=0.027440 near=0.000189 random=0.000325 ray=0.000204 eikonal=0.036059 direction=0.032485 gradient_vector=0.072873
+Epoch 0950 | total=0.025703 near=0.000187 random=0.000359 ray=0.000177 eikonal=0.036006 direction=0.029718 gradient_vector=0.068233
+Epoch 0975 | total=0.029448 near=0.000185 random=0.000367 ray=0.000183 eikonal=0.035698 direction=0.035550 gradient_vector=0.078544
+Epoch 1000 | total=0.025906 near=0.000191 random=0.000313 ray=0.000192 eikonal=0.035523 direction=0.029482 gradient_vector=0.069381
+Epoch 1025 | total=0.028089 near=0.000213 random=0.000394 ray=0.000200 eikonal=0.037159 direction=0.033040 gradient_vector=0.074462
+Epoch 1050 | total=0.030074 near=0.000186 random=0.000351 ray=0.000201 eikonal=0.037794 direction=0.037422 gradient_vector=0.079043
+Epoch 1075 | total=0.026777 near=0.000198 random=0.000449 ray=0.000203 eikonal=0.037713 direction=0.030298 gradient_vector=0.071110
+Epoch 1100 | total=0.027842 near=0.000187 random=0.000521 ray=0.000183 eikonal=0.037091 direction=0.032873 gradient_vector=0.073353
+Epoch 1125 | total=0.027635 near=0.000182 random=0.000376 ray=0.000174 eikonal=0.036629 direction=0.032578 gradient_vector=0.073526
+Epoch 1150 | total=0.027474 near=0.000190 random=0.000350 ray=0.000193 eikonal=0.036145 direction=0.031506 gradient_vector=0.073754
+Epoch 1175 | total=0.026742 near=0.000196 random=0.000288 ray=0.000174 eikonal=0.035591 direction=0.031161 gradient_vector=0.071594
+Epoch 1200 | total=0.027426 near=0.000193 random=0.000346 ray=0.000170 eikonal=0.035567 direction=0.032810 gradient_vector=0.072819
+Epoch 1225 | total=0.027437 near=0.000191 random=0.000331 ray=0.000178 eikonal=0.035729 direction=0.032624 gradient_vector=0.072997
+Epoch 1250 | total=0.027881 near=0.000216 random=0.000381 ray=0.000202 eikonal=0.039363 direction=0.030472 gradient_vector=0.075267
+Epoch 1275 | total=0.024191 near=0.000206 random=0.000376 ray=0.000159 eikonal=0.035310 direction=0.026939 gradient_vector=0.064552
+Epoch 1300 | total=0.029250 near=0.000217 random=0.000397 ray=0.000199 eikonal=0.036977 direction=0.035885 gradient_vector=0.076850
+Epoch 1325 | total=0.026528 near=0.000204 random=0.000424 ray=0.000182 eikonal=0.035708 direction=0.031344 gradient_vector=0.069927
+Epoch 1350 | total=0.028004 near=0.000185 random=0.000419 ray=0.000170 eikonal=0.036182 direction=0.033669 gradient_vector=0.074068
+Epoch 1375 | total=0.029245 near=0.000190 random=0.000413 ray=0.000178 eikonal=0.037266 direction=0.034901 gradient_vector=0.077768
+Epoch 1400 | total=0.030873 near=0.000252 random=0.000434 ray=0.000213 eikonal=0.037536 direction=0.037884 gradient_vector=0.081232
+Epoch 1425 | total=0.026800 near=0.000189 random=0.000443 ray=0.000185 eikonal=0.036747 direction=0.031485 gradient_vector=0.070652
+Epoch 1450 | total=0.027411 near=0.000186 random=0.000341 ray=0.000198 eikonal=0.035162 direction=0.032120 gradient_vector=0.073220
+Epoch 1475 | total=0.029126 near=0.000190 random=0.000317 ray=0.000195 eikonal=0.036785 direction=0.035887 gradient_vector=0.076856
+Epoch 1499 | total=0.029488 near=0.000211 random=0.000394 ray=0.000188 eikonal=0.036423 direction=0.036476 gradient_vector=0.077560
+
+Saved candidate: panda_test/Models/nfunc12_candidate/xarm7_link2_w.pt  (n_func=12, weights=(1728,))
+>>> [xarm7_link2] done in 21s
+=================================================================
+>>> [xarm7_link3] 12:34:03
+Link xarm7_link3: training n_func=12 (1728 params) on cuda
+
+[Stage 1] Recursive least squares for 80 iters...
+[95m Iteration 0 loss 0.03724929317831993[0m
+[95m Iteration 1 loss 0.0007465669186785817[0m
+[95m Iteration 2 loss 0.00038723376928828657[0m
+[95m Iteration 3 loss 0.0003972236008848995[0m
+[95m Iteration 4 loss 0.0002965143066830933[0m
+[95m Iteration 5 loss 0.00028314124210737646[0m
+[95m Iteration 6 loss 0.0002653331612236798[0m
+[95m Iteration 7 loss 0.00025741622084751725[0m
+[95m Iteration 8 loss 0.00022689290926791728[0m
+[95m Iteration 9 loss 0.0002644270716700703[0m
+[95m Iteration 10 loss 0.00022759512648917735[0m
+[95m Iteration 11 loss 0.00017927869339473546[0m
+[95m Iteration 12 loss 0.0001597008522367105[0m
+[95m Iteration 13 loss 0.00022743425506632775[0m
+[95m Iteration 14 loss 0.00019115465693175793[0m
+[95m Iteration 15 loss 0.00019705039449036121[0m
+[95m Iteration 16 loss 0.00020559437689371407[0m
+[95m Iteration 17 loss 0.000187913523404859[0m
+[95m Iteration 18 loss 0.00020288194355089217[0m
+[95m Iteration 19 loss 0.00018346378055866808[0m
+[95m Iteration 20 loss 0.00017746091180015355[0m
+[95m Iteration 21 loss 0.00018804092542268336[0m
+[95m Iteration 22 loss 0.0001958997017936781[0m
+[95m Iteration 23 loss 0.00019161414820700884[0m
+[95m Iteration 24 loss 0.0002829063741955906[0m
+[95m Iteration 25 loss 0.00022236559016164392[0m
+[95m Iteration 26 loss 0.00013374106492847204[0m
+[95m Iteration 27 loss 0.00015714930486865342[0m
+[95m Iteration 28 loss 0.00018340529641136527[0m
+[95m Iteration 29 loss 0.00021366486907936633[0m
+[95m Iteration 30 loss 0.00012556268484331667[0m
+[95m Iteration 31 loss 0.00017364780069328845[0m
+[95m Iteration 32 loss 0.00013759048306383193[0m
+[95m Iteration 33 loss 0.00021128103253431618[0m
+[95m Iteration 34 loss 0.0002498589747119695[0m
+[95m Iteration 35 loss 0.0001556844508741051[0m
+[95m Iteration 36 loss 0.00018419510161038488[0m
+[95m Iteration 37 loss 0.0001569308660691604[0m
+[95m Iteration 38 loss 0.00014462292892858386[0m
+[95m Iteration 39 loss 0.000149427869473584[0m
+[95m Iteration 40 loss 0.00019866580259986222[0m
+[95m Iteration 41 loss 0.00024053062952589244[0m
+[95m Iteration 42 loss 0.0001649135519983247[0m
+[95m Iteration 43 loss 0.0001993250334635377[0m
+[95m Iteration 44 loss 0.00017987116007134318[0m
+[95m Iteration 45 loss 0.00017672312969807535[0m
+[95m Iteration 46 loss 0.0002137634000973776[0m
+[95m Iteration 47 loss 0.00020067459263373166[0m
+[95m Iteration 48 loss 0.0001526541745988652[0m
+[95m Iteration 49 loss 0.00017478041991125792[0m
+[95m Iteration 50 loss 0.00014620546426158398[0m
+[95m Iteration 51 loss 0.00018560956232249737[0m
+[95m Iteration 52 loss 0.00019154402252752334[0m
+[95m Iteration 53 loss 0.00017656336422078311[0m
+[95m Iteration 54 loss 0.00014224171172827482[0m
+[95m Iteration 55 loss 0.00017628802743274719[0m
+[95m Iteration 56 loss 0.00013784882321488112[0m
+[95m Iteration 57 loss 0.00014755490701645613[0m
+[95m Iteration 58 loss 0.00017204829782713205[0m
+[95m Iteration 59 loss 0.00015097418508958071[0m
+[95m Iteration 60 loss 0.00016047510143835098[0m
+[95m Iteration 61 loss 0.00019647642329800874[0m
+[95m Iteration 62 loss 0.0002244351926492527[0m
+[95m Iteration 63 loss 0.0001476013712817803[0m
+[95m Iteration 64 loss 0.0001354071864625439[0m
+[95m Iteration 65 loss 0.0002032856282312423[0m
+[95m Iteration 66 loss 0.0001205513981403783[0m
+[95m Iteration 67 loss 0.00017122166173066944[0m
+[95m Iteration 68 loss 0.00015846575843170285[0m
+[95m Iteration 69 loss 0.00018371353507973254[0m
+[95m Iteration 70 loss 0.00016120569489430636[0m
+[95m Iteration 71 loss 0.00016135117039084435[0m
+[95m Iteration 72 loss 0.0001598312082933262[0m
+[95m Iteration 73 loss 0.00015729473670944571[0m
+[95m Iteration 74 loss 0.00015774070925544947[0m
+[95m Iteration 75 loss 0.00017196328553836793[0m
+[95m Iteration 76 loss 0.00013839993334840983[0m
+[95m Iteration 77 loss 0.00013016459706705064[0m
+[95m Iteration 78 loss 0.0002758581249509007[0m
+[95m Iteration 79 loss 0.00016909418627619743[0m
+
+Generating 20,000 verified normal-ray samples...
+
+[Stage 2] Geometric fine-tune for 1500 epochs...
+Training geometric Bernstein SDF: n_func=12, epochs=1500, near=2048, random=1024, rays=1024
+Epoch 0000 | total=0.030478 near=0.000127 random=0.000491 ray=0.000240 eikonal=0.060786 direction=0.027161 gradient_vector=0.083629
+Epoch 0025 | total=0.032164 near=0.000103 random=0.000559 ray=0.000191 eikonal=0.054097 direction=0.033742 gradient_vector=0.086674
+Epoch 0050 | total=0.026529 near=0.000131 random=0.000629 ray=0.000173 eikonal=0.052421 direction=0.025203 gradient_vector=0.071041
+Epoch 0075 | total=0.030115 near=0.000147 random=0.000736 ray=0.000180 eikonal=0.048167 direction=0.033057 gradient_vector=0.079411
+Epoch 0100 | total=0.024080 near=0.000149 random=0.000545 ray=0.000184 eikonal=0.043680 direction=0.022946 gradient_vector=0.064974
+Epoch 0125 | total=0.026765 near=0.000197 random=0.000658 ray=0.000185 eikonal=0.042717 direction=0.028779 gradient_vector=0.070592
+Epoch 0150 | total=0.025344 near=0.000179 random=0.000577 ray=0.000176 eikonal=0.042086 direction=0.025490 gradient_vector=0.068138
+Epoch 0175 | total=0.024471 near=0.000168 random=0.000649 ray=0.000157 eikonal=0.044668 direction=0.024702 gradient_vector=0.064662
+Epoch 0200 | total=0.020962 near=0.000188 random=0.000644 ray=0.000186 eikonal=0.041587 direction=0.019445 gradient_vector=0.055153
+Epoch 0225 | total=0.024740 near=0.000171 random=0.000448 ray=0.000202 eikonal=0.041072 direction=0.025983 gradient_vector=0.065861
+Epoch 0250 | total=0.022981 near=0.000184 random=0.000621 ray=0.000156 eikonal=0.040372 direction=0.022261 gradient_vector=0.061573
+Epoch 0275 | total=0.025018 near=0.000172 random=0.000421 ray=0.000181 eikonal=0.039070 direction=0.026209 gradient_vector=0.067475
+Epoch 0300 | total=0.025566 near=0.000183 random=0.000480 ray=0.000209 eikonal=0.039541 direction=0.026627 gradient_vector=0.068731
+Epoch 0325 | total=0.023943 near=0.000220 random=0.000537 ray=0.000193 eikonal=0.039209 direction=0.025139 gradient_vector=0.063250
+Epoch 0350 | total=0.024272 near=0.000183 random=0.000683 ray=0.000169 eikonal=0.037903 direction=0.026397 gradient_vector=0.063568
+Epoch 0375 | total=0.024027 near=0.000168 random=0.000630 ray=0.000160 eikonal=0.036531 direction=0.025792 gradient_vector=0.063694
+Epoch 0400 | total=0.024827 near=0.000176 random=0.000644 ray=0.000167 eikonal=0.038214 direction=0.025952 gradient_vector=0.066284
+Epoch 0425 | total=0.022293 near=0.000188 random=0.000845 ray=0.000157 eikonal=0.036482 direction=0.022332 gradient_vector=0.058625
+Epoch 0450 | total=0.024835 near=0.000176 random=0.000851 ray=0.000164 eikonal=0.037154 direction=0.026777 gradient_vector=0.065064
+Epoch 0475 | total=0.026126 near=0.000174 random=0.000591 ray=0.000174 eikonal=0.037407 direction=0.028349 gradient_vector=0.069891
+Epoch 0500 | total=0.023920 near=0.000182 random=0.000492 ray=0.000168 eikonal=0.038713 direction=0.026639 gradient_vector=0.062583
+Epoch 0525 | total=0.025216 near=0.000188 random=0.000584 ray=0.000157 eikonal=0.037091 direction=0.027930 gradient_vector=0.066759
+Epoch 0550 | total=0.022740 near=0.000268 random=0.000525 ray=0.000167 eikonal=0.035547 direction=0.024350 gradient_vector=0.059860
+Epoch 0575 | total=0.022393 near=0.000190 random=0.000291 ray=0.000160 eikonal=0.034876 direction=0.024660 gradient_vector=0.059669
+Epoch 0600 | total=0.022365 near=0.000182 random=0.000444 ray=0.000184 eikonal=0.037513 direction=0.021890 gradient_vector=0.060468
+Epoch 0625 | total=0.022138 near=0.000180 random=0.000489 ray=0.000162 eikonal=0.036109 direction=0.022670 gradient_vector=0.059221
+Epoch 0650 | total=0.023396 near=0.000182 random=0.000493 ray=0.000166 eikonal=0.034737 direction=0.025128 gradient_vector=0.062506
+Epoch 0675 | total=0.022208 near=0.000174 random=0.000321 ray=0.000178 eikonal=0.033904 direction=0.022256 gradient_vector=0.060847
+Epoch 0700 | total=0.023451 near=0.000243 random=0.000467 ray=0.000141 eikonal=0.033729 direction=0.025389 gradient_vector=0.062772
+Epoch 0725 | total=0.021607 near=0.000236 random=0.000555 ray=0.000145 eikonal=0.034181 direction=0.022330 gradient_vector=0.057407
+Epoch 0750 | total=0.021123 near=0.000169 random=0.000505 ray=0.000160 eikonal=0.034620 direction=0.022119 gradient_vector=0.055898
+Epoch 0775 | total=0.023225 near=0.000169 random=0.000680 ray=0.000198 eikonal=0.035985 direction=0.024665 gradient_vector=0.060995
+Epoch 0800 | total=0.022446 near=0.000239 random=0.000515 ray=0.000169 eikonal=0.033946 direction=0.024001 gradient_vector=0.059425
+Epoch 0825 | total=0.024878 near=0.000177 random=0.000486 ray=0.000145 eikonal=0.035494 direction=0.027543 gradient_vector=0.066563
+Epoch 0850 | total=0.023270 near=0.000196 random=0.000710 ray=0.000144 eikonal=0.035320 direction=0.025123 gradient_vector=0.061143
+Epoch 0875 | total=0.023321 near=0.000180 random=0.000461 ray=0.000171 eikonal=0.036475 direction=0.025030 gradient_vector=0.062033
+Epoch 0900 | total=0.024604 near=0.000289 random=0.000608 ray=0.000153 eikonal=0.035234 direction=0.025803 gradient_vector=0.065917
+Epoch 0925 | total=0.023814 near=0.000277 random=0.000306 ray=0.000152 eikonal=0.033868 direction=0.026085 gradient_vector=0.064064
+Epoch 0950 | total=0.020931 near=0.000188 random=0.000348 ray=0.000173 eikonal=0.034061 direction=0.021268 gradient_vector=0.056372
+Epoch 0975 | total=0.022822 near=0.000178 random=0.000568 ray=0.000147 eikonal=0.033346 direction=0.025201 gradient_vector=0.060296
+Epoch 1000 | total=0.022559 near=0.000178 random=0.000617 ray=0.000155 eikonal=0.034562 direction=0.023933 gradient_vector=0.059755
+Epoch 1025 | total=0.025429 near=0.000232 random=0.000713 ray=0.000147 eikonal=0.037744 direction=0.027280 gradient_vector=0.067391
+Epoch 1050 | total=0.028440 near=0.000200 random=0.000731 ray=0.000155 eikonal=0.035466 direction=0.033964 gradient_vector=0.074533
+Epoch 1075 | total=0.024351 near=0.000177 random=0.000480 ray=0.000148 eikonal=0.033889 direction=0.027080 gradient_vector=0.065152
+Epoch 1100 | total=0.023427 near=0.000223 random=0.000590 ray=0.000143 eikonal=0.036181 direction=0.025377 gradient_vector=0.061776
+Epoch 1125 | total=0.026107 near=0.000195 random=0.000642 ray=0.000143 eikonal=0.034742 direction=0.030038 gradient_vector=0.068957
+Epoch 1150 | total=0.025930 near=0.000227 random=0.000681 ray=0.000154 eikonal=0.034597 direction=0.028220 gradient_vector=0.069359
+Epoch 1175 | total=0.024412 near=0.000180 random=0.000470 ray=0.000148 eikonal=0.034210 direction=0.026527 gradient_vector=0.065798
+Epoch 1200 | total=0.021119 near=0.000206 random=0.000391 ray=0.000149 eikonal=0.033698 direction=0.021571 gradient_vector=0.056895
+Epoch 1225 | total=0.019706 near=0.000197 random=0.000451 ray=0.000143 eikonal=0.031224 direction=0.021196 gradient_vector=0.051885
+Epoch 1250 | total=0.024712 near=0.000206 random=0.000529 ray=0.000152 eikonal=0.036346 direction=0.026479 gradient_vector=0.066242
+Epoch 1275 | total=0.024974 near=0.000297 random=0.000280 ray=0.000144 eikonal=0.033225 direction=0.028110 gradient_vector=0.067296
+Epoch 1300 | total=0.023044 near=0.000233 random=0.000618 ray=0.000154 eikonal=0.034950 direction=0.023971 gradient_vector=0.061374
+Epoch 1325 | total=0.023787 near=0.000177 random=0.000534 ray=0.000173 eikonal=0.034265 direction=0.025981 gradient_vector=0.063280
+Epoch 1350 | total=0.023645 near=0.000196 random=0.000341 ray=0.000144 eikonal=0.033096 direction=0.026060 gradient_vector=0.063814
+Epoch 1375 | total=0.023508 near=0.000188 random=0.000474 ray=0.000165 eikonal=0.033409 direction=0.025372 gradient_vector=0.063083
+Epoch 1400 | total=0.024339 near=0.000179 random=0.000884 ray=0.000158 eikonal=0.033544 direction=0.026288 gradient_vector=0.064097
+Epoch 1425 | total=0.023333 near=0.000235 random=0.000446 ray=0.000145 eikonal=0.036059 direction=0.024764 gradient_vector=0.062420
+Epoch 1450 | total=0.023043 near=0.000177 random=0.000723 ray=0.000139 eikonal=0.033402 direction=0.024173 gradient_vector=0.061438
+Epoch 1475 | total=0.021228 near=0.000194 random=0.000819 ray=0.000129 eikonal=0.033424 direction=0.022163 gradient_vector=0.055413
+Epoch 1499 | total=0.021836 near=0.000175 random=0.000772 ray=0.000131 eikonal=0.033009 direction=0.023356 gradient_vector=0.057222
+
+Saved candidate: panda_test/Models/nfunc12_candidate/xarm7_link3_w.pt  (n_func=12, weights=(1728,))
+>>> [xarm7_link3] done in 20s
+=================================================================
+>>> [xarm7_link4] 12:34:23
+Link xarm7_link4: training n_func=12 (1728 params) on cuda
+
+[Stage 1] Recursive least squares for 80 iters...
+[95m Iteration 0 loss 0.058231960982084274[0m
+[95m Iteration 1 loss 0.0006029641954228282[0m
+[95m Iteration 2 loss 0.0004960422520525753[0m
+[95m Iteration 3 loss 0.00028636501519940794[0m
+[95m Iteration 4 loss 0.0002609339717309922[0m
+[95m Iteration 5 loss 0.000293723278446123[0m
+[95m Iteration 6 loss 0.00027296782354824245[0m
+[95m Iteration 7 loss 0.0002511683851480484[0m
+[95m Iteration 8 loss 0.00022330092906486243[0m
+[95m Iteration 9 loss 0.00023897613573353738[0m
+[95m Iteration 10 loss 0.00021167087834328413[0m
+[95m Iteration 11 loss 0.00022496427118312567[0m
+[95m Iteration 12 loss 0.0002323162480024621[0m
+[95m Iteration 13 loss 0.000219423629459925[0m
+[95m Iteration 14 loss 0.0002175269037252292[0m
+[95m Iteration 15 loss 0.00022485984663944691[0m
+[95m Iteration 16 loss 0.00021702055528294295[0m
+[95m Iteration 17 loss 0.0002217885630670935[0m
+[95m Iteration 18 loss 0.0001930951257236302[0m
+[95m Iteration 19 loss 0.00021585659123957157[0m
+[95m Iteration 20 loss 0.0002524068986531347[0m
+[95m Iteration 21 loss 0.00022379362781066447[0m
+[95m Iteration 22 loss 0.00022369161888491362[0m
+[95m Iteration 23 loss 0.0002337380574317649[0m
+[95m Iteration 24 loss 0.0002260570036014542[0m
+[95m Iteration 25 loss 0.00021953530085738748[0m
+[95m Iteration 26 loss 0.0001696877443464473[0m
+[95m Iteration 27 loss 0.00023690544185228646[0m
+[95m Iteration 28 loss 0.0001897149923024699[0m
+[95m Iteration 29 loss 0.00016348090139217675[0m
+[95m Iteration 30 loss 0.00026273372350260615[0m
+[95m Iteration 31 loss 0.0001616572990315035[0m
+[95m Iteration 32 loss 0.00016394307021982968[0m
+[95m Iteration 33 loss 0.0001979810476768762[0m
+[95m Iteration 34 loss 0.0002651228569447994[0m
+[95m Iteration 35 loss 0.00020690909877885133[0m
+[95m Iteration 36 loss 0.0001513396273367107[0m
+[95m Iteration 37 loss 0.00021512182138394564[0m
+[95m Iteration 38 loss 0.00017140619456768036[0m
+[95m Iteration 39 loss 0.00023838283959776163[0m
+[95m Iteration 40 loss 0.00025089021073654294[0m
+[95m Iteration 41 loss 0.00016722953296266496[0m
+[95m Iteration 42 loss 0.00015832355711609125[0m
+[95m Iteration 43 loss 0.00015249526768457144[0m
+[95m Iteration 44 loss 0.00017041467071976513[0m
+[95m Iteration 45 loss 0.0001782541658030823[0m
+[95m Iteration 46 loss 0.00018476328114047647[0m
+[95m Iteration 47 loss 0.00022118333436083049[0m
+[95m Iteration 48 loss 0.00018367310985922813[0m
+[95m Iteration 49 loss 0.00020983899594284594[0m
+[95m Iteration 50 loss 0.0001697785482974723[0m
+[95m Iteration 51 loss 0.0001846215018304065[0m
+[95m Iteration 52 loss 0.00015469307254534215[0m
+[95m Iteration 53 loss 0.00014609690697398037[0m
+[95m Iteration 54 loss 0.00016260906704701483[0m
+[95m Iteration 55 loss 0.00019218484521843493[0m
+[95m Iteration 56 loss 0.00021462964650709182[0m
+[95m Iteration 57 loss 0.00017727751401253045[0m
+[95m Iteration 58 loss 0.00023240559676196426[0m
+[95m Iteration 59 loss 0.00016793764370959252[0m
+[95m Iteration 60 loss 0.00013623828999698162[0m
+[95m Iteration 61 loss 0.0001529978180769831[0m
+[95m Iteration 62 loss 0.00013879533798899502[0m
+[95m Iteration 63 loss 0.00023944841814227402[0m
+[95m Iteration 64 loss 0.00023731030523777008[0m
+[95m Iteration 65 loss 0.00015269963478203863[0m
+[95m Iteration 66 loss 0.0002165142068406567[0m
+[95m Iteration 67 loss 0.00018027209443971515[0m
+[95m Iteration 68 loss 0.00021284651302266866[0m
+[95m Iteration 69 loss 0.0002021833643084392[0m
+[95m Iteration 70 loss 0.00018530525267124176[0m
+[95m Iteration 71 loss 0.00015588627138640732[0m
+[95m Iteration 72 loss 0.0002376331976847723[0m
+[95m Iteration 73 loss 0.00021278031636029482[0m
+[95m Iteration 74 loss 0.00015793211059644818[0m
+[95m Iteration 75 loss 0.00016758865967858583[0m
+[95m Iteration 76 loss 0.00017247689538635314[0m
+[95m Iteration 77 loss 0.00015458017878700048[0m
+[95m Iteration 78 loss 0.0001521245576441288[0m
+[95m Iteration 79 loss 0.0001464635570300743[0m
+
+Generating 20,000 verified normal-ray samples...
+
+[Stage 2] Geometric fine-tune for 1500 epochs...
+Training geometric Bernstein SDF: n_func=12, epochs=1500, near=2048, random=1024, rays=1024
+Epoch 0000 | total=0.043107 near=0.000121 random=0.000465 ray=0.000335 eikonal=0.088905 direction=0.039598 gradient_vector=0.117949
+Epoch 0025 | total=0.034409 near=0.000141 random=0.000367 ray=0.000250 eikonal=0.072352 direction=0.031356 gradient_vector=0.094047
+Epoch 0050 | total=0.037598 near=0.000155 random=0.000499 ray=0.000303 eikonal=0.065064 direction=0.039757 gradient_vector=0.100537
+Epoch 0075 | total=0.038110 near=0.000172 random=0.000510 ray=0.000285 eikonal=0.061167 direction=0.041271 gradient_vector=0.102180
+Epoch 0100 | total=0.034372 near=0.000176 random=0.000623 ray=0.000276 eikonal=0.055326 direction=0.036757 gradient_vector=0.091619
+Epoch 0125 | total=0.030912 near=0.000196 random=0.000561 ray=0.000258 eikonal=0.057114 direction=0.030632 gradient_vector=0.082631
+Epoch 0150 | total=0.034143 near=0.000194 random=0.000733 ray=0.000264 eikonal=0.052849 direction=0.036232 gradient_vector=0.091193
+Epoch 0175 | total=0.034415 near=0.000212 random=0.000482 ray=0.000249 eikonal=0.051660 direction=0.038719 gradient_vector=0.091588
+Epoch 0200 | total=0.030976 near=0.000214 random=0.000442 ray=0.000253 eikonal=0.049443 direction=0.035046 gradient_vector=0.081334
+Epoch 0225 | total=0.033720 near=0.000205 random=0.000511 ray=0.000246 eikonal=0.049536 direction=0.038679 gradient_vector=0.089201
+Epoch 0250 | total=0.032911 near=0.000226 random=0.000670 ray=0.000251 eikonal=0.047949 direction=0.037922 gradient_vector=0.086123
+Epoch 0275 | total=0.027915 near=0.000199 random=0.000527 ray=0.000231 eikonal=0.046453 direction=0.029577 gradient_vector=0.073955
+Epoch 0300 | total=0.031156 near=0.000290 random=0.000494 ray=0.000231 eikonal=0.048718 direction=0.034714 gradient_vector=0.082123
+Epoch 0325 | total=0.033897 near=0.000196 random=0.000512 ray=0.000264 eikonal=0.047833 direction=0.039368 gradient_vector=0.089579
+Epoch 0350 | total=0.029907 near=0.000201 random=0.000450 ray=0.000219 eikonal=0.044536 direction=0.033676 gradient_vector=0.079427
+Epoch 0375 | total=0.032475 near=0.000208 random=0.000389 ray=0.000256 eikonal=0.045770 direction=0.038502 gradient_vector=0.085511
+Epoch 0400 | total=0.030734 near=0.000206 random=0.000466 ray=0.000264 eikonal=0.045472 direction=0.034464 gradient_vector=0.081468
+Epoch 0425 | total=0.031537 near=0.000203 random=0.000393 ray=0.000245 eikonal=0.044053 direction=0.036901 gradient_vector=0.083477
+Epoch 0450 | total=0.033774 near=0.000212 random=0.000519 ray=0.000246 eikonal=0.043671 direction=0.039948 gradient_vector=0.089505
+Epoch 0475 | total=0.030972 near=0.000218 random=0.000544 ray=0.000269 eikonal=0.045492 direction=0.033819 gradient_vector=0.082537
+Epoch 0500 | total=0.031793 near=0.000222 random=0.000452 ray=0.000256 eikonal=0.044208 direction=0.037844 gradient_vector=0.083308
+Epoch 0525 | total=0.031804 near=0.000212 random=0.000452 ray=0.000274 eikonal=0.043209 direction=0.037338 gradient_vector=0.083860
+Epoch 0550 | total=0.033181 near=0.000211 random=0.000597 ray=0.000273 eikonal=0.042233 direction=0.039557 gradient_vector=0.087212
+Epoch 0575 | total=0.032380 near=0.000210 random=0.000469 ray=0.000270 eikonal=0.043076 direction=0.037378 gradient_vector=0.086125
+Epoch 0600 | total=0.028959 near=0.000218 random=0.000374 ray=0.000225 eikonal=0.042494 direction=0.034168 gradient_vector=0.075832
+Epoch 0625 | total=0.031147 near=0.000229 random=0.000354 ray=0.000227 eikonal=0.043046 direction=0.036805 gradient_vector=0.082384
+Epoch 0650 | total=0.030187 near=0.000210 random=0.000453 ray=0.000240 eikonal=0.043963 direction=0.034597 gradient_vector=0.079707
+Epoch 0675 | total=0.031604 near=0.000213 random=0.000455 ray=0.000246 eikonal=0.042772 direction=0.036213 gradient_vector=0.084251
+Epoch 0700 | total=0.032119 near=0.000205 random=0.000384 ray=0.000242 eikonal=0.042253 direction=0.039132 gradient_vector=0.084422
+Epoch 0725 | total=0.030997 near=0.000199 random=0.000442 ray=0.000212 eikonal=0.040338 direction=0.036600 gradient_vector=0.082383
+Epoch 0750 | total=0.031851 near=0.000219 random=0.000365 ray=0.000228 eikonal=0.040652 direction=0.038862 gradient_vector=0.084025
+Epoch 0775 | total=0.028389 near=0.000225 random=0.000798 ray=0.000242 eikonal=0.041832 direction=0.032095 gradient_vector=0.073485
+Epoch 0800 | total=0.030325 near=0.000300 random=0.000642 ray=0.000225 eikonal=0.042235 direction=0.035688 gradient_vector=0.078737
+Epoch 0825 | total=0.033393 near=0.000222 random=0.000561 ray=0.000259 eikonal=0.041597 direction=0.039645 gradient_vector=0.088334
+Epoch 0850 | total=0.031989 near=0.000232 random=0.000469 ray=0.000267 eikonal=0.041383 direction=0.037387 gradient_vector=0.084831
+Epoch 0875 | total=0.032742 near=0.000223 random=0.000418 ray=0.000242 eikonal=0.039868 direction=0.040321 gradient_vector=0.086235
+Epoch 0900 | total=0.032707 near=0.000273 random=0.000399 ray=0.000250 eikonal=0.041287 direction=0.038736 gradient_vector=0.086894
+Epoch 0925 | total=0.028647 near=0.000216 random=0.000376 ray=0.000235 eikonal=0.038567 direction=0.034207 gradient_vector=0.075268
+Epoch 0950 | total=0.032833 near=0.000219 random=0.000709 ray=0.000233 eikonal=0.042272 direction=0.039068 gradient_vector=0.086045
+Epoch 0975 | total=0.033160 near=0.000207 random=0.000632 ray=0.000234 eikonal=0.042097 direction=0.040534 gradient_vector=0.086561
+Epoch 1000 | total=0.032226 near=0.000221 random=0.000632 ray=0.000219 eikonal=0.040754 direction=0.039168 gradient_vector=0.084252
+Epoch 1025 | total=0.029158 near=0.000210 random=0.000519 ray=0.000229 eikonal=0.039606 direction=0.032518 gradient_vector=0.077950
+Epoch 1050 | total=0.031441 near=0.000261 random=0.000638 ray=0.000245 eikonal=0.042242 direction=0.036513 gradient_vector=0.082551
+Epoch 1075 | total=0.033084 near=0.000238 random=0.000519 ray=0.000247 eikonal=0.043313 direction=0.040047 gradient_vector=0.086636
+Epoch 1100 | total=0.032991 near=0.000236 random=0.000445 ray=0.000231 eikonal=0.041754 direction=0.039134 gradient_vector=0.087734
+Epoch 1125 | total=0.030984 near=0.000216 random=0.000598 ray=0.000238 eikonal=0.040276 direction=0.036196 gradient_vector=0.081762
+Epoch 1150 | total=0.029944 near=0.000221 random=0.000501 ray=0.000231 eikonal=0.040296 direction=0.035493 gradient_vector=0.078583
+Epoch 1175 | total=0.032844 near=0.000309 random=0.000442 ray=0.000249 eikonal=0.040522 direction=0.039617 gradient_vector=0.086584
+Epoch 1200 | total=0.031064 near=0.000234 random=0.000319 ray=0.000241 eikonal=0.041194 direction=0.036901 gradient_vector=0.082356
+Epoch 1225 | total=0.029876 near=0.000253 random=0.000289 ray=0.000223 eikonal=0.039751 direction=0.035875 gradient_vector=0.078899
+Epoch 1250 | total=0.028500 near=0.000235 random=0.000464 ray=0.000227 eikonal=0.040994 direction=0.032820 gradient_vector=0.074934
+Epoch 1275 | total=0.031819 near=0.000278 random=0.000659 ray=0.000245 eikonal=0.040032 direction=0.037500 gradient_vector=0.083564
+Epoch 1300 | total=0.029598 near=0.000227 random=0.000393 ray=0.000229 eikonal=0.040700 direction=0.034497 gradient_vector=0.078343
+Epoch 1325 | total=0.032291 near=0.000231 random=0.000547 ray=0.000241 eikonal=0.041141 direction=0.038634 gradient_vector=0.084990
+Epoch 1350 | total=0.029171 near=0.000231 random=0.000570 ray=0.000225 eikonal=0.041922 direction=0.033536 gradient_vector=0.076471
+Epoch 1375 | total=0.033213 near=0.000213 random=0.000716 ray=0.000231 eikonal=0.041540 direction=0.040691 gradient_vector=0.086425
+Epoch 1400 | total=0.032023 near=0.000201 random=0.000601 ray=0.000244 eikonal=0.041388 direction=0.037094 gradient_vector=0.084984
+Epoch 1425 | total=0.031759 near=0.000217 random=0.000399 ray=0.000215 eikonal=0.040248 direction=0.038340 gradient_vector=0.084131
+Epoch 1450 | total=0.027596 near=0.000218 random=0.000431 ray=0.000227 eikonal=0.041256 direction=0.030737 gradient_vector=0.073125
+Epoch 1475 | total=0.028871 near=0.000233 random=0.000523 ray=0.000242 eikonal=0.042095 direction=0.032056 gradient_vector=0.076462
+Epoch 1499 | total=0.028406 near=0.000223 random=0.000504 ray=0.000223 eikonal=0.039720 direction=0.031930 gradient_vector=0.075440
+
+Saved candidate: panda_test/Models/nfunc12_candidate/xarm7_link4_w.pt  (n_func=12, weights=(1728,))
+>>> [xarm7_link4] done in 21s
+=================================================================
+>>> [xarm7_link5] 12:34:44
+Link xarm7_link5: training n_func=12 (1728 params) on cuda
+
+[Stage 1] Recursive least squares for 80 iters...
+[95m Iteration 0 loss 0.060079287737607956[0m
+[95m Iteration 1 loss 0.0008167982450686395[0m
+[95m Iteration 2 loss 0.0004907234688289464[0m
+[95m Iteration 3 loss 0.0004267402400728315[0m
+[95m Iteration 4 loss 0.000348421250237152[0m
+[95m Iteration 5 loss 0.0003046342171728611[0m
+[95m Iteration 6 loss 0.0003004168102052063[0m
+[95m Iteration 7 loss 0.000282937049632892[0m
+[95m Iteration 8 loss 0.0002581487351562828[0m
+[95m Iteration 9 loss 0.00025606737472116947[0m
+[95m Iteration 10 loss 0.00022343220189213753[0m
+[95m Iteration 11 loss 0.00027115861303173006[0m
+[95m Iteration 12 loss 0.00023399214842356741[0m
+[95m Iteration 13 loss 0.00022504982189275324[0m
+[95m Iteration 14 loss 0.0002550187928136438[0m
+[95m Iteration 15 loss 0.00021377670054789633[0m
+[95m Iteration 16 loss 0.00022960193746257573[0m
+[95m Iteration 17 loss 0.00021852622739970684[0m
+[95m Iteration 18 loss 0.00019941477512475103[0m
+[95m Iteration 19 loss 0.0001995856873691082[0m
+[95m Iteration 20 loss 0.0002075907395919785[0m
+[95m Iteration 21 loss 0.00020327958918642253[0m
+[95m Iteration 22 loss 0.00022116967011243105[0m
+[95m Iteration 23 loss 0.0002073697542073205[0m
+[95m Iteration 24 loss 0.00020042415417265147[0m
+[95m Iteration 25 loss 0.00019547510601114482[0m
+[95m Iteration 26 loss 0.00020583752484526485[0m
+[95m Iteration 27 loss 0.0001904457894852385[0m
+[95m Iteration 28 loss 0.00017906147695612162[0m
+[95m Iteration 29 loss 0.00019668314780574292[0m
+[95m Iteration 30 loss 0.00018528294458519667[0m
+[95m Iteration 31 loss 0.00017769052647054195[0m
+[95m Iteration 32 loss 0.000177068286575377[0m
+[95m Iteration 33 loss 0.00018341185932513326[0m
+[95m Iteration 34 loss 0.00019202838302589953[0m
+[95m Iteration 35 loss 0.00018532236572355032[0m
+[95m Iteration 36 loss 0.00017648962966632098[0m
+[95m Iteration 37 loss 0.0002090443595079705[0m
+[95m Iteration 38 loss 0.00016203802078962326[0m
+[95m Iteration 39 loss 0.00018897862173616886[0m
+[95m Iteration 40 loss 0.00017231229867320508[0m
+[95m Iteration 41 loss 0.00020465328998398036[0m
+[95m Iteration 42 loss 0.0001872936263680458[0m
+[95m Iteration 43 loss 0.00015780155081301928[0m
+[95m Iteration 44 loss 0.00018555630231276155[0m
+[95m Iteration 45 loss 0.00019589946896303445[0m
+[95m Iteration 46 loss 0.00017463481344748288[0m
+[95m Iteration 47 loss 0.00017104354628827423[0m
+[95m Iteration 48 loss 0.00016775360563769937[0m
+[95m Iteration 49 loss 0.00017215532716363668[0m
+[95m Iteration 50 loss 0.00015506263298448175[0m
+[95m Iteration 51 loss 0.0001653157378314063[0m
+[95m Iteration 52 loss 0.00019087472173850983[0m
+[95m Iteration 53 loss 0.00014879624359309673[0m
+[95m Iteration 54 loss 0.00017578944971319288[0m
+[95m Iteration 55 loss 0.0001728633651509881[0m
+[95m Iteration 56 loss 0.00017916297656483948[0m
+[95m Iteration 57 loss 0.0001677953259786591[0m
+[95m Iteration 58 loss 0.00015967040963005275[0m
+[95m Iteration 59 loss 0.00018293519678991288[0m
+[95m Iteration 60 loss 0.00015460909344255924[0m
+[95m Iteration 61 loss 0.0001560609816806391[0m
+[95m Iteration 62 loss 0.00015913325478322804[0m
+[95m Iteration 63 loss 0.00016751300427131355[0m
+[95m Iteration 64 loss 0.00014974268560763448[0m
+[95m Iteration 65 loss 0.00016890651022549719[0m
+[95m Iteration 66 loss 0.00017320900224149227[0m
+[95m Iteration 67 loss 0.00017722831398714334[0m
+[95m Iteration 68 loss 0.00015932675160001963[0m
+[95m Iteration 69 loss 0.00018326821736991405[0m
+[95m Iteration 70 loss 0.0001453451841371134[0m
+[95m Iteration 71 loss 0.00015691817679908127[0m
+[95m Iteration 72 loss 0.00014679516607429832[0m
+[95m Iteration 73 loss 0.00014405690308194607[0m
+[95m Iteration 74 loss 0.00016544654499739408[0m
+[95m Iteration 75 loss 0.00013916970056015998[0m
+[95m Iteration 76 loss 0.0001487867411924526[0m
+[95m Iteration 77 loss 0.00015184500080067664[0m
+[95m Iteration 78 loss 0.0001553321344545111[0m
+[95m Iteration 79 loss 0.00018290743173565716[0m
+
+Generating 20,000 verified normal-ray samples...
+
+[Stage 2] Geometric fine-tune for 1500 epochs...
+Training geometric Bernstein SDF: n_func=12, epochs=1500, near=2048, random=1024, rays=1024
+Epoch 0000 | total=0.077065 near=0.000106 random=0.000323 ray=0.000931 eikonal=0.118681 direction=0.099979 gradient_vector=0.195377
+Epoch 0025 | total=0.079545 near=0.000170 random=0.000421 ray=0.000992 eikonal=0.111759 direction=0.107071 gradient_vector=0.199870
+Epoch 0050 | total=0.071402 near=0.000252 random=0.000433 ray=0.000830 eikonal=0.105104 direction=0.090699 gradient_vector=0.182646
+Epoch 0075 | total=0.078375 near=0.000274 random=0.000567 ray=0.000989 eikonal=0.102239 direction=0.109154 gradient_vector=0.194444
+Epoch 0100 | total=0.075235 near=0.000328 random=0.000651 ray=0.001076 eikonal=0.096448 direction=0.103654 gradient_vector=0.186205
+Epoch 0125 | total=0.075039 near=0.000314 random=0.000557 ray=0.000955 eikonal=0.099199 direction=0.100789 gradient_vector=0.188559
+Epoch 0150 | total=0.080364 near=0.000344 random=0.000565 ray=0.001349 eikonal=0.094574 direction=0.115639 gradient_vector=0.195598
+Epoch 0175 | total=0.069191 near=0.000374 random=0.000555 ray=0.000966 eikonal=0.092850 direction=0.094504 gradient_vector=0.171152
+Epoch 0200 | total=0.069958 near=0.000380 random=0.000619 ray=0.001125 eikonal=0.091182 direction=0.097639 gradient_vector=0.170481
+Epoch 0225 | total=0.076922 near=0.000393 random=0.000634 ray=0.000986 eikonal=0.094391 direction=0.110737 gradient_vector=0.188226
+Epoch 0250 | total=0.076703 near=0.000393 random=0.000563 ray=0.001263 eikonal=0.090583 direction=0.107076 gradient_vector=0.189109
+Epoch 0275 | total=0.070403 near=0.000397 random=0.000657 ray=0.001182 eikonal=0.090007 direction=0.093725 gradient_vector=0.174962
+Epoch 0300 | total=0.059048 near=0.000430 random=0.000576 ray=0.000916 eikonal=0.088895 direction=0.071848 gradient_vector=0.149577
+Epoch 0325 | total=0.064644 near=0.000399 random=0.000534 ray=0.001046 eikonal=0.089337 direction=0.081679 gradient_vector=0.163270
+Epoch 0350 | total=0.071962 near=0.000401 random=0.000605 ray=0.001188 eikonal=0.089472 direction=0.099401 gradient_vector=0.176903
+Epoch 0375 | total=0.068730 near=0.000433 random=0.000537 ray=0.001149 eikonal=0.089327 direction=0.092247 gradient_vector=0.170186
+Epoch 0400 | total=0.070905 near=0.000439 random=0.000600 ray=0.001092 eikonal=0.089332 direction=0.096270 gradient_vector=0.175851
+Epoch 0425 | total=0.070913 near=0.000405 random=0.000638 ray=0.001082 eikonal=0.089490 direction=0.098423 gradient_vector=0.174184
+Epoch 0450 | total=0.066673 near=0.000457 random=0.000549 ray=0.001159 eikonal=0.089027 direction=0.086360 gradient_vector=0.166502
+Epoch 0475 | total=0.071878 near=0.000425 random=0.000591 ray=0.001212 eikonal=0.093174 direction=0.094816 gradient_vector=0.179265
+Epoch 0500 | total=0.073404 near=0.000470 random=0.000628 ray=0.001113 eikonal=0.089748 direction=0.100093 gradient_vector=0.182296
+Epoch 0525 | total=0.065966 near=0.000468 random=0.000564 ray=0.001023 eikonal=0.089591 direction=0.088851 gradient_vector=0.162555
+Epoch 0550 | total=0.068404 near=0.000441 random=0.000663 ray=0.001195 eikonal=0.090386 direction=0.092139 gradient_vector=0.167845
+Epoch 0575 | total=0.072719 near=0.000437 random=0.000649 ray=0.001145 eikonal=0.094199 direction=0.098689 gradient_vector=0.179579
+Epoch 0600 | total=0.068344 near=0.000451 random=0.000654 ray=0.001173 eikonal=0.091026 direction=0.091391 gradient_vector=0.168254
+Epoch 0625 | total=0.066293 near=0.000442 random=0.000623 ray=0.001113 eikonal=0.089208 direction=0.086840 gradient_vector=0.164696
+Epoch 0650 | total=0.067137 near=0.000466 random=0.000643 ray=0.001113 eikonal=0.091582 direction=0.089905 gradient_vector=0.164969
+Epoch 0675 | total=0.062812 near=0.000456 random=0.000647 ray=0.000946 eikonal=0.088240 direction=0.078805 gradient_vector=0.158577
+Epoch 0700 | total=0.066761 near=0.000453 random=0.000655 ray=0.001206 eikonal=0.090114 direction=0.087051 gradient_vector=0.165302
+Epoch 0725 | total=0.064404 near=0.000499 random=0.000655 ray=0.001206 eikonal=0.088789 direction=0.083333 gradient_vector=0.158928
+Epoch 0750 | total=0.071774 near=0.000430 random=0.000677 ray=0.001350 eikonal=0.090723 direction=0.097840 gradient_vector=0.175448
+Epoch 0775 | total=0.078978 near=0.000481 random=0.000679 ray=0.001413 eikonal=0.093316 direction=0.113019 gradient_vector=0.190890
+Epoch 0800 | total=0.067784 near=0.000488 random=0.000651 ray=0.001070 eikonal=0.090077 direction=0.089675 gradient_vector=0.168260
+Epoch 0825 | total=0.067628 near=0.000465 random=0.000618 ray=0.001126 eikonal=0.088335 direction=0.092975 gradient_vector=0.165125
+Epoch 0850 | total=0.065807 near=0.000470 random=0.000613 ray=0.001119 eikonal=0.089898 direction=0.085044 gradient_vector=0.163930
+Epoch 0875 | total=0.062599 near=0.000523 random=0.000691 ray=0.001150 eikonal=0.089573 direction=0.076816 gradient_vector=0.156970
+Epoch 0900 | total=0.065891 near=0.000466 random=0.000692 ray=0.001197 eikonal=0.090613 direction=0.083520 gradient_vector=0.164418
+Epoch 0925 | total=0.068793 near=0.000446 random=0.000711 ray=0.001086 eikonal=0.088226 direction=0.092161 gradient_vector=0.170486
+Epoch 0950 | total=0.065241 near=0.000462 random=0.000696 ray=0.001218 eikonal=0.088021 direction=0.084443 gradient_vector=0.161425
+Epoch 0975 | total=0.064057 near=0.000478 random=0.000587 ray=0.000982 eikonal=0.084491 direction=0.085514 gradient_vector=0.158802
+Epoch 1000 | total=0.065008 near=0.000513 random=0.000674 ray=0.001098 eikonal=0.087833 direction=0.087196 gradient_vector=0.159178
+Epoch 1025 | total=0.067683 near=0.000482 random=0.000587 ray=0.001218 eikonal=0.088131 direction=0.087769 gradient_vector=0.168869
+Epoch 1050 | total=0.069180 near=0.000490 random=0.000663 ray=0.001074 eikonal=0.089977 direction=0.096668 gradient_vector=0.168186
+Epoch 1075 | total=0.067870 near=0.000482 random=0.000738 ray=0.001241 eikonal=0.087471 direction=0.091227 gradient_vector=0.166197
+Epoch 1100 | total=0.074032 near=0.000501 random=0.000649 ray=0.001193 eikonal=0.088892 direction=0.101487 gradient_vector=0.183015
+Epoch 1125 | total=0.069776 near=0.000475 random=0.000660 ray=0.001303 eikonal=0.087145 direction=0.096014 gradient_vector=0.169903
+Epoch 1150 | total=0.063442 near=0.000494 random=0.000663 ray=0.000949 eikonal=0.086827 direction=0.081120 gradient_vector=0.159282
+Epoch 1175 | total=0.071576 near=0.000436 random=0.000749 ray=0.001392 eikonal=0.088920 direction=0.099637 gradient_vector=0.172936
+Epoch 1200 | total=0.070523 near=0.000490 random=0.000667 ray=0.001050 eikonal=0.086826 direction=0.096234 gradient_vector=0.174715
+Epoch 1225 | total=0.064767 near=0.000473 random=0.000717 ray=0.001220 eikonal=0.085676 direction=0.081886 gradient_vector=0.161900
+Epoch 1250 | total=0.066359 near=0.000491 random=0.000629 ray=0.001159 eikonal=0.088276 direction=0.088171 gradient_vector=0.163494
+Epoch 1275 | total=0.070963 near=0.000495 random=0.000767 ray=0.001210 eikonal=0.089211 direction=0.094570 gradient_vector=0.175623
+Epoch 1300 | total=0.066277 near=0.000492 random=0.000766 ray=0.001058 eikonal=0.087708 direction=0.090834 gradient_vector=0.161402
+Epoch 1325 | total=0.069982 near=0.000494 random=0.000705 ray=0.001149 eikonal=0.087412 direction=0.097530 gradient_vector=0.170440
+Epoch 1350 | total=0.068615 near=0.000513 random=0.000628 ray=0.001276 eikonal=0.087309 direction=0.092019 gradient_vector=0.168608
+Epoch 1375 | total=0.073411 near=0.000507 random=0.000672 ray=0.001251 eikonal=0.088432 direction=0.102406 gradient_vector=0.179309
+Epoch 1400 | total=0.071633 near=0.000477 random=0.000701 ray=0.001151 eikonal=0.087594 direction=0.097286 gradient_vector=0.177270
+Epoch 1425 | total=0.064111 near=0.000507 random=0.000658 ray=0.001214 eikonal=0.089215 direction=0.081342 gradient_vector=0.159152
+Epoch 1450 | total=0.076089 near=0.000528 random=0.000787 ray=0.001219 eikonal=0.089892 direction=0.107064 gradient_vector=0.185722
+Epoch 1475 | total=0.068039 near=0.000495 random=0.000697 ray=0.001180 eikonal=0.088911 direction=0.090206 gradient_vector=0.168006
+Epoch 1499 | total=0.054524 near=0.000500 random=0.000710 ray=0.000951 eikonal=0.086286 direction=0.065809 gradient_vector=0.135747
+
+Saved candidate: panda_test/Models/nfunc12_candidate/xarm7_link5_w.pt  (n_func=12, weights=(1728,))
+>>> [xarm7_link5] done in 20s
+=================================================================
+>>> [xarm7_link6] 12:35:04
+Link xarm7_link6: training n_func=12 (1728 params) on cuda
+
+[Stage 1] Recursive least squares for 80 iters...
+[95m Iteration 0 loss 0.03433942794799805[0m
+[95m Iteration 1 loss 0.0009644776582717896[0m
+[95m Iteration 2 loss 0.0004009331751149148[0m
+[95m Iteration 3 loss 0.0002831976453308016[0m
+[95m Iteration 4 loss 0.00025333298253826797[0m
+[95m Iteration 5 loss 0.0002738824114203453[0m
+[95m Iteration 6 loss 0.00022889603860676289[0m
+[95m Iteration 7 loss 0.00022127831471152604[0m
+[95m Iteration 8 loss 0.00023104851425159723[0m
+[95m Iteration 9 loss 0.00022407330106943846[0m
+[95m Iteration 10 loss 0.00020321470219641924[0m
+[95m Iteration 11 loss 0.00018929872021544725[0m
+[95m Iteration 12 loss 0.00023406797845382243[0m
+[95m Iteration 13 loss 0.00020500608661677688[0m
+[95m Iteration 14 loss 0.00017502627451904118[0m
+[95m Iteration 15 loss 0.0001727948838379234[0m
+[95m Iteration 16 loss 0.0001771182578522712[0m
+[95m Iteration 17 loss 0.000298522412776947[0m
+[95m Iteration 18 loss 0.00018895664834417403[0m
+[95m Iteration 19 loss 0.00017893512267619371[0m
+[95m Iteration 20 loss 0.00017016554193105549[0m
+[95m Iteration 21 loss 0.00015670066932216287[0m
+[95m Iteration 22 loss 0.0001981432578759268[0m
+[95m Iteration 23 loss 0.00017713614215608686[0m
+[95m Iteration 24 loss 0.00015247342525981367[0m
+[95m Iteration 25 loss 0.0001693571248324588[0m
+[95m Iteration 26 loss 0.00015711731975898147[0m
+[95m Iteration 27 loss 0.0001380509347654879[0m
+[95m Iteration 28 loss 0.00018335870117880404[0m
+[95m Iteration 29 loss 0.00021391711197793484[0m
+[95m Iteration 30 loss 0.00016127550043165684[0m
+[95m Iteration 31 loss 0.0001822484628064558[0m
+[95m Iteration 32 loss 0.0002082452701870352[0m
+[95m Iteration 33 loss 0.00014817426563240588[0m
+[95m Iteration 34 loss 0.0001729205105220899[0m
+[95m Iteration 35 loss 0.0001462506188545376[0m
+[95m Iteration 36 loss 0.00018421391723677516[0m
+[95m Iteration 37 loss 0.00021625286899507046[0m
+[95m Iteration 38 loss 0.0001399366883561015[0m
+[95m Iteration 39 loss 0.00014581003051716834[0m
+[95m Iteration 40 loss 0.00014324503717944026[0m
+[95m Iteration 41 loss 0.00014073621423449367[0m
+[95m Iteration 42 loss 0.00016186186985578388[0m
+[95m Iteration 43 loss 0.0002200583548983559[0m
+[95m Iteration 44 loss 0.0001524820545455441[0m
+[95m Iteration 45 loss 0.00015582775813527405[0m
+[95m Iteration 46 loss 0.00013108892017044127[0m
+[95m Iteration 47 loss 0.00013551271695178002[0m
+[95m Iteration 48 loss 0.00015475192049052566[0m
+[95m Iteration 49 loss 0.0001507328124716878[0m
+[95m Iteration 50 loss 0.00013231452612672[0m
+[95m Iteration 51 loss 0.00015851463831495494[0m
+[95m Iteration 52 loss 0.0001407838281011209[0m
+[95m Iteration 53 loss 0.0001918608322739601[0m
+[95m Iteration 54 loss 0.00036943829036317766[0m
+[95m Iteration 55 loss 0.00014007043500896543[0m
+[95m Iteration 56 loss 0.00014996837126091123[0m
+[95m Iteration 57 loss 0.00013380892050918192[0m
+[95m Iteration 58 loss 0.00013095101166982204[0m
+[95m Iteration 59 loss 0.00020580556883942336[0m
+[95m Iteration 60 loss 0.00011773128062486649[0m
+[95m Iteration 61 loss 0.00018875114619731903[0m
+[95m Iteration 62 loss 0.0001372124970657751[0m
+[95m Iteration 63 loss 0.00011680280294967815[0m
+[95m Iteration 64 loss 0.00012915399565827101[0m
+[95m Iteration 65 loss 0.00018324195116292685[0m
+[95m Iteration 66 loss 0.00021653874136973172[0m
+[95m Iteration 67 loss 0.00011390984582249075[0m
+[95m Iteration 68 loss 0.00013902537466492504[0m
+[95m Iteration 69 loss 0.00015353654453065246[0m
+[95m Iteration 70 loss 0.00018669695418793708[0m
+[95m Iteration 71 loss 0.00014256517169997096[0m
+[95m Iteration 72 loss 0.0001316112611675635[0m
+[95m Iteration 73 loss 0.00015762441034894437[0m
+[95m Iteration 74 loss 0.00019175818306393921[0m
+[95m Iteration 75 loss 0.00014111210475675762[0m
+[95m Iteration 76 loss 0.00023111053451430053[0m
+[95m Iteration 77 loss 0.00023139007680583745[0m
+[95m Iteration 78 loss 0.00014707182708662003[0m
+[95m Iteration 79 loss 0.0002537583641242236[0m
+
+Generating 20,000 verified normal-ray samples...
+
+[Stage 2] Geometric fine-tune for 1500 epochs...
+Training geometric Bernstein SDF: n_func=12, epochs=1500, near=2048, random=1024, rays=1024
+Epoch 0000 | total=0.122683 near=0.000096 random=0.000241 ray=0.005445 eikonal=0.045306 direction=0.168557 gradient_vector=0.301922
+Epoch 0025 | total=0.125917 near=0.000241 random=0.000461 ray=0.005187 eikonal=0.044644 direction=0.176970 gradient_vector=0.308859
+Epoch 0050 | total=0.095063 near=0.000320 random=0.000601 ray=0.004342 eikonal=0.045228 direction=0.133095 gradient_vector=0.226313
+Epoch 0075 | total=0.104203 near=0.000365 random=0.000567 ray=0.004687 eikonal=0.050350 direction=0.148625 gradient_vector=0.246613
+Epoch 0100 | total=0.112503 near=0.000337 random=0.000711 ray=0.004649 eikonal=0.048934 direction=0.159878 gradient_vector=0.270940
+Epoch 0125 | total=0.109855 near=0.000378 random=0.000596 ray=0.004705 eikonal=0.050626 direction=0.155192 gradient_vector=0.263603
+Epoch 0150 | total=0.101242 near=0.000399 random=0.000720 ray=0.004018 eikonal=0.053810 direction=0.141511 gradient_vector=0.244375
+Epoch 0175 | total=0.102209 near=0.000393 random=0.000656 ray=0.004501 eikonal=0.052521 direction=0.147266 gradient_vector=0.240313
+Epoch 0200 | total=0.108173 near=0.000386 random=0.000667 ray=0.004018 eikonal=0.054014 direction=0.160828 gradient_vector=0.256868
+Epoch 0225 | total=0.094125 near=0.000382 random=0.000704 ray=0.003329 eikonal=0.053198 direction=0.137796 gradient_vector=0.224642
+Epoch 0250 | total=0.121755 near=0.000404 random=0.000923 ray=0.005213 eikonal=0.056353 direction=0.182080 gradient_vector=0.283074
+Epoch 0275 | total=0.099028 near=0.000381 random=0.000861 ray=0.003984 eikonal=0.055831 direction=0.145449 gradient_vector=0.231745
+Epoch 0300 | total=0.099451 near=0.000433 random=0.000691 ray=0.003853 eikonal=0.055306 direction=0.147680 gradient_vector=0.233275
+Epoch 0325 | total=0.109860 near=0.000372 random=0.000890 ray=0.004540 eikonal=0.053991 direction=0.164902 gradient_vector=0.255353
+Epoch 0350 | total=0.106381 near=0.000452 random=0.000794 ray=0.003841 eikonal=0.058794 direction=0.160900 gradient_vector=0.249337
+Epoch 0375 | total=0.110191 near=0.000401 random=0.000671 ray=0.004364 eikonal=0.058060 direction=0.166057 gradient_vector=0.257112
+Epoch 0400 | total=0.100984 near=0.000431 random=0.000852 ray=0.004109 eikonal=0.057254 direction=0.150603 gradient_vector=0.233993
+Epoch 0425 | total=0.095333 near=0.000375 random=0.000830 ray=0.003436 eikonal=0.058278 direction=0.143000 gradient_vector=0.222966
+Epoch 0450 | total=0.113809 near=0.000394 random=0.000842 ray=0.004953 eikonal=0.060288 direction=0.176203 gradient_vector=0.257651
+Epoch 0475 | total=0.097660 near=0.000404 random=0.000943 ray=0.004194 eikonal=0.060885 direction=0.145526 gradient_vector=0.223103
+Epoch 0500 | total=0.102607 near=0.000508 random=0.000886 ray=0.003616 eikonal=0.060905 direction=0.155679 gradient_vector=0.239200
+Epoch 0525 | total=0.103926 near=0.000408 random=0.000797 ray=0.004221 eikonal=0.060152 direction=0.154999 gradient_vector=0.241084
+Epoch 0550 | total=0.094646 near=0.000442 random=0.000903 ray=0.003762 eikonal=0.061108 direction=0.139249 gradient_vector=0.219487
+Epoch 0575 | total=0.108287 near=0.000413 random=0.000979 ray=0.004565 eikonal=0.062685 direction=0.161674 gradient_vector=0.249184
+Epoch 0600 | total=0.100043 near=0.000448 random=0.001075 ray=0.003874 eikonal=0.060000 direction=0.149179 gradient_vector=0.231745
+Epoch 0625 | total=0.087470 near=0.000420 random=0.000857 ray=0.003091 eikonal=0.057498 direction=0.130144 gradient_vector=0.204430
+Epoch 0650 | total=0.095827 near=0.000452 random=0.001017 ray=0.004161 eikonal=0.063692 direction=0.141214 gradient_vector=0.218440
+Epoch 0675 | total=0.097813 near=0.000446 random=0.000981 ray=0.003907 eikonal=0.060936 direction=0.147960 gradient_vector=0.223737
+Epoch 0700 | total=0.093931 near=0.000439 random=0.000925 ray=0.003479 eikonal=0.061757 direction=0.143211 gradient_vector=0.215516
+Epoch 0725 | total=0.090957 near=0.000409 random=0.001223 ray=0.003659 eikonal=0.059869 direction=0.135419 gradient_vector=0.207720
+Epoch 0750 | total=0.108238 near=0.000439 random=0.000926 ray=0.004858 eikonal=0.063647 direction=0.162130 gradient_vector=0.246198
+Epoch 0775 | total=0.089498 near=0.000436 random=0.000972 ray=0.003765 eikonal=0.063570 direction=0.130937 gradient_vector=0.204783
+Epoch 0800 | total=0.097311 near=0.000464 random=0.001105 ray=0.004143 eikonal=0.062498 direction=0.145239 gradient_vector=0.221139
+Epoch 0825 | total=0.097287 near=0.000385 random=0.001097 ray=0.003898 eikonal=0.061757 direction=0.147338 gradient_vector=0.221821
+Epoch 0850 | total=0.107975 near=0.000423 random=0.001046 ray=0.004710 eikonal=0.064189 direction=0.163750 gradient_vector=0.244505
+Epoch 0875 | total=0.090198 near=0.000480 random=0.001016 ray=0.003386 eikonal=0.062565 direction=0.135165 gradient_vector=0.207075
+Epoch 0900 | total=0.107128 near=0.000451 random=0.001080 ray=0.004024 eikonal=0.065790 direction=0.165576 gradient_vector=0.244582
+Epoch 0925 | total=0.097478 near=0.000523 random=0.001120 ray=0.003829 eikonal=0.064782 direction=0.145845 gradient_vector=0.223072
+Epoch 0950 | total=0.096566 near=0.000438 random=0.000936 ray=0.004685 eikonal=0.063264 direction=0.144482 gradient_vector=0.215045
+Epoch 0975 | total=0.096718 near=0.000462 random=0.001060 ray=0.004469 eikonal=0.065987 direction=0.140459 gradient_vector=0.219464
+Epoch 1000 | total=0.093627 near=0.000486 random=0.000963 ray=0.003930 eikonal=0.063322 direction=0.138881 gradient_vector=0.213502
+Epoch 1025 | total=0.109881 near=0.000434 random=0.000871 ray=0.003993 eikonal=0.063494 direction=0.173733 gradient_vector=0.250676
+Epoch 1050 | total=0.103841 near=0.000446 random=0.001060 ray=0.003896 eikonal=0.065284 direction=0.155976 gradient_vector=0.240337
+Epoch 1075 | total=0.099840 near=0.000482 random=0.001123 ray=0.003701 eikonal=0.064288 direction=0.149838 gradient_vector=0.230602
+Epoch 1100 | total=0.098646 near=0.000421 random=0.000923 ray=0.003633 eikonal=0.063217 direction=0.145632 gradient_vector=0.230992
+Epoch 1125 | total=0.105444 near=0.000433 random=0.001017 ray=0.004157 eikonal=0.066136 direction=0.159855 gradient_vector=0.241607
+Epoch 1150 | total=0.093888 near=0.000442 random=0.001090 ray=0.003955 eikonal=0.063815 direction=0.139254 gradient_vector=0.213615
+Epoch 1175 | total=0.093772 near=0.000487 random=0.001107 ray=0.003906 eikonal=0.063483 direction=0.140530 gradient_vector=0.212341
+Epoch 1200 | total=0.092059 near=0.000431 random=0.001031 ray=0.003093 eikonal=0.065791 direction=0.137871 gradient_vector=0.214187
+Epoch 1225 | total=0.104024 near=0.000465 random=0.001215 ray=0.004010 eikonal=0.065503 direction=0.161092 gradient_vector=0.235322
+Epoch 1250 | total=0.100694 near=0.000466 random=0.001194 ray=0.004165 eikonal=0.065621 direction=0.152407 gradient_vector=0.227759
+Epoch 1275 | total=0.088720 near=0.000477 random=0.001221 ray=0.003871 eikonal=0.065879 direction=0.131841 gradient_vector=0.198467
+Epoch 1300 | total=0.109611 near=0.000439 random=0.000920 ray=0.004809 eikonal=0.065676 direction=0.171079 gradient_vector=0.244539
+Epoch 1325 | total=0.091472 near=0.000446 random=0.000944 ray=0.003947 eikonal=0.063642 direction=0.138548 gradient_vector=0.205180
+Epoch 1350 | total=0.094257 near=0.000431 random=0.001210 ray=0.003649 eikonal=0.063550 direction=0.142124 gradient_vector=0.214860
+Epoch 1375 | total=0.102403 near=0.000427 random=0.000939 ray=0.004651 eikonal=0.064643 direction=0.153385 gradient_vector=0.231302
+Epoch 1400 | total=0.114959 near=0.000475 random=0.001062 ray=0.005166 eikonal=0.067714 direction=0.180375 gradient_vector=0.254517
+Epoch 1425 | total=0.104542 near=0.000428 random=0.000977 ray=0.004659 eikonal=0.067728 direction=0.156903 gradient_vector=0.236203
+Epoch 1450 | total=0.095421 near=0.000502 random=0.001214 ray=0.004301 eikonal=0.064848 direction=0.140415 gradient_vector=0.215110
+Epoch 1475 | total=0.099245 near=0.000456 random=0.000957 ray=0.004241 eikonal=0.063976 direction=0.149952 gradient_vector=0.224650
+Epoch 1499 | total=0.098556 near=0.000512 random=0.001077 ray=0.004368 eikonal=0.065014 direction=0.148234 gradient_vector=0.221336
+
+Saved candidate: panda_test/Models/nfunc12_candidate/xarm7_link6_w.pt  (n_func=12, weights=(1728,))
+>>> [xarm7_link6] done in 23s
+=================================================================
+>>> [xarm7_link7] 12:35:27
+Link xarm7_link7: training n_func=12 (1728 params) on cuda
+
+[Stage 1] Recursive least squares for 80 iters...
+[95m Iteration 0 loss 0.03195016831159592[0m
+[95m Iteration 1 loss 0.000811431382317096[0m
+[95m Iteration 2 loss 0.00041208157199434936[0m
+[95m Iteration 3 loss 0.0003973367274738848[0m
+[95m Iteration 4 loss 0.0003872511151712388[0m
+[95m Iteration 5 loss 0.00041360739851370454[0m
+[95m Iteration 6 loss 0.00033521439763717353[0m
+[95m Iteration 7 loss 0.00036365340929478407[0m
+[95m Iteration 8 loss 0.0003834723902400583[0m
+[95m Iteration 9 loss 0.00036475269007496536[0m
+[95m Iteration 10 loss 0.00035380531335249543[0m
+[95m Iteration 11 loss 0.00033104344038292766[0m
+[95m Iteration 12 loss 0.0003319104143884033[0m
+[95m Iteration 13 loss 0.0003151888959109783[0m
+[95m Iteration 14 loss 0.0003220670041628182[0m
+[95m Iteration 15 loss 0.0003444383619353175[0m
+[95m Iteration 16 loss 0.0003164063673466444[0m
+[95m Iteration 17 loss 0.0003243735700380057[0m
+[95m Iteration 18 loss 0.0003184224187862128[0m
+[95m Iteration 19 loss 0.0003247508720960468[0m
+[95m Iteration 20 loss 0.00035680897417478263[0m
+[95m Iteration 21 loss 0.0003105346695519984[0m
+[95m Iteration 22 loss 0.0003284793929196894[0m
+[95m Iteration 23 loss 0.000321658153552562[0m
+[95m Iteration 24 loss 0.00033882175921462476[0m
+[95m Iteration 25 loss 0.00035377187305130064[0m
+[95m Iteration 26 loss 0.0003154396254103631[0m
+[95m Iteration 27 loss 0.00031926584779284894[0m
+[95m Iteration 28 loss 0.0003010077343787998[0m
+[95m Iteration 29 loss 0.0003324317221995443[0m
+[95m Iteration 30 loss 0.0003142240166198462[0m
+[95m Iteration 31 loss 0.00033364337286911905[0m
+[95m Iteration 32 loss 0.0003404248273000121[0m
+[95m Iteration 33 loss 0.0002961629943456501[0m
+[95m Iteration 34 loss 0.00032785028452053666[0m
+[95m Iteration 35 loss 0.00027997809229418635[0m
+[95m Iteration 36 loss 0.0003071644459851086[0m
+[95m Iteration 37 loss 0.000282528402749449[0m
+[95m Iteration 38 loss 0.00029649879434145987[0m
+[95m Iteration 39 loss 0.0003219109494239092[0m
+[95m Iteration 40 loss 0.0002993640664499253[0m
+[95m Iteration 41 loss 0.00030572593095712364[0m
+[95m Iteration 42 loss 0.00030362873803824186[0m
+[95m Iteration 43 loss 0.00030446849996224046[0m
+[95m Iteration 44 loss 0.00031851089443080127[0m
+[95m Iteration 45 loss 0.0003090131503995508[0m
+[95m Iteration 46 loss 0.00030965471523813903[0m
+[95m Iteration 47 loss 0.00030368249281309545[0m
+[95m Iteration 48 loss 0.00029253397951833904[0m
+[95m Iteration 49 loss 0.00032092188484966755[0m
+[95m Iteration 50 loss 0.0002938013931270689[0m
+[95m Iteration 51 loss 0.0002923795545939356[0m
+[95m Iteration 52 loss 0.0002750529092736542[0m
+[95m Iteration 53 loss 0.0002871043689083308[0m
+[95m Iteration 54 loss 0.00031481380574405193[0m
+[95m Iteration 55 loss 0.00028187964926473796[0m
+[95m Iteration 56 loss 0.0002908925525844097[0m
+[95m Iteration 57 loss 0.00029440326034091413[0m
+[95m Iteration 58 loss 0.0003052991523873061[0m
+[95m Iteration 59 loss 0.0002975373063236475[0m
+[95m Iteration 60 loss 0.00030604875064454973[0m
+[95m Iteration 61 loss 0.0002875641221180558[0m
+[95m Iteration 62 loss 0.0003215237520635128[0m
+[95m Iteration 63 loss 0.00027344649424776435[0m
+[95m Iteration 64 loss 0.00030277608311735094[0m
+[95m Iteration 65 loss 0.0002991783549077809[0m
+[95m Iteration 66 loss 0.0003122836642432958[0m
+[95m Iteration 67 loss 0.00028783021843992174[0m
+[95m Iteration 68 loss 0.00028532822034321725[0m
+[95m Iteration 69 loss 0.00028628812287934124[0m
+[95m Iteration 70 loss 0.00028009232482872903[0m
+[95m Iteration 71 loss 0.00030364934355020523[0m
+[95m Iteration 72 loss 0.0002800261427182704[0m
+[95m Iteration 73 loss 0.0002902203123085201[0m
+[95m Iteration 74 loss 0.00029384056688286364[0m
+[95m Iteration 75 loss 0.00026866747066378593[0m
+[95m Iteration 76 loss 0.0003162790962960571[0m
+[95m Iteration 77 loss 0.000270813558017835[0m
+[95m Iteration 78 loss 0.0002826732234098017[0m
+[95m Iteration 79 loss 0.00028031537658534944[0m
+
+Generating 20,000 verified normal-ray samples...
+
+[Stage 2] Geometric fine-tune for 1500 epochs...
+Training geometric Bernstein SDF: n_func=12, epochs=1500, near=2048, random=1024, rays=1024
+Epoch 0000 | total=0.044294 near=0.000238 random=0.000493 ray=0.000531 eikonal=0.101868 direction=0.044909 gradient_vector=0.113702
+Epoch 0025 | total=0.036650 near=0.000271 random=0.000427 ray=0.000394 eikonal=0.085742 direction=0.038720 gradient_vector=0.092527
+Epoch 0050 | total=0.037496 near=0.000311 random=0.000464 ray=0.000335 eikonal=0.079549 direction=0.041066 gradient_vector=0.095444
+Epoch 0075 | total=0.037029 near=0.000339 random=0.000535 ray=0.000304 eikonal=0.073152 direction=0.043103 gradient_vector=0.093072
+Epoch 0100 | total=0.037390 near=0.000328 random=0.000492 ray=0.000307 eikonal=0.068952 direction=0.044717 gradient_vector=0.094265
+Epoch 0125 | total=0.034364 near=0.000330 random=0.000440 ray=0.000275 eikonal=0.063546 direction=0.040066 gradient_vector=0.087414
+Epoch 0150 | total=0.039247 near=0.000357 random=0.000496 ray=0.000310 eikonal=0.064258 direction=0.048611 gradient_vector=0.099357
+Epoch 0175 | total=0.035850 near=0.000361 random=0.000507 ray=0.000283 eikonal=0.062169 direction=0.045006 gradient_vector=0.089224
+Epoch 0200 | total=0.035771 near=0.000370 random=0.000423 ray=0.000254 eikonal=0.061673 direction=0.042958 gradient_vector=0.091181
+Epoch 0225 | total=0.033654 near=0.000375 random=0.000453 ray=0.000304 eikonal=0.060788 direction=0.040269 gradient_vector=0.084500
+Epoch 0250 | total=0.037391 near=0.000358 random=0.000467 ray=0.000336 eikonal=0.060430 direction=0.047450 gradient_vector=0.093527
+Epoch 0275 | total=0.036096 near=0.000373 random=0.000495 ray=0.000278 eikonal=0.057202 direction=0.044790 gradient_vector=0.091415
+Epoch 0300 | total=0.034631 near=0.000376 random=0.000421 ray=0.000304 eikonal=0.056357 direction=0.043245 gradient_vector=0.087036
+Epoch 0325 | total=0.032960 near=0.000355 random=0.000480 ray=0.000262 eikonal=0.053908 direction=0.040956 gradient_vector=0.082861
+Epoch 0350 | total=0.033379 near=0.000383 random=0.000469 ray=0.000249 eikonal=0.055754 direction=0.040483 gradient_vector=0.084578
+Epoch 0375 | total=0.030531 near=0.000367 random=0.000455 ray=0.000235 eikonal=0.053062 direction=0.036289 gradient_vector=0.077308
+Epoch 0400 | total=0.032205 near=0.000394 random=0.000470 ray=0.000275 eikonal=0.055217 direction=0.039492 gradient_vector=0.080527
+Epoch 0425 | total=0.033771 near=0.000370 random=0.000449 ray=0.000302 eikonal=0.054584 direction=0.041897 gradient_vector=0.084952
+Epoch 0450 | total=0.033426 near=0.000358 random=0.000404 ray=0.000293 eikonal=0.049664 direction=0.042008 gradient_vector=0.084776
+Epoch 0475 | total=0.035159 near=0.000398 random=0.000425 ray=0.000378 eikonal=0.050274 direction=0.044920 gradient_vector=0.088327
+Epoch 0500 | total=0.034268 near=0.000400 random=0.000453 ray=0.000288 eikonal=0.052840 direction=0.042619 gradient_vector=0.086692
+Epoch 0525 | total=0.037125 near=0.000373 random=0.000415 ray=0.000290 eikonal=0.050569 direction=0.048234 gradient_vector=0.094325
+Epoch 0550 | total=0.030852 near=0.000400 random=0.000457 ray=0.000307 eikonal=0.049996 direction=0.038075 gradient_vector=0.077066
+Epoch 0575 | total=0.035054 near=0.000401 random=0.000474 ray=0.000298 eikonal=0.051390 direction=0.044401 gradient_vector=0.088538
+Epoch 0600 | total=0.030461 near=0.000380 random=0.000393 ray=0.000227 eikonal=0.051670 direction=0.037168 gradient_vector=0.076864
+Epoch 0625 | total=0.033702 near=0.000370 random=0.000432 ray=0.000350 eikonal=0.050039 direction=0.043508 gradient_vector=0.083985
+Epoch 0650 | total=0.030381 near=0.000372 random=0.000428 ray=0.000263 eikonal=0.050706 direction=0.037514 gradient_vector=0.076064
+Epoch 0675 | total=0.030312 near=0.000415 random=0.000414 ray=0.000258 eikonal=0.048911 direction=0.037515 gradient_vector=0.076077
+Epoch 0700 | total=0.030765 near=0.000380 random=0.000470 ray=0.000295 eikonal=0.050421 direction=0.038695 gradient_vector=0.076260
+Epoch 0725 | total=0.028367 near=0.000386 random=0.000464 ray=0.000278 eikonal=0.048193 direction=0.033458 gradient_vector=0.071439
+Epoch 0750 | total=0.040198 near=0.000375 random=0.000471 ray=0.000372 eikonal=0.050232 direction=0.053781 gradient_vector=0.101364
+Epoch 0775 | total=0.036948 near=0.000406 random=0.000504 ray=0.000287 eikonal=0.048747 direction=0.047791 gradient_vector=0.093869
+Epoch 0800 | total=0.035730 near=0.000411 random=0.000472 ray=0.000297 eikonal=0.051474 direction=0.046035 gradient_vector=0.089889
+Epoch 0825 | total=0.031844 near=0.000382 random=0.000412 ray=0.000294 eikonal=0.049069 direction=0.039128 gradient_vector=0.080730
+Epoch 0850 | total=0.035435 near=0.000402 random=0.000513 ray=0.000297 eikonal=0.051968 direction=0.044693 gradient_vector=0.089557
+Epoch 0875 | total=0.034448 near=0.000399 random=0.000480 ray=0.000319 eikonal=0.049650 direction=0.044351 gradient_vector=0.086315
+Epoch 0900 | total=0.028688 near=0.000407 random=0.000416 ray=0.000251 eikonal=0.048019 direction=0.034994 gradient_vector=0.071848
+Epoch 0925 | total=0.033358 near=0.000359 random=0.000453 ray=0.000254 eikonal=0.048523 direction=0.042140 gradient_vector=0.084730
+Epoch 0950 | total=0.032227 near=0.000395 random=0.000412 ray=0.000301 eikonal=0.048691 direction=0.041059 gradient_vector=0.080690
+Epoch 0975 | total=0.039731 near=0.000392 random=0.000405 ray=0.000328 eikonal=0.049514 direction=0.052682 gradient_vector=0.101066
+Epoch 1000 | total=0.035212 near=0.000378 random=0.000474 ray=0.000316 eikonal=0.048120 direction=0.044273 gradient_vector=0.089867
+Epoch 1025 | total=0.034431 near=0.000385 random=0.000418 ray=0.000365 eikonal=0.047460 direction=0.044521 gradient_vector=0.086485
+Epoch 1050 | total=0.038438 near=0.000404 random=0.000389 ray=0.000345 eikonal=0.047626 direction=0.051354 gradient_vector=0.097210
+Epoch 1075 | total=0.033994 near=0.000422 random=0.000455 ray=0.000268 eikonal=0.048721 direction=0.043349 gradient_vector=0.085902
+Epoch 1100 | total=0.030656 near=0.000373 random=0.000410 ray=0.000313 eikonal=0.047130 direction=0.037971 gradient_vector=0.077188
+Epoch 1125 | total=0.035114 near=0.000380 random=0.000404 ray=0.000279 eikonal=0.046439 direction=0.045240 gradient_vector=0.089608
+Epoch 1150 | total=0.038243 near=0.000360 random=0.000486 ray=0.000353 eikonal=0.048113 direction=0.050039 gradient_vector=0.097104
+Epoch 1175 | total=0.034625 near=0.000371 random=0.000403 ray=0.000262 eikonal=0.046489 direction=0.044767 gradient_vector=0.088197
+Epoch 1200 | total=0.034786 near=0.000414 random=0.000410 ray=0.000274 eikonal=0.046404 direction=0.045154 gradient_vector=0.088254
+Epoch 1225 | total=0.030552 near=0.000397 random=0.000428 ray=0.000261 eikonal=0.047756 direction=0.038268 gradient_vector=0.076653
+Epoch 1250 | total=0.034893 near=0.000396 random=0.000406 ray=0.000285 eikonal=0.049151 direction=0.044697 gradient_vector=0.088499
+Epoch 1275 | total=0.039714 near=0.000373 random=0.000428 ray=0.000392 eikonal=0.047367 direction=0.052798 gradient_vector=0.100798
+Epoch 1300 | total=0.035151 near=0.000418 random=0.000486 ray=0.000307 eikonal=0.049443 direction=0.045315 gradient_vector=0.088395
+Epoch 1325 | total=0.030363 near=0.000425 random=0.000430 ray=0.000306 eikonal=0.048252 direction=0.037484 gradient_vector=0.075952
+Epoch 1350 | total=0.035642 near=0.000432 random=0.000474 ray=0.000310 eikonal=0.049839 direction=0.045868 gradient_vector=0.089802
+Epoch 1375 | total=0.034323 near=0.000426 random=0.000403 ray=0.000267 eikonal=0.047382 direction=0.043773 gradient_vector=0.087350
+Epoch 1400 | total=0.032385 near=0.000385 random=0.000435 ray=0.000287 eikonal=0.046540 direction=0.041688 gradient_vector=0.081302
+Epoch 1425 | total=0.032957 near=0.000410 random=0.000463 ray=0.000276 eikonal=0.047284 direction=0.041284 gradient_vector=0.083645
+Epoch 1450 | total=0.036232 near=0.000383 random=0.000436 ray=0.000319 eikonal=0.049255 direction=0.046637 gradient_vector=0.091934
+Epoch 1475 | total=0.031173 near=0.000383 random=0.000414 ray=0.000242 eikonal=0.047011 direction=0.039400 gradient_vector=0.078647
+Epoch 1499 | total=0.032035 near=0.000389 random=0.000424 ray=0.000241 eikonal=0.047744 direction=0.040358 gradient_vector=0.081122
+
+Saved candidate: panda_test/Models/nfunc12_candidate/xarm7_link7_w.pt  (n_func=12, weights=(1728,))
+>>> [xarm7_link7] done in 20s
+ALL_DONE Wed 08 Jul 2026 12:35:47 PM EDT
