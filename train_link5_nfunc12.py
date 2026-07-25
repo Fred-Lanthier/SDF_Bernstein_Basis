@@ -27,7 +27,7 @@ PANDA_TEST = os.path.join(ROOT, "panda_test")
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--link", default="panda_rightfinger")
+    p.add_argument("--link", default="panda_link3")
     p.add_argument("--n-func", type=int, default=12)
     p.add_argument("--rls-iters", type=int, default=80)
     p.add_argument("--epochs", type=int, default=1500)

@@ -121,11 +121,28 @@ class BernsteinCore():
                 return info
         raise ValueError(f"Link {target_link} not found in URDF visuals")
 
+    def _pad_theta(self, theta):
+        """Extend a partial joint vector to the full URDF dof.
+
+        Uses the live `q_extra` buffer (measured uncontrolled joints, e.g. the
+        gripper fingers) when one of matching size/device/dtype has been
+        attached; falls back to zeros otherwise. The buffer is read through a
+        view, so in-place updates remain visible to captured CUDA graphs.
+        """
+        missing = self.robot.dof - theta.shape[-1]
+        if missing <= 0:
+            return theta
+        extra = getattr(self, 'q_extra', None)
+        if (extra is not None and extra.numel() == missing
+                and extra.device == theta.device and extra.dtype == theta.dtype):
+            tail = extra.reshape(*([1] * (theta.dim() - 1)), missing).expand(
+                *theta.shape[:-1], missing)
+        else:
+            tail = theta.new_zeros((*theta.shape[:-1], missing))
+        return torch.cat([theta, tail], dim=-1)
+
     def _stack_used_link_transforms(self, pose, theta, link_poses=None):
-        if theta.shape[-1] < self.robot.dof:
-            batch_shape = theta.shape[:-1]
-            padding = theta.new_zeros((*batch_shape, self.robot.dof - theta.shape[-1]))
-            theta = torch.cat([theta, padding], dim=-1)
+        theta = self._pad_theta(theta)
 
         if link_poses is None:
             link_poses = self.robot._native_forward_kinematics(theta)
@@ -222,12 +239,8 @@ class BernsteinCore():
         #    Compute link_poses once here (if not provided) so the grasped-box
         #    term below can attach to its link frame with grad flowing through FK.
         if link_poses is None:
-            theta_fk = theta
-            if theta_fk.shape[-1] < self.robot.dof:
-                pad = theta_fk.new_zeros(
-                    (*theta_fk.shape[:-1], self.robot.dof - theta_fk.shape[-1]))
-                theta_fk = torch.cat([theta_fk, pad], dim=-1)
-            link_poses = self.robot._native_forward_kinematics(theta_fk)
+            link_poses = self.robot._native_forward_kinematics(
+                self._pad_theta(theta))
         trans_stacked = self._stack_used_link_transforms(pose, theta, link_poses=link_poses)
 
         fk_trans = trans_stacked.reshape(B*K, 4, 4)
